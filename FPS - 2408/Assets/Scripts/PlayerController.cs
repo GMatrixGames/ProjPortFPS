@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int shootDamage;
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
-    
+
     private Vector3 move;
     private Vector3 playerVelocity;
 
@@ -58,8 +58,10 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
 
-        if(Input.GetButton("Shoot") && !isShooting)
-             StartCoroutine(shoot());
+        if (Input.GetButton("Shoot") && !isShooting)
+        {
+            StartCoroutine(Shoot());
+        }
     }
 
     void Sprint()
@@ -76,20 +78,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator shoot()
+    IEnumerator Shoot()
     {
         isShooting = true;
 
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, shootDist, ~ignoreMask))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
-            //Debug.Log(hit.collider.name);
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-            if(dmg != null)
-            {
-                dmg.takeDamage(shootDamage);
-            }
+            Debug.Log(hit.collider.name);
+
+            var dmg = hit.collider.GetComponent<IDamage>();
+            dmg?.TakeDamage(shootDamage);
         }
+
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
