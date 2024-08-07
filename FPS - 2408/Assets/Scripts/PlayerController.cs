@@ -25,24 +25,29 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Movement();
+    }
+
+    void Movement()
+    {
         if (controller.isGrounded)
         {
             jumpCount = 0;
             playerVelocity = Vector3.zero;
         }
-        
+
         // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         // transform.position += move * speed * Time.deltaTime;
 
         move = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move * (speed * Time.deltaTime));
-        
+
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             jumpCount++;
             playerVelocity.y = jumpSpeed;
         }
-        
+
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
     }
