@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
+        Sprint();
     }
 
     void Movement()
@@ -50,5 +51,19 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
+    }
+
+    void Sprint()
+    {
+        if (Input.GetButtonDown("Sprint"))
+        {
+            speed *= sprintMod;
+            isSprinting = true;
+        }
+        else if (Input.GetButtonUp("Sprint"))
+        {
+            speed /= sprintMod;
+            isSprinting = false;
+        }
     }
 }
