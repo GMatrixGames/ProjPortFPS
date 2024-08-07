@@ -193,9 +193,9 @@ GameObject:
   - component: {fileID: 214164382}
   - component: {fileID: 214164381}
   - component: {fileID: 214164380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -286,11 +286,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 214164385}
+  ignoreMask:
+    serializedVersion: 2
+    m_Bits: 8
   speed: 5
   sprintMod: 3
   jumpMax: 2
   jumpSpeed: 12
   gravity: 28
+  shootDamage: 1
+  shootRate: 0.5
+  shootDist: 500
 --- !u!4 &214164384
 Transform:
   m_ObjectHideFlags: 0
