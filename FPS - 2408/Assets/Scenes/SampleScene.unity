@@ -189,6 +189,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214164384}
   - component: {fileID: 214164383}
+  - component: {fileID: 214164385}
   - component: {fileID: 214164382}
   - component: {fileID: 214164381}
   - component: {fileID: 214164380}
@@ -284,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15d712669482f64cb1e22d22d42d1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 214164385}
   speed: 5
 --- !u!4 &214164384
 Transform:
@@ -300,6 +302,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &214164385
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 214164379}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &588927005
 PrefabInstance:
   m_ObjectHideFlags: 0

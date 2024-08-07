@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private CharacterController controller;
     [SerializeField] private int speed;
 
     private Vector3 move;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        transform.position += move * speed * Time.deltaTime;
+        // transform.position += move * speed * Time.deltaTime;
+
+        controller.Move(move * (speed * Time.deltaTime));
     }
 }
