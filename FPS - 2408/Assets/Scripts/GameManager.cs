@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set the state of the game to "Paused"
+    /// </summary>
     public void StatePause()
     {
         isPaused = !isPaused;
@@ -44,6 +47,9 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None; // GK: Personally dislike exclusive windowed, so it's None.
     }
 
+    /// <summary>
+    /// Set the state of the game to "Unpaused"
+    /// </summary>
     public void StateUnpause()
     {
         isPaused = !isPaused;
