@@ -487,8 +487,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.001
+  m_Height: 0.001
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &214164381
@@ -4195,7 +4195,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58db8adcaab7e1148b6d26342485be56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 1
+  type: 0
+  rb: {fileID: 1770343560}
+  damage: 1
+  speed: 25
+  destroyTime: 3
 --- !u!54 &1770343560
 Rigidbody:
   m_ObjectHideFlags: 0
