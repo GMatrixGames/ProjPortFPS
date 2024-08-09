@@ -31,10 +31,17 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
+        if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
+        {
+            Movement();
+        }
+
         Sprint();
     }
 
+    /// <summary>
+    /// Handling of sprinting mechanic.
+    /// </summary>
     void Movement()
     {
         if (controller.isGrounded)
@@ -64,6 +71,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handling of sprinting mechanic.
+    /// </summary>
     void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))
@@ -78,13 +88,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handling of shooting mechanic via raycast.
+    /// </summary>
+    /// <returns>Time wait based on shootRate</returns>
     IEnumerator Shoot()
     {
         isShooting = true;
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
-            Debug.Log(hit.collider.name);
+            // Debug.Log(hit.collider.name);
 
             var dmg = hit.collider.GetComponent<IDamage>();
             dmg?.TakeDamage(shootDamage);
