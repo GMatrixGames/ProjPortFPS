@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
 
+    [SerializeField] TMP_Text enemyCountText;
     #region Player
 
     public GameObject player { get; private set; }
@@ -80,7 +81,7 @@ public class GameManager : MonoBehaviour
     public void UpdateGoal(int amount)
     {
         enemyCount += amount;
-
+        enemyCountText.text = enemyCount.ToString("F0");
         if (enemyCount <= 0)
         {
             StateUnpause();
