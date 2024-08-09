@@ -1,10 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
+    [SerializeField] private int hp;
     [SerializeField] private int speed;
     [SerializeField] private int sprintMod;
     [SerializeField] private int jumpMax;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
 
     private int jumpCount;
+    private int hpOrig;
 
     private bool isSprinting;
     private bool isShooting;
@@ -106,5 +108,15 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    public void TakeDamage(int amount)
+    {
+        hp -= amount;
+
+        if (hp <= 0)
+        {
+            GameManager.instance.StateLost();
+        }
     }
 }
