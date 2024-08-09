@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
@@ -34,7 +31,7 @@ public class DamageTrigger : MonoBehaviour
 
         var dmg = other.GetComponent<IDamage>();
         dmg?.TakeDamage(damage);
-        
+
         Destroy(gameObject);
     }
 }

@@ -110,6 +110,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isShooting = false;
     }
 
+    /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
         hp -= amount;

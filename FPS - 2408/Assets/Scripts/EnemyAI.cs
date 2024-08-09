@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private Renderer model;
     [SerializeField] private Transform shootPos;
 
-    [SerializeField] private int HP;
+    [SerializeField] private int hp;
 
     [SerializeField] private GameObject bullet;
     [SerializeField] private float shootRate;
@@ -28,29 +28,35 @@ public class EnemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
-
-        if(playerInRange)
+        if (playerInRange)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);
 
             if (!isShooting)
-                StartCoroutine(shoot());
-        }        
+            {
+                StartCoroutine(Shoot());
+            }
+        }
     }
 
+    /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
-        HP -= amount;
+        hp -= amount;
 
         StartCoroutine(FlashRed());
 
-        if (HP <= 0)
+        if (hp <= 0)
         {
             GameManager.instance.UpdateGoal(-1);
             Destroy(gameObject);
         }
     }
 
+    /// <summary>
+    /// Flash red when taking damage.
+    /// </summary>
+    /// <returns>Delay</returns>
     IEnumerator FlashRed()
     {
         model.material.color = Color.red;
@@ -58,7 +64,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = colorOriginal;
     }
 
-    IEnumerator shoot()
+    /// <summary>
+    /// Shoot bullet at player.
+    /// </summary>
+    /// <returns>Delay</returns>
+    IEnumerator Shoot()
     {
         isShooting = true;
         Instantiate(bullet, shootPos.position, transform.rotation);
