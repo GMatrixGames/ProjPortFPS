@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -77,6 +76,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         isShooting = false;
     }
 
+    /// <summary>
+    /// When the player enters the enemy's range, set playerInRange to true.
+    /// </summary>
+    /// <param name="other">object entering the trigger</param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -85,6 +88,10 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
+    /// <summary>
+    /// When the player exits the enemy's range, set playerInRange to false.
+    /// </summary>
+    /// <param name="other">object exiting the trigger</param>
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
