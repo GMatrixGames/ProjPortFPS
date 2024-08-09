@@ -6,8 +6,19 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject menuActive;
     [SerializeField] private GameObject menuPause;
+    [SerializeField] private GameObject menuWin;
+    [SerializeField] private GameObject menuLose;
+
+    #region Player
+
+    public GameObject player { get; private set; }
+    public PlayerController playerScript { get; private set; }
+
+    #endregion
 
     public bool isPaused;
+
+    private int enemyCount;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
@@ -16,6 +27,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -58,5 +71,21 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+    }
+
+    /// <summary>
+    /// Update the goal amount.
+    /// </summary>
+    /// <param name="amount">Amount of enemies killed</param>
+    public void UpdateGoal(int amount)
+    {
+        enemyCount += amount;
+
+        if (enemyCount <= 0)
+        {
+            StateUnpause();
+            menuActive = menuWin;
+            menuActive.SetActive(isPaused);
+        }
     }
 }
