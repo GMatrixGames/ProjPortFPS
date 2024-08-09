@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
 
-    // Start is called before the first frame update
-    void Start()
+    // Awake allows for initialization before other game objects
+    void Awake()
     {
         instance = this;
         player = GameObject.FindWithTag("Player");
