@@ -89,4 +89,4 @@ public class GameManager : MonoBehaviour
             menuActive.SetActive(isPaused);
         }
     }
-}
+} 
