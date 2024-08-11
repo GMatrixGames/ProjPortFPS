@@ -576,9 +576,12 @@ MonoBehaviour:
   wallKickMax: 1
   wallKickSpeed: 12
   runningOnWall: 0
-  shootDamage: 1
   shootRate: 0.5
   shootDist: 500
+  minDamage: 1
+  maxDamage: 3
+  dropOffStart: 5
+  dropOffEnd: 10
 --- !u!4 &214164384
 Transform:
   m_ObjectHideFlags: 0

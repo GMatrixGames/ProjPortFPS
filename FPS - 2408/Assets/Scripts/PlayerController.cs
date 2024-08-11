@@ -11,12 +11,11 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int jumpMax;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
-    [SerializeField] int wallKickMax;
-    [SerializeField] int wallKickSpeed;
+    [SerializeField] private int wallKickMax;
+    [SerializeField] private int wallKickSpeed;
 
-    [SerializeField] bool runningOnWall;
+    [SerializeField] private bool runningOnWall;
 
-    [SerializeField] private int shootDamage;
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
 
@@ -30,6 +29,17 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isSprinting;
     private bool isShooting;
     private GameObject lastTouchedWall;
+
+    #region Damage & Dropoff
+
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
+    [SerializeField] private float dropOffStart;
+    [SerializeField] private float dropOffEnd;
+
+    private Vector3 startPos;
+
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +79,7 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount++;
             playerVelocity.y = jumpSpeed;
         }
+
         if (Input.GetButtonDown("Jump") && runningOnWall == true && wallKickCount < wallKickMax)
         {
             wallKickCount++;
@@ -111,14 +122,34 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
-            //Debug.Log(hit.collider.name);
+            var damage = CalcDamage(hit.distance);
+
+            Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
 
             var dmg = hit.collider.GetComponent<IDamage>();
-            dmg?.TakeDamage(shootDamage);
+            dmg?.TakeDamage(damage);
         }
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    /// <summary>
+    /// Calculate the damage based on the distance traveled by the bullet.
+    /// If distance is less than the dropoff start, return max damage.
+    /// If distance is greater than the dropoff end, return minimum damage.
+    /// </summary>
+    /// <param name="distance">Distance the bullet has traveled</param>
+    /// <returns>calculated damage</returns>
+    private int CalcDamage(float distance)
+    {
+        if (distance <= dropOffStart) return maxDamage;
+        if (distance >= dropOffEnd) return minDamage;
+
+        var range = dropOffEnd - dropOffStart;
+        var normalizedDistance = (distance - dropOffStart) / range;
+
+        return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
     }
 
     /// <inheritdoc/>
@@ -134,11 +165,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8)
         {
             Debug.Log("Yep.");
             runningOnWall = true;
-            if(other.gameObject != lastTouchedWall)
+            if (other.gameObject != lastTouchedWall)
             {
                 wallKickCount = 0;
             }
@@ -147,7 +178,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8)
         {
             Debug.Log("Nope.");
             runningOnWall = false;
