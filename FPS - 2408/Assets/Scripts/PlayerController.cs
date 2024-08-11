@@ -179,7 +179,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private int CalcDamage(float distance)
     {
         if (distance <= dropOffStart) return maxDamage;
-        if (distance >= dropOffEnd) return minDamage;
+        if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
 
         var range = dropOffEnd - dropOffStart;
         var normalizedDistance = (distance - dropOffStart) / range;
