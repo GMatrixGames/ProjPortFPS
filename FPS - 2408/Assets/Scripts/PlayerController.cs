@@ -11,10 +11,28 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int jumpMax;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
+
+    //Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
+    #region WallRunning
+    [SerializeField] private int wallRunGravity;
     [SerializeField] private int wallKickMax;
     [SerializeField] private int wallKickSpeed;
-
     [SerializeField] private bool runningOnWall;
+
+    private GameObject lastTouchedWall;
+    private bool hasWallKicked;
+    private int wallKickCount;
+    #endregion
+
+
+    //Nothing in HealthRegen actually works yet, I (Deferonz) set this up
+    //thinking it would be simple and it was not, so yeah lol. If it gets in your way feel free to delete
+    //this, it's not doing anything. 
+    #region HealthRegen
+    private bool shouldRegen;
+    [SerializeField] private int hpRegenAmount;
+    [SerializeField] private int healthRegenTime;
+    #endregion
 
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
@@ -23,12 +41,10 @@ public class PlayerController : MonoBehaviour, IDamage
     private Vector3 playerVelocity;
 
     private int jumpCount;
-    private int wallKickCount;
     private int hpOrig;
 
     private bool isSprinting;
     private bool isShooting;
-    private GameObject lastTouchedWall;
 
     #region Damage & Dropoff
 
@@ -79,15 +95,26 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount++;
             playerVelocity.y = jumpSpeed;
         }
-
+        //Walljumping is here. Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
         if (Input.GetButtonDown("Jump") && runningOnWall == true && wallKickCount < wallKickMax)
         {
             wallKickCount++;
             playerVelocity.y = wallKickSpeed;
+            hasWallKicked = true;
         }
 
         controller.Move(playerVelocity * Time.deltaTime);
-        playerVelocity.y -= gravity * Time.deltaTime;
+
+        //Wallkick stuff, basically checks if you're wallrunning, and you haven't already kicked off this wall. If
+        //you haven't, your gravity gets slowed for wallrunning. 
+        if(runningOnWall && hasWallKicked == false)
+        {
+            playerVelocity.y -= wallRunGravity * Time.deltaTime;
+        }//Otherwise you use normal gravity
+        else
+        {
+            playerVelocity.y -= gravity * Time.deltaTime;
+        }
 
         if (Input.GetButton("Shoot") && !isShooting)
         {
@@ -171,6 +198,7 @@ public class PlayerController : MonoBehaviour, IDamage
             runningOnWall = true;
             if (other.gameObject != lastTouchedWall)
             {
+                hasWallKicked = false;
                 wallKickCount = 0;
             }
         }
@@ -183,6 +211,8 @@ public class PlayerController : MonoBehaviour, IDamage
             Debug.Log("Nope.");
             runningOnWall = false;
             lastTouchedWall = other.gameObject;
+            hasWallKicked = true;
         }
     }
+
 }
