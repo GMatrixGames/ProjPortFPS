@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
-    [SerializeField] private int hp;
+    [SerializeField] private int hpMax;
     [SerializeField] private int speed;
     [SerializeField] private int sprintMod;
     [SerializeField] private int jumpMax;
@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private Vector3 move;
     private Vector3 playerVelocity;
 
+    public int hpCurrent;
+
     private int jumpCount;
     private int hpOrig;
 
@@ -65,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        hpCurrent = hpMax;
+        Debug.Log("HP Initialized: " + hpCurrent);
     }
 
     // Update is called once per frame
@@ -190,12 +194,16 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
-        hp -= amount;
+        hpCurrent -= amount;
+        Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
 
-        if (hp <= 0)
+        if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
+            Debug.Log("Player died.");
         }
+
+        GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
     }
 
     private void OnTriggerEnter(Collider other)

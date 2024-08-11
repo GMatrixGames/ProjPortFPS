@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     private int enemyCount;
+
+    public Image healthBar;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
@@ -74,6 +77,18 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+    }
+
+    /// <summary>
+    /// Update the HP bar fill amount.
+    /// </summary>
+    ///<param name="hpCurr"> Players current HP</param>
+    ///<param name="hpMax"> Players max HP</param>
+    public void UpdateHealthBar(int hpCurr, int hpMax)
+    {
+        Debug.Log("Updating Health Bar: Current HP = " + hpCurr + "/" + hpMax);
+        healthBar.fillAmount = (float)hpCurr / hpMax;
+        Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
     }
 
     /// <summary>
