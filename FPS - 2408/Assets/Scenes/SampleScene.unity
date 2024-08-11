@@ -573,10 +573,12 @@ MonoBehaviour:
   jumpMax: 2
   jumpSpeed: 12
   gravity: 28
-  wallRunGravity: 12
+  wallRunGravity: 5
   wallKickMax: 1
   wallKickSpeed: 12
   runningOnWall: 0
+  hpRegenAmount: 0
+  healthRegenTime: 0
   shootRate: 0.5
   shootDist: 500
   minDamage: 1
@@ -979,7 +981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3501386698607493855, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.87323
+      value: -8.75
       objectReference: {fileID: 0}
     - target: {fileID: 3501386698607493855, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
       propertyPath: m_LocalRotation.w
