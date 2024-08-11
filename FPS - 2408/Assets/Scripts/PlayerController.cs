@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             jumpCount = 0;
             playerVelocity = Vector3.zero;
+            lastTouchedWall = null;
         }
 
         // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
