@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int jumpMax;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
+    [SerializeField] int wallKickMax;
+    [SerializeField] int wallKickSpeed;
+
+    [SerializeField] bool runningOnWall;
 
     [SerializeField] private int shootDamage;
     [SerializeField] private float shootRate;
@@ -20,10 +24,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private Vector3 playerVelocity;
 
     private int jumpCount;
+    private int wallKickCount;
     private int hpOrig;
 
     private bool isSprinting;
     private bool isShooting;
+    private GameObject lastTouchedWall;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +69,11 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount++;
             playerVelocity.y = jumpSpeed;
         }
+        if (Input.GetButtonDown("Jump") && runningOnWall == true && wallKickCount < wallKickMax)
+        {
+            wallKickCount++;
+            playerVelocity.y = wallKickSpeed;
+        }
 
         controller.Move(playerVelocity * Time.deltaTime);
         playerVelocity.y -= gravity * Time.deltaTime;
@@ -100,7 +111,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
-            // Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
 
             var dmg = hit.collider.GetComponent<IDamage>();
             dmg?.TakeDamage(shootDamage);
@@ -118,6 +129,29 @@ public class PlayerController : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             GameManager.instance.StateLost();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer == 8)
+        {
+            Debug.Log("Yep.");
+            runningOnWall = true;
+            if(other.gameObject != lastTouchedWall)
+            {
+                wallKickCount = 0;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.gameObject.layer == 8)
+        {
+            Debug.Log("Nope.");
+            runningOnWall = false;
+            lastTouchedWall = other.gameObject;
         }
     }
 }
