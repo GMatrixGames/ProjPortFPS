@@ -617,7 +617,7 @@ MonoBehaviour:
   ignoreMask:
     serializedVersion: 2
     m_Bits: 8
-  hpMax: 10
+  hp: 3
   speed: 5
   sprintMod: 3
   jumpMax: 2
@@ -632,7 +632,6 @@ MonoBehaviour:
   healthRegenTime: 0
   shootRate: 0.5
   shootDist: 500
-  hpCurrent: 0
   minDamage: 1
   maxDamage: 3
   dropOffStart: 5
@@ -1034,7 +1033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3501386698607493855, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.87323
+      value: -8.75
       objectReference: {fileID: 0}
     - target: {fileID: 3501386698607493855, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1073,43 +1072,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
---- !u!1 &354650504
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 354650505}
-  m_Layer: 5
-  m_Name: HP Bar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &354650505
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 354650504}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8525735}
-  - {fileID: 561113512}
-  m_Father: {fileID: 727046136}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -420, y: -245}
-  m_SizeDelta: {x: 376, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &465540385
 GameObject:
   m_ObjectHideFlags: 0
