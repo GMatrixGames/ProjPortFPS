@@ -643,6 +643,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   hpMax: 10
+  hpCurrent: 10
+  healthRegenRate: 90
   speed: 5
   sprintMod: 3
   jumpMax: 2
@@ -653,11 +655,8 @@ MonoBehaviour:
   wallKickMax: 1
   wallKickSpeed: 12
   runningOnWall: 0
-  hpRegenAmount: 0
-  healthRegenTime: 0
   shootRate: 0.5
   shootDist: 500
-  hpCurrent: 0
   minDamage: 1
   maxDamage: 3
   dropOffStart: 5
