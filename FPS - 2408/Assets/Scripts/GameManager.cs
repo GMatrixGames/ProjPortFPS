@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        Time.timeScale = timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
     }
