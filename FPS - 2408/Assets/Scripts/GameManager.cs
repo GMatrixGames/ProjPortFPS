@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        Time.timeScale = timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
     }
@@ -87,9 +86,16 @@ public class GameManager : MonoBehaviour
     ///<param name="hpMax"> Players max HP</param>
     public void UpdateHealthBar(int hpCurr, int hpMax)
     {
-        Debug.Log("Updating Health Bar: Current HP = " + hpCurr + "/" + hpMax);
-        healthBar.fillAmount = (float)hpCurr / hpMax;
-        Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
+        Debug.Log($"Updating Health Bar: Current HP = {hpCurr}/{hpMax}");
+        if (healthBar != null)
+        {
+            healthBar.fillAmount = (float)hpCurr / hpMax;
+            Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
+        }
+        else
+        {
+            Debug.LogError("Health Bar reference is missing!");
+        }
     }
 
     /// <summary>
