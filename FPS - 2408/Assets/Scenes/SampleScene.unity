@@ -648,7 +648,7 @@ MonoBehaviour:
   jumpMax: 2
   jumpSpeed: 12
   gravity: 28
-  wallRunGravity: 12
+  wallRunGravity: 5
   wallKickMax: 1
   wallKickSpeed: 12
   runningOnWall: 0

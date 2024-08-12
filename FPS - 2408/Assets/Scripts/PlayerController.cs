@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int jumpMax;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
+    [SerializeField] private CameraShake cameraShake;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
@@ -196,6 +197,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpCurrent -= amount;
         Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
+
+        // Triggers the camera shake when damage has been taken
+        if (cameraShake != null)
+        {
+            StartCoroutine(cameraShake.Shake(0.2f, 0.1f));
+        }
 
         if (hpCurrent <= 0)
         {

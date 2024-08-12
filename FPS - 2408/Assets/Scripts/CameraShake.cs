@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class CameraShake : MonoBehaviour
 {
-   public IEnumerator Shake(float duration, float magnitude)
+    public IEnumerator Shake(float duration, float magnitude)
     {
         // Stores the original position of the camera
         Vector3 origPos = transform.localPosition;
@@ -16,7 +16,7 @@ public class CameraShake : MonoBehaviour
         float elasped = 0.0f;
 
         // This is the loop for the duration of the shake effect
-        while(elasped < duration)
+        while (elasped < duration)
         {
             // This will give a random offset for the shake effect
             float x = Random.Range(-1f, 1f) * magnitude;
@@ -33,6 +33,6 @@ public class CameraShake : MonoBehaviour
         }
 
         // Resets the camera back to the original position after the effect
-        transform.localPosition = origPos; 
+        transform.localPosition = origPos;
     }
 }
