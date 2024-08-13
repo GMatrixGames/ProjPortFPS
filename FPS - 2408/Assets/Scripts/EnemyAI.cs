@@ -6,26 +6,20 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Renderer model;
-    [SerializeField] private Transform shootPos;
     [SerializeField] private Transform throwPos;
 
     [SerializeField] private int hp;
 
-    [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject grenade;
-    [SerializeField] private float shootRate;
 
-    [SerializeField] bool isMelee;
-    [SerializeField] int atkRate;
-    [SerializeField] int dmg;
+    [SerializeField] public int atkRate;
+    [SerializeField] public int dmg;
 
     [SerializeField] bool isGrenadier;
     [SerializeField] float throwCooldown;
     [SerializeField] float throwForce;
 
-    public bool isShooting;
     public bool playerInRange;
-    public bool isAttacking;
     public bool isThrowing;
 
     public Color colorOriginal;
@@ -43,11 +37,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (playerInRange)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);
-            if (!isAttacking)
-            {
-                StartCoroutine(Melee());
-            }
-            else if (!isThrowing)
+            if (!isThrowing)
             {
                 StartCoroutine(ThrowGrenade());
             }
@@ -77,15 +67,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOriginal;
-    }
-
-    // Melee Attack
-    IEnumerator Melee()
-    {
-        isAttacking = true;
-        GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(dmg);
-        yield return new WaitForSeconds(atkRate);
-        isAttacking = false;
     }
 
     // Grenade throw
