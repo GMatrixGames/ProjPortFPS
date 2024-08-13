@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuLose;
 
     [SerializeField] private TMP_Text enemyCountText;
+    [SerializeField] private TMP_Text healthText;
 
     #region Player
 
@@ -91,6 +92,7 @@ public class GameManager : MonoBehaviour
         if (healthBar)
         {
             healthBar.fillAmount = hpCurr / hpMax;
+            healthText.text = $"{(int) hpCurr} / {hpMax}";
             Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
         }
         else
