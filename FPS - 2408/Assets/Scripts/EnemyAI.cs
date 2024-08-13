@@ -41,6 +41,10 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 StartCoroutine(Shoot());
             }
+            else if (!isAttacking)
+            {
+                StartCoroutine(Melee());
+            }
         }
     }
 
