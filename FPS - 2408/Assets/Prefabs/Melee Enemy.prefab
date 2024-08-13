@@ -51,18 +51,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 7533244892124653974}
   model: {fileID: 4966135140426161915}
-  throwPos: {fileID: 0}
   hp: 12
-  grenade: {fileID: 0}
-  atkRate: 2
+  atkRate: 1
   dmg: 1
-  isGrenadier: 0
-  throwCooldown: 0
-  throwForce: 0
   playerInRange: 0
-  isThrowing: 0
   colorOriginal: {r: 0, g: 0, b: 0, a: 0}
-  Attacking: 0
 --- !u!33 &8101626377862956420
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -171,7 +164,7 @@ NavMeshAgent:
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1

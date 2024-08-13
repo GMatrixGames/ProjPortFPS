@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shooter : EnemyAI
 {
     [SerializeField] private Transform shootPosition;
-    [SerializeField] private GameObject bulletB;
+    [SerializeField] private GameObject bullet;
 
     private bool Shooting;
 
@@ -29,7 +29,7 @@ public class Shooter : EnemyAI
     IEnumerator Shoot()
     {
         Shooting = true;
-        Instantiate(bulletB, shootPosition.position, transform.rotation);
+        Instantiate(bullet, shootPosition.position, transform.rotation);
         yield return new WaitForSeconds(atkRate);
         Shooting = false;
     }
