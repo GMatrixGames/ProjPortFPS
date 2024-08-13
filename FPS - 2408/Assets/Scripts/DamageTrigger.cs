@@ -16,6 +16,8 @@ public class DamageTrigger : MonoBehaviour
     [SerializeField] private int destroyTime;
     [SerializeField] private float headShotMultiplier = 2.0f;
 
+    public GameObject head;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,8 @@ public class DamageTrigger : MonoBehaviour
         {
             if (other.CompareTag("Head"))
             {
-                dmg.TakeDamage(damage * (int) headShotMultiplier);
+                dmg.TakeDamage(damage * (int)headShotMultiplier);
+
             }
             else
             {

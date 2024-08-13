@@ -81,6 +81,10 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         Sprint();
+
+        // Reset the camera shake trigger based on the current health.
+        // This is called every frame in the Update to ensure the camera shake can be re-triggered if conditions are met again.
+        cameraShake.ResetShakeTrigger(hpCurrent);
     }
 
     /// <summary>
@@ -198,10 +202,11 @@ public class PlayerController : MonoBehaviour, IDamage
         hpCurrent -= amount;
         Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
 
-        // Triggers the camera shake when damage has been taken
+        // Check current health and trigger camera shake if the player's health is at certain value (for now it's 3).
+        // This will trigger a camera shake when hpCurrent is at or falls below a certain threshold.
         if (cameraShake != null)
         {
-            StartCoroutine(cameraShake.Shake(0.2f, 0.1f));
+            cameraShake.TriggerShake(hpCurrent);
         }
 
         if (hpCurrent <= 0)
