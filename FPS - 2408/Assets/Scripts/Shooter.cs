@@ -6,7 +6,6 @@ public class Shooter : EnemyAI
 {
     [SerializeField] private Transform shootPosition;
     [SerializeField] private GameObject bulletB;
-    [SerializeField] private float fireRate;
 
     private bool Shooting;
 
@@ -31,7 +30,7 @@ public class Shooter : EnemyAI
     {
         Shooting = true;
         Instantiate(bulletB, shootPosition.position, transform.rotation);
-        yield return new WaitForSeconds(fireRate);
+        yield return new WaitForSeconds(atkRate);
         Shooting = false;
     }
 }
