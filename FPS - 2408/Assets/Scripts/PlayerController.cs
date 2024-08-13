@@ -210,16 +210,16 @@ public class PlayerController : MonoBehaviour, IDamage
 
         StartCoroutine(Flash());
 
-        // Triggers the camera shake when damage has been taken
-        if (cameraShake != null)
-        {
-            StartCoroutine(cameraShake.Shake(0.2f, 0.1f));
-        }
-
         if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
             Debug.Log("Player died.");
+        }
+        
+        // Trigger camera shake when damaged.
+        if (cameraShake && !GameManager.instance.isPaused)
+        {
+            cameraShake.TriggerShake();
         }
 
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
