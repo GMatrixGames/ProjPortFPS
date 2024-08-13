@@ -13,8 +13,13 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private GameObject bullet;
     [SerializeField] private float shootRate;
 
+    [SerializeField] bool isMelee;
+    [SerializeField] int atkRate;
+    [SerializeField] int dmg;
+
     private bool isShooting;
     private bool playerInRange;
+    private bool isAttacking;
 
     private Color colorOriginal;
 
@@ -75,6 +80,16 @@ public class EnemyAI : MonoBehaviour, IDamage
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
+
+    // Melee Attack
+    IEnumerator Melee()
+    {
+        isAttacking = true;
+        GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(dmg);
+        yield return new WaitForSeconds(atkRate);
+        isAttacking = false;
+    }
+
 
     /// <summary>
     /// When the player enters the enemy's range, set playerInRange to true.
