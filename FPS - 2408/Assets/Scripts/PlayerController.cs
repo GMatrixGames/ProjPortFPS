@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
     [SerializeField] private int hpMax;
-    [SerializeField] private int hpCurrent; 
+    [SerializeField] private float hpCurrent;
     [SerializeField] private float healthRegenRate = 1f;
     [SerializeField] private int speed;
     [SerializeField] private int sprintMod;
@@ -30,16 +30,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
-    // Nothing in HealthRegen actually works yet, I (Deferonz) set this up
-    // thinking it would be simple and it was not, so yeah lol. If it gets in your way feel free to delete
-    // this, it's not doing anything. 
-
     #region HealthRegen
 
-    
-    
-    private bool isTakingDamage = false;
-
+    private bool isTakingDamage;
 
     #endregion
 
@@ -49,10 +42,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private Vector3 move;
     private Vector3 playerVelocity;
 
-    
-
     private int jumpCount;
-    private int hpOrig;
+    private float hpOrig;
 
     private bool isSprinting;
     private bool isShooting;
@@ -86,12 +77,13 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!isTakingDamage)
         {
             // hpCurrent = Mathf.Min(hpCurrent + (int)(healthRegenRate * Time.deltaTime), hpOrig);
-            Debug.Log("Regenerating health: " + hpCurrent);
-            hpCurrent += (int)(healthRegenRate * Time.deltaTime);
+            Debug.Log("Regenerating health: " + healthRegenRate * Time.deltaTime);
+            hpCurrent += healthRegenRate * Time.deltaTime;
             if (hpCurrent > hpOrig)
             {
                 hpCurrent = hpOrig;
             }
+
             Debug.Log("New health: " + hpCurrent);
             GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         }
@@ -225,7 +217,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
-       
+
         StartCoroutine(EnableHealthRegen());
     }
 
@@ -256,7 +248,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     IEnumerator EnableHealthRegen()
     {
-        yield return new WaitForSeconds(0.5f); 
+        yield return new WaitForSeconds(5f);
         isTakingDamage = false;
     }
 }

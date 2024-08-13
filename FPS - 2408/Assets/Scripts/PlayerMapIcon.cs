@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class playerMapIcon : MonoBehaviour
+public class PlayerMapIcon : MonoBehaviour
 {
     private Transform player; // Reference to the player's transform
     private RectTransform playerIcon; // Reference to the player arrow icon on the minimap

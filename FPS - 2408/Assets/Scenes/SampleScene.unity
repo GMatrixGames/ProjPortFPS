@@ -644,7 +644,7 @@ MonoBehaviour:
     m_Bits: 8
   hpMax: 10
   hpCurrent: 10
-  healthRegenRate: 80
+  healthRegenRate: 0.5
   speed: 5
   sprintMod: 3
   jumpMax: 2
@@ -1256,7 +1256,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 217.51208, y: 43.500793}
+  m_AnchoredPosition: {x: 217.51208, y: 43.500732}
   m_SizeDelta: {x: 376, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &465540385

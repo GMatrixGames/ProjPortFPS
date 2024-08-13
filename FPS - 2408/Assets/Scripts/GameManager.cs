@@ -85,12 +85,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     ///<param name="hpCurr"> Players current HP</param>
     ///<param name="hpMax"> Players max HP</param>
-    public void UpdateHealthBar(int hpCurr, int hpMax)
+    public void UpdateHealthBar(float hpCurr, int hpMax)
     {
         Debug.Log($"Updating Health Bar: Current HP = {hpCurr}/{hpMax}");
-        if (healthBar != null)
+        if (healthBar)
         {
-            healthBar.fillAmount = (float)hpCurr / hpMax;
+            healthBar.fillAmount = hpCurr / hpMax;
             Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
         }
         else
