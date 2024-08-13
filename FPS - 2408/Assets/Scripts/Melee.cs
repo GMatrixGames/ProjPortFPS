@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Melee : EnemyAI
 {
-    public bool Attacking;
+    private bool Attacking;
 
     // Start is called before the first frame update
     public new void Start()
@@ -36,7 +36,7 @@ public class Melee : EnemyAI
             yield return new WaitForSeconds(atkRate);
             Attacking = false;
         }
-        else
+        else if (!enemyCollider.bounds.Intersects(playerCollider.bounds) && playerInRange && !Attacking)
         {
             agent.isStopped = false;
         }

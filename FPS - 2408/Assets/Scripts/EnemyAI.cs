@@ -6,21 +6,13 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] public NavMeshAgent agent;
     [SerializeField] private Renderer model;
-    [SerializeField] private Transform throwPos;
 
     [SerializeField] private int hp;
-
-    [SerializeField] private GameObject grenade;
 
     [SerializeField] public int atkRate;
     [SerializeField] public int dmg;
 
-    [SerializeField] bool isGrenadier;
-    [SerializeField] float throwCooldown;
-    [SerializeField] float throwForce;
-
     public bool playerInRange;
-    public bool isThrowing;
 
     public Color colorOriginal;
 
@@ -37,10 +29,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (playerInRange)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);
-            if (!isThrowing)
-            {
-                StartCoroutine(ThrowGrenade());
-            }
         }
     }
 
@@ -67,21 +55,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOriginal;
-    }
-
-    // Grenade throw
-    IEnumerator ThrowGrenade()
-    {
-        isThrowing = true;
-        Instantiate(grenade);
-        GrenadeBehavior grenadeScript = grenade.GetComponent<GrenadeBehavior>();
-        if (grenadeScript != null)
-        {
-            Vector3 targetPosition = GameManager.instance.player.transform.position;
-            grenadeScript.InitializeAndThrow(throwPos.position, targetPosition, throwForce);
-        }
-        yield return new WaitForSeconds(throwCooldown);
-        isThrowing = false;
     }
 
     /// <summary>
