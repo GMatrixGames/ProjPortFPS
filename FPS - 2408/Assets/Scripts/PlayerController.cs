@@ -81,10 +81,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         Sprint();
-
-        // Reset the camera shake trigger based on the current health.
-        // This is called every frame in the Update to ensure the camera shake can be re-triggered if conditions are met again.
-        cameraShake.ResetShakeTrigger(hpCurrent);
     }
 
     /// <summary>
@@ -206,7 +202,7 @@ public class PlayerController : MonoBehaviour, IDamage
         // This will trigger a camera shake when hpCurrent is at or falls below a certain threshold.
         if (cameraShake != null)
         {
-            cameraShake.TriggerShake(hpCurrent);
+            cameraShake.TriggerShake();
         }
 
         if (hpCurrent <= 0)
