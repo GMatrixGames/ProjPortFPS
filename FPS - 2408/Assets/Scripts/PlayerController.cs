@@ -63,11 +63,14 @@ public class PlayerController : MonoBehaviour, IDamage
     void Start()
     {
         hpOrig = hpCurrent;
+        GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
         {
             Movement();
@@ -204,6 +207,9 @@ public class PlayerController : MonoBehaviour, IDamage
         hpCurrent -= amount;
         Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
         isTakingDamage = true;
+
+        StartCoroutine(Flash());
+
         // Triggers the camera shake when damage has been taken
         if (cameraShake != null)
         {
@@ -246,6 +252,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    IEnumerator Flash()
+    {
+        GameManager.instance.damageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.damageFlash.SetActive(false);
+    }
+    
     IEnumerator EnableHealthRegen()
     {
         yield return new WaitForSeconds(5f);

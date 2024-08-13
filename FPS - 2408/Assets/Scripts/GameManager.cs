@@ -17,14 +17,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
+    public Image healthBar;
+    public GameObject damageFlash;
 
     #endregion
 
     public bool isPaused;
 
     private int enemyCount;
-
-    public Image healthBar;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
