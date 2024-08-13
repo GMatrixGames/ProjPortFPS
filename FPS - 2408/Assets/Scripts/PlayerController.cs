@@ -5,13 +5,15 @@ public class PlayerController : MonoBehaviour, IDamage
 {
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
-    [SerializeField] private int hp;
+    [SerializeField] private int hpMax;
+    [SerializeField] private int hpCurrent; 
+    [SerializeField] private float healthRegenRate = 1f;
     [SerializeField] private int speed;
     [SerializeField] private int sprintMod;
     [SerializeField] private int jumpMax;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
-    [SerializeField] private CameraShake cameraShake; // Reference to the CameraShake script
+    [SerializeField] private CameraShake cameraShake;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
@@ -34,9 +36,10 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #region HealthRegen
 
-    private bool shouldRegen;
-    [SerializeField] private int hpRegenAmount;
-    [SerializeField] private int healthRegenTime;
+    
+    
+    private bool isTakingDamage = false;
+
 
     #endregion
 
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private Vector3 move;
     private Vector3 playerVelocity;
+
+    
 
     private int jumpCount;
     private int hpOrig;
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        hpOrig = hpCurrent;
     }
 
     // Update is called once per frame
@@ -77,6 +83,10 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         Sprint();
+        if (!isTakingDamage)
+        {
+            hpCurrent = Mathf.Min(hpCurrent + (int)(healthRegenRate * Time.deltaTime), hpOrig);
+        }
     }
 
     /// <summary>
@@ -191,17 +201,24 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
-        hp -= amount;
-
+        hpCurrent -= amount;
+        Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
+        isTakingDamage = true;
         // Triggers the camera shake when damage has been taken
-        if(cameraShake != null)
+        if (cameraShake != null)
         {
             StartCoroutine(cameraShake.Shake(0.2f, 0.1f));
         }
-        if (hp <= 0)
+
+        if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
+            Debug.Log("Player died.");
         }
+
+        GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+
+        StartCoroutine(EnableHealthRegen());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -227,5 +244,11 @@ public class PlayerController : MonoBehaviour, IDamage
             lastTouchedWall = other.gameObject;
             hasWallKicked = true;
         }
+    }
+
+    IEnumerator EnableHealthRegen()
+    {
+        yield return new WaitForSeconds(0.5f); 
+        isTakingDamage = false;
     }
 }

@@ -33,17 +33,18 @@ public class DamageTrigger : MonoBehaviour
         var dmg = other.GetComponent<IDamage>();
         dmg?.TakeDamage(damage);
 
-        if(dmg != null)
+        if (dmg != null)
         {
-            if(other.CompareTag("Head"))
+            if (other.CompareTag("Head"))
             {
-                dmg.TakeDamage(damage * (int)headShotMultiplier);
+                dmg.TakeDamage(damage * (int) headShotMultiplier);
             }
             else
             {
                 dmg.TakeDamage(damage);
             }
         }
+
         Destroy(gameObject);
     }
 }
