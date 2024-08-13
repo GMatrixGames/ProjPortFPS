@@ -7,43 +7,49 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Renderer model;
     [SerializeField] private Transform shootPos;
+    [SerializeField] private Transform throwPos;
 
     [SerializeField] private int hp;
 
     [SerializeField] private GameObject bullet;
+    [SerializeField] private GameObject grenade;
     [SerializeField] private float shootRate;
 
     [SerializeField] bool isMelee;
     [SerializeField] int atkRate;
     [SerializeField] int dmg;
 
-    private bool isShooting;
-    private bool playerInRange;
-    private bool isAttacking;
+    [SerializeField] bool isGrenadier;
+    [SerializeField] float throwCooldown;
+    [SerializeField] float throwForce;
 
-    private Color colorOriginal;
+    public bool isShooting;
+    public bool playerInRange;
+    public bool isAttacking;
+    public bool isThrowing;
+
+    public Color colorOriginal;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (playerInRange)
         {
             agent.SetDestination(GameManager.instance.player.transform.position);
-
-            if (!isShooting)
-            {
-                StartCoroutine(Shoot());
-            }
-            else if (!isAttacking)
+            if (!isAttacking)
             {
                 StartCoroutine(Melee());
+            }
+            else if (!isThrowing)
+            {
+                StartCoroutine(ThrowGrenade());
             }
         }
     }
@@ -73,18 +79,6 @@ public class EnemyAI : MonoBehaviour, IDamage
         model.material.color = colorOriginal;
     }
 
-    /// <summary>
-    /// Shoot bullet at player.
-    /// </summary>
-    /// <returns>Delay</returns>
-    IEnumerator Shoot()
-    {
-        isShooting = true;
-        Instantiate(bullet, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
-    }
-
     // Melee Attack
     IEnumerator Melee()
     {
@@ -94,6 +88,20 @@ public class EnemyAI : MonoBehaviour, IDamage
         isAttacking = false;
     }
 
+    // Grenade throw
+    IEnumerator ThrowGrenade()
+    {
+        isThrowing = true;
+        Instantiate(grenade);
+        GrenadeBehavior grenadeScript = grenade.GetComponent<GrenadeBehavior>();
+        if (grenadeScript != null)
+        {
+            Vector3 targetPosition = GameManager.instance.player.transform.position;
+            grenadeScript.InitializeAndThrow(throwPos.position, targetPosition, throwForce);
+        }
+        yield return new WaitForSeconds(throwCooldown);
+        isThrowing = false;
+    }
 
     /// <summary>
     /// When the player enters the enemy's range, set playerInRange to true.
