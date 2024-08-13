@@ -198,17 +198,16 @@ public class PlayerController : MonoBehaviour, IDamage
         hpCurrent -= amount;
         Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
 
-        // Check current health and trigger camera shake if the player's health is at certain value (for now it's 3).
-        // This will trigger a camera shake when hpCurrent is at or falls below a certain threshold.
-        if (cameraShake != null)
-        {
-            cameraShake.TriggerShake();
-        }
-
         if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
             Debug.Log("Player died.");
+        }
+        
+        // Trigger camera shake when damaged.
+        if (cameraShake && !GameManager.instance.isPaused)
+        {
+            cameraShake.TriggerShake();
         }
 
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
