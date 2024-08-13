@@ -30,10 +30,15 @@ public class Melee : EnemyAI
         Collider playerCollider = GameManager.instance.player.GetComponent<Collider>();
         if (enemyCollider.bounds.Intersects(playerCollider.bounds))
         {
+            agent.isStopped = true;
             Attacking = true;
             GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(dmg);
             yield return new WaitForSeconds(atkRate);
             Attacking = false;
+        }
+        else
+        {
+            agent.isStopped = false;
         }
     }
 }
