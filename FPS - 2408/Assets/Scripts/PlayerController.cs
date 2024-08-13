@@ -85,7 +85,15 @@ public class PlayerController : MonoBehaviour, IDamage
         Sprint();
         if (!isTakingDamage)
         {
-            hpCurrent = Mathf.Min(hpCurrent + (int)(healthRegenRate * Time.deltaTime), hpOrig);
+            // hpCurrent = Mathf.Min(hpCurrent + (int)(healthRegenRate * Time.deltaTime), hpOrig);
+            Debug.Log("Regenerating health: " + hpCurrent);
+            hpCurrent += (int)(healthRegenRate * Time.deltaTime);
+            if (hpCurrent > hpOrig)
+            {
+                hpCurrent = hpOrig;
+            }
+            Debug.Log("New health: " + hpCurrent);
+            GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         }
     }
 
@@ -217,7 +225,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
-
+       
         StartCoroutine(EnableHealthRegen());
     }
 
