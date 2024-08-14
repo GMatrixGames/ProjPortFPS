@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    [SerializeField] private int headshotMultiplier = 2;
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
 
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
-        
+
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
         {
             Movement();
@@ -172,10 +173,19 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
             var damage = CalcDamage(hit.distance);
+            var dmg = hit.collider.GetComponent<IDamage>();
+
+            // Debug.Log(hit.collider.name);
+
+            if (hit.collider.CompareTag("Head"))
+            {
+                damage *= headshotMultiplier;
+                Debug.Log("Root Component Name: " + hit.collider.transform.root.name);
+                dmg = hit.collider.transform.root.GetComponent<IDamage>();
+            }
 
             Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
 
-            var dmg = hit.collider.GetComponent<IDamage>();
             dmg?.TakeDamage(damage);
         }
 
@@ -215,7 +225,7 @@ public class PlayerController : MonoBehaviour, IDamage
             GameManager.instance.StateLost();
             Debug.Log("Player died.");
         }
-        
+
         // Trigger camera shake when damaged.
         if (cameraShake && !GameManager.instance.isPaused)
         {
@@ -258,7 +268,7 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         GameManager.instance.damageFlash.SetActive(false);
     }
-    
+
     IEnumerator EnableHealthRegen()
     {
         yield return new WaitForSeconds(5f);
