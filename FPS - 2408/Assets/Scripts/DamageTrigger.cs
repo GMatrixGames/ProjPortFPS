@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DamageTrigger : MonoBehaviour
@@ -14,9 +15,7 @@ public class DamageTrigger : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private int speed;
     [SerializeField] private int destroyTime;
-    [SerializeField] private float headShotMultiplier = 2.0f;
-
-    public GameObject head;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +33,8 @@ public class DamageTrigger : MonoBehaviour
 
         var dmg = other.GetComponent<IDamage>();
         dmg?.TakeDamage(damage);
-        
+
         Destroy(gameObject);
     }
 }
+

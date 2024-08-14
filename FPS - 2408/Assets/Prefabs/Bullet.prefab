@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6689089187564577908}
   - component: {fileID: 3436868179845468177}
+  - component: {fileID: 1112653183633848458}
   - component: {fileID: 611039050762850168}
   - component: {fileID: 4808609137082909718}
   - component: {fileID: 3018562669261859786}
@@ -50,8 +51,23 @@ MonoBehaviour:
   type: 0
   rb: {fileID: 4808609137082909718}
   damage: 1
-  speed: 25
+  speed: 10
   destroyTime: 3
+  headShotMultiplier: 2
+  head: {fileID: 0}
+--- !u!114 &1112653183633848458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3962277038822394387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9213eff46c9ba6d43bd7c535fad0b636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headTag: Head
 --- !u!135 &611039050762850168
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -42,6 +42,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
+        Debug.Log($"Enemy took damage: {amount}, Current HP: {hp}");
         hp -= amount;
 
         StartCoroutine(FlashRed());

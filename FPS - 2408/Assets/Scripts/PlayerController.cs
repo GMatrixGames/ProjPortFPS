@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int jumpSpeed;
     [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
+    [SerializeField] private int headShotMultiplier = 100;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
@@ -166,8 +167,20 @@ public class PlayerController : MonoBehaviour, IDamage
 
             Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
 
-            var dmg = hit.collider.GetComponent<IDamage>();
-            dmg?.TakeDamage(damage);
+            //var dmg = hit.collider.GetComponent<IDamage>();
+            //dmg?.TakeDamage(damage);
+            if(hit.collider.CompareTag("Head"))
+            {
+                Debug.Log("Headshot detected on: " + hit.collider.name);
+                var enemy = hit.collider.GetComponentInParent<IDamage>();
+                enemy?.TakeDamage(damage * headShotMultiplier); // Apply headshot multiplier
+            }
+
+            else
+            {
+                var enemy = hit.collider.GetComponentInParent<IDamage>();
+                enemy?.TakeDamage(damage);
+            }
         }
 
         yield return new WaitForSeconds(shootRate);
