@@ -9,7 +9,7 @@ public class PlayerMapIcon : MonoBehaviour
     {
         // Find the Player GameObject by name
         var playerObject = GameObject.Find("Player");
-        if (!playerObject)
+        if (playerObject)
         {
             player = playerObject.transform;
         }
@@ -20,7 +20,7 @@ public class PlayerMapIcon : MonoBehaviour
 
         // Find the PlayerArrow GameObject by name
         var iconObject = GameObject.Find("PlayerArrow");
-        if (!iconObject)
+        if (iconObject)
         {
             playerIcon = iconObject.GetComponent<RectTransform>();
         }

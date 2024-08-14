@@ -243,7 +243,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.CompareTag("RunnableWall"))
         {
             // Debug.Log("Yep.");
             runningOnWall = true;
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.CompareTag("RunnableWall"))
         {
             // Debug.Log("Nope.");
             runningOnWall = false;
