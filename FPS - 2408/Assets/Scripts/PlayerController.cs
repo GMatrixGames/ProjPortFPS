@@ -226,6 +226,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
+            hpCurrent = 0;
             // Debug.Log("Player died.");
         }
 
