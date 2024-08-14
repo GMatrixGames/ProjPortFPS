@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] private float healthRegenRate = 1f;
     private bool isTakingDamage;
+    private Coroutine regenCoroutine;
 
     #endregion
 
@@ -59,8 +60,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int maxDamage;
     [SerializeField] private float dropOffStart;
     [SerializeField] private float dropOffEnd;
-
-    private Vector3 startPos;
 
     #endregion
 
@@ -238,7 +237,11 @@ public class PlayerController : MonoBehaviour, IDamage
 
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
 
-        StartCoroutine(EnableHealthRegen());
+        if (regenCoroutine != null)
+        {
+            StopCoroutine(regenCoroutine);
+        }
+        regenCoroutine = StartCoroutine(EnableHealthRegen());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -264,6 +267,17 @@ public class PlayerController : MonoBehaviour, IDamage
             lastTouchedWall = other.gameObject;
             hasWallKicked = true;
         }
+    }
+
+    public void Respawn()
+    {
+        hpCurrent = hpOrig;
+        GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+
+        controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
+        transform.position = GameManager.instance.spawnPoint.transform.position;
+        transform.rotation = GameManager.instance.spawnPoint.transform.rotation;
+        controller.enabled = true;
     }
 
     private static IEnumerator Flash()

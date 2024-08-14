@@ -12,6 +12,12 @@ public class ButtonHandler : MonoBehaviour
         GameManager.instance.StateUnpause();
     }
 
+    public void Respawn()
+    {
+        GameManager.instance.StateUnpause();
+        GameManager.instance.playerScript.Respawn();
+    }
+
     /// <summary>
     /// Restart the level
     /// </summary>
