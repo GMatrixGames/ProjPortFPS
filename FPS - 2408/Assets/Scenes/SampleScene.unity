@@ -382,6 +382,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
+--- !u!4 &563863476 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1957976812664223709, guid: d05b9688ea0108e49915655918e0860b, type: 3}
+  m_PrefabInstance: {fileID: 1849513298832961306}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &588927005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2004,6 +2009,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 3359236795540299624, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: PlayerArrow
+      objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2137,6 +2146,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2235691564511511070, guid: a9650ed120a3dcd419d4846a69f88583, type: 3}
+      propertyPath: headPos
+      value: 
+      objectReference: {fileID: 563863476}
     - target: {fileID: 3605286144483204765, guid: a9650ed120a3dcd419d4846a69f88583, type: 3}
       propertyPath: m_Name
       value: Melee Enemy

@@ -530,13 +530,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5439095168583781942}
-  - component: {fileID: 7243926298733267898}
+  - component: {fileID: 5646742015295804385}
   - component: {fileID: 2348111573512739411}
   - component: {fileID: 5813778695525332959}
   - component: {fileID: 3232121106275724687}
   - component: {fileID: 3393389612838292589}
   m_Layer: 0
-  m_Name: Enemy 1
+  m_Name: Gunman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -559,7 +559,7 @@ Transform:
   - {fileID: 5707583292959198773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7243926298733267898
+--- !u!114 &5646742015295804385
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -568,21 +568,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 3987275912009408700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf03043ffa352b946bf1a3c26347834f, type: 3}
+  m_Script: {fileID: 11500000, guid: 595cd7aea10f3dd4d9df9f89ff7a0962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 2348111573512739411}
-  model: {fileID: 6209033980109505667}
-  shootPos: {fileID: 3951134403919188498}
-  headPos: {fileID: 1957976812664223709}
-  hp: 3
-  viewAngle: 90
-  facePlayerSpeed: 5
-  bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
-  shootRate: 0.5
-  isMelee: 0
-  atkRate: 0
-  dmg: 0
+  agent: {fileID: 0}
+  model: {fileID: 0}
+  headPos: {fileID: 0}
+  hp: 0
+  viewAngle: 0
+  facePlayerSpeed: 0
+  aggroDuration: 6
+  shootPos: {fileID: 0}
+  bullet: {fileID: 0}
+  shootRate: 0
 --- !u!195 &2348111573512739411
 NavMeshAgent:
   m_ObjectHideFlags: 0

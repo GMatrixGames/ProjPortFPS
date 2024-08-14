@@ -4,49 +4,60 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Renderer model;
-    [SerializeField] private Transform shootPos;
-    [SerializeField] private Transform headPos;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Renderer model;
+    [SerializeField] protected Transform headPos;
 
-    [SerializeField] private int hp;
-    [SerializeField] private int viewAngle;
-    [SerializeField] private int facePlayerSpeed;
+    [SerializeField] protected int hp;
+    [SerializeField] protected int viewAngle;
+    [SerializeField] protected int facePlayerSpeed;
 
-    [SerializeField] private GameObject bullet;
-    [SerializeField] private float shootRate;
+    protected bool playerInRange;
+    protected bool isAttacking;
 
-    private bool isShooting;
-    private bool playerInRange;
-    private bool isAttacking;
+    protected float angleToPlayer;
+    protected Vector3 playerDir;
+    protected Vector3 startPosition;
+    protected bool isChasing;
+    protected bool isReturning;
 
-    private float angleToPlayer;
+    [SerializeField] protected float aggroDuration = 6.0f;
+    protected float lastAggroTime;
 
-    private Vector3 playerDir;
+    protected Color colorOriginal;
 
-    private Color colorOriginal;
-
-    // Start is called before the first frame update
-    private void Start()
+    protected virtual void Start()
     {
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
+        startPosition = transform.position;
     }
 
-    // Update is called once per frame
-    private void Update()
+    protected virtual void Update()
     {
         if (playerInRange && CanSeePlayer())
         {
+            ChasePlayer();
+
+            // This would be overridden or extended by subclasses like MeleeEnemyAI and ShooterEnemyAI
+            AttackLogic();
+
+            lastAggroTime = Time.time;
+        }
+        else
+        {
+            if (Time.time - lastAggroTime > aggroDuration)
+            {
+                if (!isReturning) StartCoroutine(ReturnToStartPosition());
+            }
         }
     }
 
-    private bool CanSeePlayer()
+    protected virtual bool CanSeePlayer()
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        // Debug.Log(angleToPlayer);
         Debug.DrawRay(headPos.position, playerDir);
 
         if (Physics.Raycast(headPos.position, playerDir, out var hit))
@@ -54,8 +65,7 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
-                if (!isShooting) StartCoroutine(Shoot());
-                if (agent.remainingDistance <= agent.stoppingDistance) FacePlayer();
+                FacePlayer();
 
                 return true;
             }
@@ -64,17 +74,39 @@ public class EnemyAI : MonoBehaviour, IDamage
         return false;
     }
 
-    private void FacePlayer()
+    protected virtual void AttackLogic()
+    {
+        // This is intentionally left empty and should be overridden by subclasses
+    }
+
+    protected void ChasePlayer()
+    {
+        isChasing = true;
+        isReturning = false;
+        agent.SetDestination(GameManager.instance.player.transform.position);
+    }
+
+    protected IEnumerator ReturnToStartPosition()
+    {
+        isReturning = true;
+        isChasing = false;
+        agent.SetDestination(startPosition);
+        while (Vector3.Distance(transform.position, startPosition) > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+        isReturning = false;
+    }
+
+    protected void FacePlayer()
     {
         var rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
     }
 
-    /// <inheritdoc/>
     public void TakeDamage(int amount)
     {
         hp -= amount;
-
         StartCoroutine(FlashRed());
 
         if (hp <= 0)
@@ -84,50 +116,28 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
-    /// <summary>
-    /// Flash red when taking damage.
-    /// </summary>
-    /// <returns>Delay</returns>
-    private IEnumerator FlashRed()
+    protected IEnumerator FlashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOriginal;
     }
 
-    /// <summary>
-    /// Shoot bullet at player.
-    /// </summary>
-    /// <returns>Delay</returns>
-    private IEnumerator Shoot()
-    {
-        isShooting = true;
-        Instantiate(bullet, shootPos.position, transform.rotation);
-        yield return new WaitForSeconds(shootRate);
-        isShooting = false;
-    }
-
-    /// <summary>
-    /// When the player enters the enemy's range, set playerInRange to true.
-    /// </summary>
-    /// <param name="other">object entering the trigger</param>
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            isChasing = true;
         }
     }
 
-    /// <summary>
-    /// When the player exits the enemy's range, set playerInRange to false.
-    /// </summary>
-    /// <param name="other">object exiting the trigger</param>
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            isChasing = false;
         }
     }
 }

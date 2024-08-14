@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private int jumpCount;
     private float hpOrig;
 
-    private bool isSprinting;
+    //private bool isSprinting;
     private bool isShooting;
 
     #region Damage & Dropoff
@@ -157,12 +157,12 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Sprint"))
         {
             speed *= sprintMod;
-            isSprinting = true;
+            //isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
-            isSprinting = false;
+            //isSprinting = false;
         }
     }
 
