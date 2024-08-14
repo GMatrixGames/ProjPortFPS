@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 3232121106275724687}
   - component: {fileID: 3393389612838292589}
   m_Layer: 0
-  m_Name: Enemy 1
+  m_Name: Gunman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   viewAngle: 90
   facePlayerSpeed: 5
   bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
-  shootRate: 0.5
+  shootRate: 1
 --- !u!195 &2348111573512739411
 NavMeshAgent:
   m_ObjectHideFlags: 0

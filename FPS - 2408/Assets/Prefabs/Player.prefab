@@ -284,7 +284,7 @@ MonoBehaviour:
   shootRate: 0.5
   shootDist: 500
   minDamage: 1
-  maxDamage: 3
+  maxDamage: 5
   dropOffStart: 5
   dropOffEnd: 10
 --- !u!143 &4598826797301015484
