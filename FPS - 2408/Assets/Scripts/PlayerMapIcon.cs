@@ -5,7 +5,7 @@ public class PlayerMapIcon : MonoBehaviour
     private Transform player; // Reference to the player's transform
     private RectTransform playerIcon; // Reference to the player arrow icon on the minimap
 
-    void Start()
+    private void Start()
     {
         // Find the Player GameObject by name
         var playerObject = GameObject.Find("Player");
@@ -30,7 +30,7 @@ public class PlayerMapIcon : MonoBehaviour
         }
     }
 
-    //Update is called once per frame.
+    // Update is called once per frame.
     private void Update()
     {
         if (player && playerIcon)

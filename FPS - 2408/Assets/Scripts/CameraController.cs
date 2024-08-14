@@ -9,14 +9,14 @@ public class CameraController : MonoBehaviour
     private float rotX;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // input
         var mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;

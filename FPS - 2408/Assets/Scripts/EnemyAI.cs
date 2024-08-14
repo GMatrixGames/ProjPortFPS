@@ -16,10 +16,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private GameObject bullet;
     [SerializeField] private float shootRate;
 
-    [SerializeField] bool isMelee;
-    [SerializeField] int atkRate;
-    [SerializeField] int dmg;
-
     private bool isShooting;
     private bool playerInRange;
     private bool isAttacking;
@@ -31,14 +27,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     private Color colorOriginal;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (playerInRange && CanSeePlayer())
         {
@@ -50,7 +46,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        Debug.Log(angleToPlayer);
+        // Debug.Log(angleToPlayer);
         Debug.DrawRay(headPos.position, playerDir);
 
         if (Physics.Raycast(headPos.position, playerDir, out var hit))
@@ -59,7 +55,6 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
                 if (!isShooting) StartCoroutine(Shoot());
-                // else if (!isAttacking) StartCoroutine(Melee());
                 if (agent.remainingDistance <= agent.stoppingDistance) FacePlayer();
 
                 return true;
@@ -93,7 +88,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     /// Flash red when taking damage.
     /// </summary>
     /// <returns>Delay</returns>
-    IEnumerator FlashRed()
+    private IEnumerator FlashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
@@ -104,21 +99,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     /// Shoot bullet at player.
     /// </summary>
     /// <returns>Delay</returns>
-    IEnumerator Shoot()
+    private IEnumerator Shoot()
     {
         isShooting = true;
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
-    }
-
-    // Melee Attack
-    IEnumerator Melee()
-    {
-        isAttacking = true;
-        GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(dmg);
-        yield return new WaitForSeconds(atkRate);
-        isAttacking = false;
     }
 
     /// <summary>

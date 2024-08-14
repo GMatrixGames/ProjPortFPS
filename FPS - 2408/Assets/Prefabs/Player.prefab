@@ -97,6 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2255971209563409337}
   - component: {fileID: 993554062430531910}
+  - component: {fileID: 3705740741484860386}
   - component: {fileID: 3889028845154441956}
   - component: {fileID: 8621645323928512589}
   m_Layer: 0
@@ -137,6 +138,20 @@ MonoBehaviour:
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
+--- !u!114 &3705740741484860386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6697713468247662897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81f422b640e7734ca7cceb04361f910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeDuration: 0.2
+  shakeMagnitude: 0.1
 --- !u!20 &3889028845154441956
 Camera:
   m_ObjectHideFlags: 0
@@ -260,7 +275,7 @@ MonoBehaviour:
   jumpMax: 2
   jumpSpeed: 12
   gravity: 28
-  cameraShake: {fileID: 0}
+  cameraShake: {fileID: 3705740741484860386}
   wallRunGravity: 5
   wallKickMax: 1
   wallKickSpeed: 12

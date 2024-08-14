@@ -1,38 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// Coroutine to shake the camera at a specified duration and magnitude
-// Duration = How long the shake should last
-// Magnitude = The intesity of the shake
-
+/// <summary>
+/// Controls the shaking effect of the camera in response to game events, such as when the player takes damage.
+/// </summary>
 public class CameraShake : MonoBehaviour
 {
-    public IEnumerator Shake(float duration, float magnitude)
+    [SerializeField] private float shakeDuration = 0.5f; // The duration of the shake effect in seconds.
+    [SerializeField] private float shakeMagnitude = 0.2f; // The magnitude of the shake, affecting how much the camera moves.
+
+    // Triggers the camera shake whenever the player takes damage.
+    public void TriggerShake()
     {
-        // Stores the original position of the camera
-        Vector3 origPos = transform.localPosition;
+        StartCoroutine(Shake());
+    }
 
-        float elasped = 0.0f;
+    /// <summary>
+    /// Performs the actual shaking of the camera by randomly adjusting its position within a certain range defined by shakeMagnitude.
+    /// </summary>
+    private IEnumerator Shake()
+    {
+        var originalPosition = transform.localPosition; // Store the original position of the camera.
+        var elapsed = 0.0f; // Timer to track the duration of the shake.
 
-        // This is the loop for the duration of the shake effect
-        while (elasped < duration)
+        while (elapsed < shakeDuration)
         {
-            // This will give a random offset for the shake effect
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            // Generate random offsets for x and y axes based on shakeMagnitude.
+            var x = Random.Range(-shakeMagnitude, shakeMagnitude);
+            var y = Random.Range(-shakeMagnitude, shakeMagnitude);
 
-            // Applies the offset to the camera's position
-            transform.localPosition = new Vector3(x, y, origPos.z);
+            // Apply the shake effect by moving the camera's position.
+            transform.localPosition = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
 
-            // Increments the elasped time
-            elasped += Time.deltaTime;
-
-            // Wait for next frame before continuing loop
-            yield return null;
+            elapsed += Time.deltaTime; // Increment the timer.
+            yield return null; // Wait until the next frame before continuing the loop.
         }
 
-        // Resets the camera back to the original position after the effect
-        transform.localPosition = origPos;
+        // Reset the camera's position to its original state after the shake.
+        transform.localPosition = originalPosition;
     }
 }
