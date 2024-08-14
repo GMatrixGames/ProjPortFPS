@@ -14,12 +14,9 @@ public class DamageTrigger : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private int speed;
     [SerializeField] private int destroyTime;
-    [SerializeField] private float headShotMultiplier = 2.0f;
-
-    public GameObject head;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if (type == DamageType.Bullet)
         {

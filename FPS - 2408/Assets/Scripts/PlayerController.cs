@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private LayerMask ignoreMask;
     [SerializeField] private int hpMax;
     [SerializeField] private float hpCurrent;
-    [SerializeField] private float healthRegenRate = 1f;
     [SerializeField] private int speed;
     [SerializeField] private int sprintMod;
     [SerializeField] private int jumpMax;
@@ -32,13 +31,18 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #region HealthRegen
 
+    [SerializeField] private float healthRegenRate = 1f;
     private bool isTakingDamage;
 
     #endregion
 
+    #region Headshot
+
     [SerializeField] private int headshotMultiplier = 2;
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
+
+    #endregion
 
     private Vector3 move;
     private Vector3 playerVelocity;
@@ -61,14 +65,14 @@ public class PlayerController : MonoBehaviour, IDamage
     #endregion
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         hpOrig = hpCurrent;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
@@ -81,14 +85,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!isTakingDamage)
         {
             // hpCurrent = Mathf.Min(hpCurrent + (int)(healthRegenRate * Time.deltaTime), hpOrig);
-            Debug.Log("Regenerating health: " + healthRegenRate * Time.deltaTime);
+            // Debug.Log("Regenerating health: " + healthRegenRate * Time.deltaTime);
             hpCurrent += healthRegenRate * Time.deltaTime;
             if (hpCurrent > hpOrig)
             {
                 hpCurrent = hpOrig;
             }
 
-            Debug.Log("New health: " + hpCurrent);
+            // Debug.Log("New health: " + hpCurrent);
             GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         }
     }
@@ -96,7 +100,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <summary>
     /// Handling of sprinting mechanic.
     /// </summary>
-    void Movement()
+    private void Movement()
     {
         if (controller.isGrounded)
         {
@@ -117,10 +121,10 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVelocity.y = jumpSpeed;
         }
 
-        //Walljumping is here. Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
-        if (Input.GetButtonDown("Jump") && runningOnWall == true && wallKickCount < wallKickMax)
+        // Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
+        if (Input.GetButtonDown("Jump") && runningOnWall && wallKickCount < wallKickMax)
         {
-            Debug.Log($"Wallkick {wallKickCount}");
+            // Debug.Log($"Wallkick {wallKickCount}");
             wallKickCount++;
             playerVelocity.y = wallKickSpeed;
             hasWallKicked = true;
@@ -128,13 +132,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
         controller.Move(playerVelocity * Time.deltaTime);
 
-        //Wallkick stuff, basically checks if you're wallrunning, and you haven't already kicked off this wall. If
-        //you haven't, your gravity gets slowed for wallrunning. 
+        // Basically checks if you're wallrunning, and you haven't already kicked off this wall. If
+        // you haven't, your gravity gets slowed for wallrunning. 
         if (runningOnWall && hasWallKicked == false)
         {
             playerVelocity.y -= wallRunGravity * Time.deltaTime;
-        } //Otherwise you use normal gravity
-        else
+        }
+        else // Otherwise, use normal gravity
         {
             playerVelocity.y -= gravity * Time.deltaTime;
         }
@@ -148,7 +152,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <summary>
     /// Handling of sprinting mechanic.
     /// </summary>
-    void Sprint()
+    private void Sprint()
     {
         if (Input.GetButtonDown("Sprint"))
         {
@@ -166,7 +170,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// Handling of shooting mechanic via raycast.
     /// </summary>
     /// <returns>Time wait based on shootRate</returns>
-    IEnumerator Shoot()
+    private IEnumerator Shoot()
     {
         isShooting = true;
 
@@ -180,11 +184,11 @@ public class PlayerController : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Head"))
             {
                 damage *= headshotMultiplier;
-                Debug.Log("Root Component Name: " + hit.collider.transform.root.name);
+                // Debug.Log("Root Component Name: " + hit.collider.transform.root.name);
                 dmg = hit.collider.transform.root.GetComponent<IDamage>();
             }
 
-            Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
+            // Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
 
             dmg?.TakeDamage(damage);
         }
@@ -215,7 +219,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         hpCurrent -= amount;
-        Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
+        // Debug.Log("Player took damage: " + amount + ", Current HP: " + hpCurrent);
         isTakingDamage = true;
 
         StartCoroutine(Flash());
@@ -223,7 +227,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (hpCurrent <= 0)
         {
             GameManager.instance.StateLost();
-            Debug.Log("Player died.");
+            // Debug.Log("Player died.");
         }
 
         // Trigger camera shake when damaged.
@@ -262,14 +266,14 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator Flash()
+    private static IEnumerator Flash()
     {
         GameManager.instance.damageFlash.SetActive(true);
         yield return new WaitForSeconds(0.1f);
         GameManager.instance.damageFlash.SetActive(false);
     }
 
-    IEnumerator EnableHealthRegen()
+    private IEnumerator EnableHealthRegen()
     {
         yield return new WaitForSeconds(5f);
         isTakingDamage = false;

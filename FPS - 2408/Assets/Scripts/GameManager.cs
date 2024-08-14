@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int timeScale = 1;
 
     // Awake allows for initialization before other game objects
-    void Awake()
+    private void Awake()
     {
         instance = this;
         Time.timeScale = timeScale;
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetButtonDown("Cancel"))
         {
@@ -87,11 +87,11 @@ public class GameManager : MonoBehaviour
     ///<param name="hpMax"> Players max HP</param>
     public void UpdateHealthBar(float hpCurr, int hpMax)
     {
-        Debug.Log($"Updating Health Bar: Current HP = {hpCurr}/{hpMax}");
+        // Debug.Log($"Updating Health Bar: Current HP = {hpCurr}/{hpMax}");
         if (healthBar)
         {
             healthBar.fillAmount = hpCurr / hpMax;
-            Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
+            // Debug.Log("Health Bar Fill Amount: " + healthBar.fillAmount);
         }
         else
         {
