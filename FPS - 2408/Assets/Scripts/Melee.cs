@@ -22,21 +22,24 @@ public class Melee : EnemyAI
         // Check if player is in melee range
         bool inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
 
-        if (playerInRange && !Attacking)
+        if (playerInRange)
         {
-            if (inMeleeRange)
+            if (inMeleeRange && !Attacking)
             {
-                if (!Attacking) // Ensure the attack isn't already started
-                {
-                    StartCoroutine(MeleeAttack());
-                }
+                // Start the attack if in melee range
+                StartCoroutine(MeleeAttack());
             }
-            else
+            else if (!Attacking)
             {
-                // Resume chasing if player leaves melee range but is still in aggro range
+                // Resume chasing if not in melee range and not attacking
                 agent.isStopped = false;
                 agent.SetDestination(GameManager.instance.player.transform.position);
             }
+        }
+        else
+        {
+            // Stop the enemy if the player is out of aggro range
+            agent.isStopped = true;
         }
     }
 
@@ -46,7 +49,7 @@ public class Melee : EnemyAI
         agent.isStopped = true; // Stop moving while attacking
 
         // Wait to simulate attack rate delay
-        yield return new WaitForSeconds(atkRate / 2);
+        yield return new WaitForSeconds(atkRate);
 
         // Check again if the player is still in melee range before dealing damage
         Collider enemyCollider = GetComponent<CapsuleCollider>();
@@ -59,15 +62,19 @@ public class Melee : EnemyAI
         }
 
         // Finish attack
-        yield return new WaitForSeconds(atkRate / 2);
+        yield return new WaitForSeconds(atkRate);
 
         Attacking = false;
-        agent.isStopped = false;
 
-        // Resume chasing if player is out of melee range
-        if (!enemyCollider.bounds.Intersects(playerCollider.bounds))
+        // Always resume chasing after the attack if the player is still in aggro range
+        if (playerInRange)
         {
+            agent.isStopped = false;
             agent.SetDestination(GameManager.instance.player.transform.position);
+        }
+        else
+        {
+            agent.isStopped = true;
         }
     }
 }
