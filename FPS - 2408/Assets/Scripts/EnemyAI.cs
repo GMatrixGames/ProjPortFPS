@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
@@ -9,6 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private Transform shootPos;
     [SerializeField] private Transform headPos;
 
+    [SerializeField] private Image healthBar;
     [SerializeField] private int hp;
     private int maxHp;
     [SerializeField] private int viewAngle;
@@ -33,6 +35,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         maxHp = hp; // hp should initially be max
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
+        healthBar.fillAmount = maxHp;
     }
 
     // Update is called once per frame
@@ -79,14 +82,14 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         StartCoroutine(FlashRed());
 
+        healthBar.fillAmount = (float) hp / maxHp;
+
         if (hp <= 0)
         {
             hp = 0;
             GameManager.instance.UpdateGoal(-1);
             Destroy(gameObject);
         }
-
-        GameManager.instance.enemyHitText.text = $"Enemy: {hp}/{maxHp}";
     }
 
     /// <summary>

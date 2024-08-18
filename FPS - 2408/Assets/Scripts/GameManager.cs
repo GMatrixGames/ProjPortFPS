@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuLose;
 
     [SerializeField] private TMP_Text enemyCountText;
-    public TMP_Text enemyHitText;
     [SerializeField] private TMP_Text healthText;
 
     public GameObject spawnPoint;
