@@ -36,6 +36,25 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    #region JetPack Variables
+
+    //Currently deciding whether or not this should be implemented. I'm leaning towards no atm. We'll see. 
+    [SerializeField] int maxFuel;
+    [SerializeField] float fuel;
+    [SerializeField] float fuelRecoveryRate;
+    [SerializeField] float fuelWaitTime;
+    [SerializeField] float jetPackFuelCost;
+
+    bool isUsingFuel;
+    bool hasExhaustedFuel;
+
+    private float origFuel;
+    
+    [SerializeField] float maxAcceleration;
+    [SerializeField] float accelerationTime;
+ 
+    #endregion
+
     [SerializeField] private float shootRate;
     [SerializeField] private int shootDist;
 
@@ -44,6 +63,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private int jumpCount;
     private float hpOrig;
+    
 
     private bool isSprinting;
     private bool isShooting;
@@ -64,6 +84,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpOrig = hpCurrent;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
+        origFuel = fuel;
     }
 
     // Update is called once per frame
@@ -102,6 +124,11 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount = 0;
             playerVelocity = Vector3.zero;
             lastTouchedWall = null;
+            hasExhaustedFuel = false;
+            if (fuel < maxFuel && !isUsingFuel)
+            {
+                StartCoroutine(RegainFuel());
+            }
         }
 
         // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -142,6 +169,13 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(Shoot());
         }
+
+        if(Input.GetButton("Jetpack") && !hasExhaustedFuel)
+        {
+            JetPack();
+        }
+
+        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
     }
 
     /// <summary>
@@ -264,4 +298,39 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(5f);
         isTakingDamage = false;
     }
+
+
+    #region JetPack Methods
+    IEnumerator RegainFuel()
+    {
+        yield return new WaitForSeconds(.1f);
+        fuel += fuelRecoveryRate;
+
+        if(fuel > maxFuel)
+        {
+            fuel = maxFuel;
+        }
+    }
+
+    IEnumerator StopRegainingFuel()
+    {
+        yield return new WaitForSeconds(fuelWaitTime);
+        isUsingFuel = false;
+    }
+
+    void JetPack()
+    {
+        isUsingFuel = true;
+        StartCoroutine(StopRegainingFuel());
+
+        playerVelocity.y = Mathf.MoveTowards(playerVelocity.y, maxAcceleration, accelerationTime);
+
+        fuel -= jetPackFuelCost * Time.deltaTime;
+
+        if (fuel <= 0)
+        {
+            hasExhaustedFuel = true;
+        }
+    }
+    #endregion
 }
