@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuLose;
 
     [SerializeField] private TMP_Text enemyCountText;
+    [SerializeField] private TMP_Text killCountText;
 
     #region Player
 
@@ -23,6 +24,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     private int enemyCount;
+    private int killCount;
 
     public Image healthBar;
 
@@ -124,5 +126,11 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
+    }
+
+    public void UpdateKills(int amount)
+    {
+        killCount += amount;
+        killCountText.text = killCount.ToString("F0");
     }
 }

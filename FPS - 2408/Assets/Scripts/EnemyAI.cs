@@ -21,6 +21,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
+        GameManager.instance.UpdateKills(0);
     }
 
     // Update is called once per frame
@@ -43,6 +44,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             GameManager.instance.UpdateGoal(-1);
             Destroy(gameObject);
+            GameManager.instance.UpdateKills(+1);
         }
     }
 
