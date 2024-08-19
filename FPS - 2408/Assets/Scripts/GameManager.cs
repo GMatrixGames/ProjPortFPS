@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text enemyCountText;
     public TMP_Text enemyHitText;
     [SerializeField] private TMP_Text healthText;
+    [SerializeField] private TMP_Text levelTimerText;
 
     public GameObject spawnPoint;
 
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public bool isPaused;
 
     private int enemyCount;
+    private float levelTimer;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
@@ -45,6 +47,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        if(!isPaused)
+        {
+            // Updates the timer every frame
+            UpdateLevelTimer();
+        }
+
         if (Input.GetButtonDown("Cancel"))
         {
             if (!menuActive)
@@ -102,6 +110,20 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("Health Bar reference is missing!");
         }
+    }
+
+    // Update the level timer and display it on the UI
+    private void UpdateLevelTimer()
+    {
+        // Increment the timer by the time elapsed since the last frame
+        levelTimer += Time.deltaTime;
+
+        // Format the timer as minutes and seconds (MM:SS)
+        int mins = Mathf.FloorToInt(levelTimer / 60F);
+        int secs = Mathf.FloorToInt(levelTimer % 60F);
+
+        // Updates the UI text
+        levelTimerText.text = string.Format("{0:00} : {1:00}", mins, secs);
     }
 
     /// <summary>
