@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] private Renderer model;
     [SerializeField] private Transform shootPos;
     [SerializeField] private Transform headPos;
@@ -18,8 +18,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private float shootRate;
 
     private bool isShooting;
-    private bool playerInRange;
-    private bool isAttacking;
+    public bool playerInRange;
 
     private float angleToPlayer;
 
@@ -36,14 +35,14 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    private void Update()
+    public void Update()
     {
         if (playerInRange && CanSeePlayer())
         {
         }
     }
 
-    private bool CanSeePlayer()
+    public bool CanSeePlayer()
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
