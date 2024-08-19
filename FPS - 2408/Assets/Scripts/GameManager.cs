@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
         killCountText.text = killCount.ToString("F0");
 
         // Checks if the player has killed all enemies
-        if (killCount >= totalEnemies)
+        if (killCount <= totalEnemies)
         {
             StatePause();
             menuActive = menuWin;
