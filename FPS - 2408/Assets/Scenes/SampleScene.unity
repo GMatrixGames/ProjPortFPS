@@ -1183,6 +1183,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
+--- !u!114 &1572480557 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3484754125795040680, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+  m_PrefabInstance: {fileID: 6920340972759494651}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1621976849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1898,6 +1909,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 866553189058053548, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: Kill Count Background
+      objectReference: {fileID: 0}
+    - target: {fileID: 4854424964919627062, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: Kill Count Label
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915647558355807943, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: Kill Count
+      objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1977,6 +2000,16 @@ PrefabInstance:
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958310061344574262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: killCountText
+      value: 
+      objectReference: {fileID: 1572480557}
+    - target: {fileID: 8643332301238772894, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_text
+      value: 'Kill Count
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
