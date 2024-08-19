@@ -20,10 +20,9 @@ public class Melee : EnemyAI
         base.Update();
         Collider enemyCollider = GetComponent<Collider>();
 
-        // Check if player is in melee range
         bool inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
 
-        if (playerInRange && inMeleeRange && !isAttacking)
+        if (base.CanSeePlayer() && inMeleeRange && !isAttacking)
         {
             StartCoroutine(MeleeAttack());
         }
