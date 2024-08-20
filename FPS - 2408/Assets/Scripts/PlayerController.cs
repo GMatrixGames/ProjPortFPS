@@ -323,7 +323,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isUsingFuel = true;
         StartCoroutine(StopRegainingFuel());
 
-        playerVelocity.y = Mathf.MoveTowards(playerVelocity.y, maxAcceleration, accelerationTime);
+        playerVelocity.y = Mathf.Lerp(playerVelocity.y, maxAcceleration, accelerationTime);
 
         fuel -= jetPackFuelCost * Time.deltaTime;
 
