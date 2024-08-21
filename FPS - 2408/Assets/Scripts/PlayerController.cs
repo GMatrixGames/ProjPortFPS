@@ -319,14 +319,28 @@ public class PlayerController : MonoBehaviour, IDamage
             GameObject grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
             Debug.Log("Grenade instantiated at position: " + throwPoint.position);
 
-            // Get the Rigidbody component and apply velocity
+            
             Rigidbody rb = grenade.GetComponent<Rigidbody>();
             if (rb != null)
             {
                 // Ensure the grenade starts moving in the forward direction
                 Vector3 throwDirection = throwPoint.forward;
-                rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+                float angle = 45f;
+                float gravity = Physics.gravity.y;
+                float throwSpeed = throwForce;
+
+                // Calculate the initial velocity
+                float radians = angle * Mathf.Deg2Rad;
+                float horizontalSpeed = throwSpeed * Mathf.Cos(radians);
+                float verticalSpeed = throwSpeed * Mathf.Sin(radians);
+                Vector3 initialVelocity = throwDirection * horizontalSpeed;
+                initialVelocity.y = verticalSpeed;
+
+                // Apply the velocity to the Rigidbody
+                rb.velocity = initialVelocity;
+
                 
+                rb.drag = 0.5f;
             }
             else
             {

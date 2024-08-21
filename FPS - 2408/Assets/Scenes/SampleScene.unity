@@ -2370,7 +2370,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: throwForce
-      value: 18.5
+      value: 15.5
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: throwPoint
