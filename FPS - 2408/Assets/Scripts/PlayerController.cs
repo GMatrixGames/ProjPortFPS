@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isSprinting;
     private bool isShooting;
 
+    public bool hasGrenade = false;
+    public GameObject grenadePrefab;
+    public Transform throwPoint;
+    public float throwForce = 10f;
+
     #region Damage & Dropoff
 
     [SerializeField] private int minDamage;
@@ -102,6 +107,12 @@ public class PlayerController : MonoBehaviour, IDamage
 
             // Debug.Log("New health: " + hpCurrent);
             GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G) && hasGrenade)
+        {
+            Debug.Log("G key pressed. Calling ThrowGrenade.");
+            ThrowGrenade();
         }
     }
 
@@ -291,5 +302,47 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         yield return new WaitForSeconds(5f);
         isTakingDamage = false;
+    }
+
+    public void PickUpGrenade()
+    {
+        hasGrenade = true; // Set the flag to true when the player picks up a grenade
+    }
+
+    private void ThrowGrenade()
+    {
+        if (grenadePrefab != null && throwPoint != null)
+        {
+            Debug.Log("Throw point and grenade prefab are assigned.");
+
+            // Instantiate the grenade at the throw point
+            GameObject grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
+            Debug.Log("Grenade instantiated at position: " + throwPoint.position);
+
+            // Get the Rigidbody component and apply velocity
+            Rigidbody rb = grenade.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                // Ensure the grenade starts moving in the forward direction
+                Vector3 throwDirection = throwPoint.forward;
+                rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+                Debug.Log("force applied to grenade: " + rb.velocity);
+            }
+            else
+            {
+                Debug.LogError("No Rigidbody found on grenade prefab.");
+            }
+
+            // Destroy the grenade after some time
+            Destroy(grenade, 5f);
+            Debug.Log("Grenade will be destroyed after 5 seconds.");
+
+            // Reset the flag since the grenade has been thrown
+            hasGrenade = false;
+        }
+        else
+        {
+            Debug.LogError("ThrowPoint or GrenadePrefab not assigned!");
+        }
     }
 }
