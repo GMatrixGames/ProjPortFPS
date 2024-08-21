@@ -14,16 +14,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text enemyCountText;
     [SerializeField] private TMP_Text healthText;
 
-    public GameObject spawnPoint;
-
     #region Player
 
+    public GameObject playerSpawnPos { get; private set; }
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
     public GameObject damageFlash;
 
     #endregion
+
+    public GameObject checkpointPopup;
 
     public bool isPaused;
 
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
     // Update is called once per frame

@@ -5,7 +5,8 @@ public class DamageTrigger : MonoBehaviour
     private enum DamageType
     {
         Bullet,
-        Stationary
+        Stationary,
+        Melee
     }
 
     [SerializeField] private DamageType type;
@@ -20,7 +21,7 @@ public class DamageTrigger : MonoBehaviour
     {
         if (type == DamageType.Bullet)
         {
-            rb.velocity = transform.forward * speed;
+            rb.velocity = (GameManager.instance.player.transform.position - (transform.position - new Vector3(0, 0.5f, 0))).normalized * speed;
             Destroy(gameObject, destroyTime);
         }
     }
@@ -31,7 +32,7 @@ public class DamageTrigger : MonoBehaviour
 
         var dmg = other.GetComponent<IDamage>();
         dmg?.TakeDamage(damage);
-        
-        Destroy(gameObject);
+
+        if (type == DamageType.Bullet) Destroy(gameObject);
     }
 }

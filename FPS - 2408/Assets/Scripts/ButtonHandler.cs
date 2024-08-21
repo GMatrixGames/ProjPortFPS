@@ -14,8 +14,8 @@ public class ButtonHandler : MonoBehaviour
 
     public void Respawn()
     {
+        GameManager.instance.playerScript.SpawnPlayer();
         GameManager.instance.StateUnpause();
-        GameManager.instance.playerScript.Respawn();
     }
 
     /// <summary>

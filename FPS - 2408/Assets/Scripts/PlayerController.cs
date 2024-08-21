@@ -67,7 +67,16 @@ public class PlayerController : MonoBehaviour, IDamage
     private void Start()
     {
         hpOrig = hpCurrent;
+        SpawnPlayer();
+    }
+
+    public void SpawnPlayer()
+    {
+        hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+        controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
+        transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
     }
 
     // Update is called once per frame
@@ -242,6 +251,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StopCoroutine(regenCoroutine);
         }
+
         regenCoroutine = StartCoroutine(EnableHealthRegen());
     }
 
@@ -268,17 +278,6 @@ public class PlayerController : MonoBehaviour, IDamage
             lastTouchedWall = other.gameObject;
             hasWallKicked = true;
         }
-    }
-
-    public void Respawn()
-    {
-        hpCurrent = hpOrig;
-        GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
-
-        controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
-        transform.position = GameManager.instance.spawnPoint.transform.position;
-        transform.rotation = GameManager.instance.spawnPoint.transform.rotation;
-        controller.enabled = true;
     }
 
     private static IEnumerator Flash()

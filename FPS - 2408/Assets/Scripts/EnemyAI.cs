@@ -7,25 +7,34 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Renderer model;
+    [SerializeField] private Animator anim;
     [SerializeField] private Transform shootPos;
     [SerializeField] private Transform headPos;
+    [SerializeField] private Collider meleeCol;
 
     [SerializeField] private Image healthBar;
     [SerializeField] private int hp;
     private int maxHp;
     [SerializeField] private int viewAngle;
     [SerializeField] private int facePlayerSpeed;
+    [SerializeField] private int roamDistance;
+    [SerializeField] private int roamTimer;
+    [SerializeField] private int animSpeedTrans;
 
     [SerializeField] private GameObject bullet;
     [SerializeField] private float shootRate;
+    [SerializeField] private int shootAngle;
 
     private bool isShooting;
     private bool playerInRange;
     private bool isAttacking;
+    private bool isRoaming;
 
     private float angleToPlayer;
+    private float stoppingDistanceOriginal;
 
     private Vector3 playerDir;
+    private Vector3 startingPos;
 
     private Color colorOriginal;
 
@@ -36,14 +45,48 @@ public class EnemyAI : MonoBehaviour, IDamage
         colorOriginal = model.material.color;
         GameManager.instance.UpdateGoal(1);
         healthBar.fillAmount = maxHp;
+        stoppingDistanceOriginal = agent.stoppingDistance;
+        startingPos = transform.position;
     }
 
     // Update is called once per frame
     private void Update()
     {
-        if (playerInRange && CanSeePlayer())
+        var agentSpeed = agent.velocity.normalized.magnitude;
+        anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTrans));
+
+        if (playerInRange && !CanSeePlayer())
         {
+            if (!isRoaming && agent.remainingDistance < 0.05)
+            {
+                StartCoroutine(Roam());
+            }
         }
+        else if (!playerInRange)
+        {
+            if (!isRoaming && agent.remainingDistance < 0.05)
+            {
+                StartCoroutine(Roam());
+            }
+        }
+    }
+
+    private IEnumerator Roam()
+    {
+        isRoaming = true;
+
+        yield return new WaitForSeconds(roamTimer);
+        agent.stoppingDistance = 0;
+
+        var randomDist = Random.insideUnitSphere * roamDistance;
+        randomDist += startingPos;
+
+        if (NavMesh.SamplePosition(randomDist, out var hit, roamDistance, 1))
+        {
+            agent.SetDestination(hit.position);
+        }
+
+        isRoaming = false;
     }
 
     private bool CanSeePlayer()
@@ -59,13 +102,15 @@ public class EnemyAI : MonoBehaviour, IDamage
             if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
             {
                 agent.SetDestination(GameManager.instance.player.transform.position);
-                if (!isShooting) StartCoroutine(Shoot());
+                if (!isShooting && angleToPlayer <= shootAngle) StartCoroutine(Shoot());
                 if (agent.remainingDistance <= agent.stoppingDistance) FacePlayer();
 
+                agent.stoppingDistance = stoppingDistanceOriginal;
                 return true;
             }
         }
 
+        agent.stoppingDistance = 0;
         return false;
     }
 
@@ -79,6 +124,8 @@ public class EnemyAI : MonoBehaviour, IDamage
     public void TakeDamage(int amount)
     {
         hp -= amount;
+        agent.SetDestination(GameManager.instance.player.transform.position);
+        StopCoroutine(Roam());
 
         StartCoroutine(FlashRed());
 
@@ -110,9 +157,28 @@ public class EnemyAI : MonoBehaviour, IDamage
     private IEnumerator Shoot()
     {
         isShooting = true;
+        anim.SetTrigger("Shoot");
         Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    /// <summary>
+    /// Create bullet at specific time in animation.
+    /// </summary>
+    public void CreateBullet()
+    {
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
+
+    public void MeleeColOn()
+    {
+        meleeCol.enabled = true;
+    }
+
+    public void MeleeColOff()
+    {
+        meleeCol.enabled = false;
     }
 
     /// <summary>
@@ -136,6 +202,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
+            agent.stoppingDistance = 0;
         }
     }
 }

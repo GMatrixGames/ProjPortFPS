@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RunnableWall
   - Head
+  - Player Spawn Pos
   layers:
   - Default
   - TransparentFX
