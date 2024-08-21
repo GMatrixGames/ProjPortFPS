@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text enemyCountText;
     [SerializeField] private TMP_Text healthText;
-
+    [SerializeField] private TMP_Text GrenadeInteractTxt;
     #region Player
 
     public GameObject playerSpawnPos { get; private set; }
@@ -130,5 +130,10 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
+    }
+
+    public void UpdateGrenadeInteractText(string text)
+    {
+        GrenadeInteractTxt.text = text;
     }
 }

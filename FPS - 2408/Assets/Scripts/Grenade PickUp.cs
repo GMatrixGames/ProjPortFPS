@@ -6,13 +6,14 @@ using UnityEngine;
 public class GrenadePickUp : MonoBehaviour
 {
     public GameObject GrenadeOnPlayer;
-    public TMP_Text PickUpText;
+    private bool isPlayerInRange = false;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initially hide the grenade on the player
         GrenadeOnPlayer.SetActive(false);
-        PickUpText.enabled = false;
+        
     }
 
     public void OnTriggerStay(Collider other) // OnTriggerStay is called continuously while the collider of this object is touching another object
@@ -20,8 +21,12 @@ public class GrenadePickUp : MonoBehaviour
         // Check if the other object is tagged as "Player"
         if (other.gameObject.tag == "Player")
         {
-            PickUpText.enabled = true;
-
+            // Update the UI text to prompt the player to pick up the grenade
+            if (!isPlayerInRange)
+            {
+                GameManager.instance.UpdateGrenadeInteractText("Press E to pick up the grenade");
+                isPlayerInRange = true;
+            }
             // Check if the player is pressing the 'E' key
             if (Input.GetKey(KeyCode.E))
             {
@@ -31,17 +36,20 @@ public class GrenadePickUp : MonoBehaviour
                 // Show the grenade on the player
                 GrenadeOnPlayer.SetActive(true);
 
-                PickUpText.enabled = false;
+                // Clear the interact text
+                GameManager.instance.UpdateGrenadeInteractText("");
             }
         }    
     }
 
+    // This method is called when the player leaves the trigger zone
     private void OnTriggerExit(Collider other)
     {
-        //removes PickUp text from screen 
-        if (PickUpText != null)
+        if (other.gameObject.tag == "Player" && isPlayerInRange)
         {
-            PickUpText.enabled = false;
+            // Clear the interact text when the player leaves the pickup area
+            GameManager.instance.UpdateGrenadeInteractText("");
+            isPlayerInRange = false;
         }
     }
 }
