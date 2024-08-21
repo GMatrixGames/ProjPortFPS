@@ -28,13 +28,20 @@ public class GrenadePickUp : MonoBehaviour
                 isPlayerInRange = true;
             }
             // Check if the player is pressing the 'E' key
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 // Hide this grenade pickup object
                 this.gameObject.SetActive(false);
 
                 // Show the grenade on the player
                 GrenadeOnPlayer.SetActive(true);
+
+                PlayerController playerController = other.GetComponent<PlayerController>();
+                if (playerController != null)
+                {
+                    playerController.PickUpGrenade();
+                    GrenadeOnPlayer.SetActive(true);
+                }
 
                 // Clear the interact text
                 GameManager.instance.UpdateGrenadeInteractText("");
@@ -45,7 +52,7 @@ public class GrenadePickUp : MonoBehaviour
     // This method is called when the player leaves the trigger zone
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player" && isPlayerInRange)
+        if (other.gameObject.tag == "Player")
         {
             // Clear the interact text when the player leaves the pickup area
             GameManager.instance.UpdateGrenadeInteractText("");

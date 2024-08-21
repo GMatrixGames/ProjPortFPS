@@ -2370,7 +2370,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: throwForce
-      value: 10
+      value: 18.5
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: throwPoint
@@ -2443,6 +2443,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1992616948435988328, guid: 49b0e9417a1ae134c8074b05e9f10311, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1992616948435988328, guid: 49b0e9417a1ae134c8074b05e9f10311, type: 3}
       propertyPath: m_IsKinematic
       value: 1

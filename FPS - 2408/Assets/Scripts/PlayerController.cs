@@ -313,7 +313,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (grenadePrefab != null && throwPoint != null)
         {
-            Debug.Log("Throw point and grenade prefab are assigned.");
+            //Debug.Log("Throw point and grenade prefab are assigned.");
 
             // Instantiate the grenade at the throw point
             GameObject grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
@@ -326,7 +326,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 // Ensure the grenade starts moving in the forward direction
                 Vector3 throwDirection = throwPoint.forward;
                 rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
-                Debug.Log("force applied to grenade: " + rb.velocity);
+                
             }
             else
             {
@@ -334,15 +334,14 @@ public class PlayerController : MonoBehaviour, IDamage
             }
 
             // Destroy the grenade after some time
-            Destroy(grenade, 5f);
-            Debug.Log("Grenade will be destroyed after 5 seconds.");
+            Destroy(grenade, 5f);            
 
             // Reset the flag since the grenade has been thrown
             hasGrenade = false;
         }
         else
         {
-            Debug.LogError("ThrowPoint or GrenadePrefab not assigned!");
+            Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
 }
