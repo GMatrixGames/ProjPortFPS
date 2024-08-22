@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private Animator anim;
     [SerializeField] private Transform shootPos;
     [SerializeField] private Transform headPos;
-    [SerializeField] private Collider meleeCol;
+    // [SerializeField] private Collider meleeCol;
 
     [SerializeField] private Image healthBar;
     [SerializeField] private int hp;
@@ -158,7 +158,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         isShooting = true;
         anim.SetTrigger("Shoot");
-        Instantiate(bullet, shootPos.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
     }
@@ -171,15 +170,15 @@ public class EnemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
-    public void MeleeColOn()
-    {
-        meleeCol.enabled = true;
-    }
-
-    public void MeleeColOff()
-    {
-        meleeCol.enabled = false;
-    }
+    // public void MeleeColOn()
+    // {
+    //     meleeCol.enabled = true;
+    // }
+    //
+    // public void MeleeColOff()
+    // {
+    //     meleeCol.enabled = false;
+    // }
 
     /// <summary>
     /// When the player enters the enemy's range, set playerInRange to true.

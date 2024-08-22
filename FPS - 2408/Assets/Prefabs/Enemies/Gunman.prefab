@@ -651,17 +651,16 @@ MonoBehaviour:
   anim: {fileID: 5813778695525332959}
   shootPos: {fileID: 3951134403919188498}
   headPos: {fileID: 1957976812664223709}
-  meleeCol: {fileID: 0}
   healthBar: {fileID: 209653013289791313}
   hp: 10
   viewAngle: 90
   facePlayerSpeed: 5
-  roamDistance: 0
-  roamTimer: 0
-  animSpeedTrans: 0
+  roamDistance: 15
+  roamTimer: 3
+  animSpeedTrans: 5
   bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
   shootRate: 1
-  shootAngle: 0
+  shootAngle: 45
 --- !u!195 &2348111573512739411
 NavMeshAgent:
   m_ObjectHideFlags: 0
