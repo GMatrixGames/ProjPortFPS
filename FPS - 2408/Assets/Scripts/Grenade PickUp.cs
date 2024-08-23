@@ -19,7 +19,7 @@ public class GrenadePickUp : MonoBehaviour
     public void OnTriggerStay(Collider other) // OnTriggerStay is called continuously while the collider of this object is touching another object
     {
         // Check if the other object is tagged as "Player"
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("ThrownGrenade"))
         {
             // Update the UI text to prompt the player to pick up the grenade
             if (!isPlayerInRange)
@@ -52,7 +52,7 @@ public class GrenadePickUp : MonoBehaviour
     // This method is called when the player leaves the trigger zone
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("ThrownGrenade"))
         {
             // Clear the interact text when the player leaves the pickup area
             GameManager.instance.UpdateGrenadeInteractText("");

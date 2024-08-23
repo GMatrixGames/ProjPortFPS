@@ -401,19 +401,17 @@ public class PlayerController : MonoBehaviour, IDamage
                 Vector3 initialVelocity = throwDirection * horizontalSpeed;
                 initialVelocity.y = verticalSpeed;
 
-                // Apply the velocity to the Rigidbody
+                
                 rb.velocity = initialVelocity;
-
-
                 rb.drag = 0.5f;
             }
             else
             {
                 Debug.LogError("No Rigidbody found on grenade prefab.");
             }
-
+            grenade.tag = "ThrownGrenade"; 
             // Destroy the grenade after some time
-            Destroy(grenade, 5f);
+            Destroy(grenade, 3f);
 
             if (GrenadeOnPlayer != null)
             {
