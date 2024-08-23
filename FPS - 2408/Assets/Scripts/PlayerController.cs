@@ -45,22 +45,22 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #region JetPack Variables
 
-    //Currently deciding whether or not this should be implemented. I'm leaning towards no atm. We'll see. 
-    [SerializeField] int maxFuel;
-    [SerializeField] float fuel;
-    [SerializeField] float fuelRecoveryRate;
-    [SerializeField] float fuelWaitTime;
-    [SerializeField] float jetPackFuelCost;
+    // Currently deciding weather or not this should be implemented. I'm leaning towards no atm. We'll see.
+    [Header("----- Jetpack -----")]
+    [SerializeField] private int maxFuel;
+    [SerializeField] private float fuel;
+    [SerializeField] private float fuelRecoveryRate;
+    [SerializeField] private float fuelWaitTime;
+    [SerializeField] private float jetPackFuelCost;
 
-    bool isUsingFuel;
-    bool hasExhaustedFuel;
+    private bool isUsingFuel;
+    private bool hasExhaustedFuel;
 
-    private float origFuel;
-    
-    [SerializeField] float maxAcceleration;
-    [SerializeField] float accelerationTime;
+    [SerializeField] private float maxAcceleration;
+    [SerializeField] private float accelerationTime;
  
     #endregion
+
     #region Weapon
 
     [Header("----- Weapon -----")]
@@ -111,8 +111,8 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
+        fuel = maxFuel;
         GameManager.instance.UpdateFuelBar(fuel, maxFuel);
-        origFuel = fuel;
         controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
@@ -458,7 +458,6 @@ public class PlayerController : MonoBehaviour, IDamage
             Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
-
 
     #region JetPack Methods
     IEnumerator RegainFuel()

@@ -8,6 +8,7 @@ TagManager:
   - Head
   - Player Spawn Pos
   - Grenade
+  - Enemy
   layers:
   - Default
   - TransparentFX

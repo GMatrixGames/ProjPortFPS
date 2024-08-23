@@ -43,7 +43,6 @@ public class EnemyAI : MonoBehaviour, IDamage
     {
         maxHp = hp; // hp should initially be max
         colorOriginal = model.material.color;
-        GameManager.instance.UpdateGoal(1);
         healthBar.fillAmount = maxHp;
         stoppingDistanceOriginal = agent.stoppingDistance;
         startingPos = transform.position;
@@ -134,7 +133,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             hp = 0;
-            GameManager.instance.UpdateGoal(-1);
+            // Increments the kill count in GameManager when this enemy dies
+            GameManager.instance.UpdateGoal(1);
             Destroy(gameObject);
         }
     }
