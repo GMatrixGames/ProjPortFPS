@@ -40,7 +40,7 @@ public class GrenadePickUp : MonoBehaviour
                 if (playerController != null)
                 {
                     playerController.PickUpGrenade();
-                    GrenadeOnPlayer.SetActive(true);
+                    playerController.GrenadeOnPlayer = GrenadeOnPlayer;
                 }
 
                 // Clear the interact text
