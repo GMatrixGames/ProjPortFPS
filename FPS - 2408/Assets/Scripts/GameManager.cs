@@ -11,23 +11,27 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
 
-    [SerializeField] private TMP_Text enemyCountText;
+    [SerializeField] private TMP_Text killCountText;
     [SerializeField] private TMP_Text healthText;
-
-    public GameObject spawnPoint;
+    [SerializeField] private TMP_Text GrenadeInteractTxt;
 
     #region Player
 
+    public GameObject playerSpawnPos { get; private set; }
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
+    public Image fuelBar;
     public GameObject damageFlash;
 
     #endregion
 
+    public GameObject checkpointPopup;
+
     public bool isPaused;
 
-    private int enemyCount;
+    private int killCount;
+    private int totalEnemies;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
@@ -39,6 +43,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+
+        // Initiailizes the total number of enemies in the level
+        // CM
+        totalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        killCountText.text = $"00/{totalEnemies:D2}";
     }
 
     // Update is called once per frame
@@ -104,15 +114,34 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Update the Fuel bar fill amount.
+    /// </summary>
+    ///<param name="fuelCurr"> Players current Fuel</param>
+    ///<param name="fuelMax"> Players max Fuel</param>
+    public void UpdateFuelBar(float fuelCurr, int fuelMax)
+    {
+        Debug.Log($"Updating Fuel Bar: Current Fuel = {fuelCurr}/{fuelMax}");
+        if (fuelBar)
+        {
+            fuelBar.fillAmount = fuelCurr / fuelMax;
+            Debug.Log("Fuel Bar Fill Amount: " + fuelBar.fillAmount);
+        }
+        else
+        {
+            Debug.LogError("Fuel Bar reference is missing!");
+        }
+    }
+
+    /// <summary>
     /// Update the goal amount.
     /// </summary>
     /// <param name="amount">Amount of enemies killed</param>
     public void UpdateGoal(int amount)
     {
-        enemyCount += amount;
-        enemyCountText.text = enemyCount.ToString("F0");
+        killCount += amount;
+        killCountText.text = $"{killCount:D2}/{totalEnemies:D2}";
 
-        if (enemyCount <= 0)
+        if (killCount >= totalEnemies)
         {
             StatePause();
             menuActive = menuWin;
@@ -128,5 +157,10 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
+    }
+
+    public void UpdateGrenadeInteractText(string text)
+    {
+        GrenadeInteractTxt.text = text;
     }
 }

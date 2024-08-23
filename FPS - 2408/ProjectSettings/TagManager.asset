@@ -6,6 +6,9 @@ TagManager:
   tags:
   - RunnableWall
   - Head
+  - Player Spawn Pos
+  - Grenade
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -16,7 +19,7 @@ TagManager:
   - Enemy
   - Enemy Bullet
   - RunnableWall
-  - 
+  - Grenade
   - 
   - 
   - 
