@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
         // Initiailizes the total number of enemies in the level
         // CM
-        totalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        totalEnemies = GameObject.FindGameObjectsWithTag("Enemy")?.Length ?? 0;
         killCountText.text = $"00/{totalEnemies:D2}";
     }
 

@@ -2987,7 +2987,7 @@ MonoBehaviour:
   menuPause: {fileID: 1313815090407439613}
   menuWin: {fileID: 8892082978776860229}
   menuLose: {fileID: 6906459532435524211}
-  enemyCountText: {fileID: 3484754125795040680}
+  killCountText: {fileID: 3484754125795040680}
   healthText: {fileID: 9165005361065588886}
   GrenadeInteractTxt: {fileID: 5222483214737060739}
   healthBar: {fileID: 6906011848660722811}
