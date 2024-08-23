@@ -1,23 +1,28 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
+    [Header("----- Components -----")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
-    [SerializeField] private int hpMax;
-    [SerializeField] private float hpCurrent;
-    [SerializeField] private int speed;
-    [SerializeField] private int sprintMod;
-    [SerializeField] private int jumpMax;
-    [SerializeField] private int jumpSpeed;
-    [SerializeField] private int gravity;
+
+    [Header("----- Attributes -----")]
+    [SerializeField] [Range(0, 30)] private int hpMax;
+    private float hpCurrent;
+    [SerializeField] [Range(1, 5)] private int speed;
+    [SerializeField] [Range(2, 4)] private int sprintMod;
+    [SerializeField] [Range(1, 3)] private int jumpMax;
+    [SerializeField] [Range(8, 20)] private int jumpSpeed;
+    [SerializeField] [Range(15, 30)] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
     #region WallRunning
 
+    [Header("----- Wall Running -----")]
     [SerializeField] private int wallRunGravity;
     [SerializeField] private int wallKickMax;
     [SerializeField] private int wallKickSpeed;
@@ -31,17 +36,23 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #region HealthRegen
 
+    [Header("----- Health Regeneration -----")]
     [SerializeField] private float healthRegenRate = 1f;
     private bool isTakingDamage;
     private Coroutine regenCoroutine;
 
     #endregion
 
-    #region Headshot
+    #region Weapon
 
+    [Header("----- Weapon -----")]
     [SerializeField] private int headshotMultiplier = 2;
-    [SerializeField] private float shootRate;
-    [SerializeField] private int shootDist;
+    [SerializeField] private GameObject gunModel;
+    [SerializeField] private GameObject muzzleFlash;
+    private List<GunStats> gunList = new();
+    private int shootDamage;
+    private float shootRate;
+    private int shootDist;
 
     #endregion
 
@@ -50,6 +61,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private int jumpCount;
     private float hpOrig;
+    private int selectedGun;
 
     private bool isSprinting;
     private bool isShooting;
@@ -73,7 +85,7 @@ public class PlayerController : MonoBehaviour, IDamage
     // Start is called before the first frame update
     private void Start()
     {
-        hpOrig = hpCurrent;
+        hpOrig = hpMax;
         SpawnPlayer();
     }
 
@@ -94,6 +106,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
         {
             Movement();
+            SelectGun();
         }
 
         Sprint();
@@ -164,7 +177,7 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVelocity.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
         {
             StartCoroutine(Shoot());
         }
@@ -194,6 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private IEnumerator Shoot()
     {
         isShooting = true;
+        StartCoroutine(FlashMuzzle());
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
@@ -212,10 +226,18 @@ public class PlayerController : MonoBehaviour, IDamage
             // Debug.Log($"Damage @ Distance: {damage} @ {(int) hit.distance}");
 
             dmg?.TakeDamage(damage);
+            Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
         }
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    private IEnumerator FlashMuzzle()
+    {
+        muzzleFlash.SetActive(true);
+        yield return new WaitForSeconds(0.05f);
+        muzzleFlash.SetActive(false);
     }
 
     /// <summary>
@@ -315,6 +337,43 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    public void GetGunStats(GunStats gun)
+    {
+        gunList.Add(gun);
+        selectedGun = gunList.Count - 1;
+
+        shootDamage = gun.shootDamage;
+        shootDist = gun.shootDist;
+        shootRate = gun.shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    private void SelectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
+        {
+            selectedGun++;
+            ChangeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
+        {
+            selectedGun--;
+            ChangeGun();
+        }
+    }
+
+    private void ChangeGun()
+    {
+        shootDamage = gunList[selectedGun].shootDamage;
+        shootDist = gunList[selectedGun].shootDist;
+        shootRate = gunList[selectedGun].shootRate;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
     private void ThrowGrenade()
     {
         if (grenadePrefab != null && throwPoint != null)
@@ -325,7 +384,7 @@ public class PlayerController : MonoBehaviour, IDamage
             GameObject grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
             Debug.Log("Grenade instantiated at position: " + throwPoint.position);
 
-            
+
             Rigidbody rb = grenade.GetComponent<Rigidbody>();
             if (rb != null)
             {
@@ -345,7 +404,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 // Apply the velocity to the Rigidbody
                 rb.velocity = initialVelocity;
 
-                
+
                 rb.drag = 0.5f;
             }
             else
