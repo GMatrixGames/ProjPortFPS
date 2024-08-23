@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IDamage
 {
+    [SerializeField] int spawnerHP;
     [SerializeField] Transform spawnPosition;
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int maxEnemiesToSpawn;
@@ -54,5 +55,14 @@ public class EnemySpawner : MonoBehaviour
         isInsideRadius = false;
     }
 
+    public void TakeDamage(int amount)
+    {
+        spawnerHP -= amount;
+
+        if(spawnerHP <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
 

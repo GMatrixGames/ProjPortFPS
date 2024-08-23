@@ -263,6 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74eca01928f9fe34890665ca1f5d1dff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerHP: 15
   spawnPosition: {fileID: 775425422}
   enemyToSpawn: {fileID: 7509744117725543746, guid: e48e9703af678f242bf2d10b0df6a770, type: 3}
   maxEnemiesToSpawn: 3
