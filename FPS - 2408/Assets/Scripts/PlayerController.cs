@@ -379,6 +379,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.transform.rotation = gun.gunModel.transform.rotation;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
