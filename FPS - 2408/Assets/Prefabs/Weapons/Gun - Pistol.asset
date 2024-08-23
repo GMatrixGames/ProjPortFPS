@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
-  m_Name: Gun - Shotgun
+  m_Name: Gun - Pistol
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 8276986080499376821, guid: e82f1152c2c33df459e1b1bd72c5d050, type: 3}
-  shootDamage: 15
-  shootRate: 1
+  gunModel: {fileID: 100000, guid: 589c90d4952cd7f4f99d50582f9da48d, type: 3}
+  shootDamage: 1
+  shootRate: 0.5
   shootDist: 350
   ammoCurrent: 0
-  ammoMax: 5
-  hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
+  ammoMax: 10
+  hitEffect: {fileID: 2955623459812423941, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
   shootSounds: []
   shootVolume: 0.5
