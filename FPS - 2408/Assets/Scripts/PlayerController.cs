@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour, IDamage
     public Transform throwPoint;
     public float throwForce = 10f;
 
+    public GameObject GrenadeOnPlayer;
+
     #region Damage & Dropoff
 
     [SerializeField] private int minDamage;
@@ -307,6 +309,10 @@ public class PlayerController : MonoBehaviour, IDamage
     public void PickUpGrenade()
     {
         hasGrenade = true; // Set the flag to true when the player picks up a grenade
+        if (GrenadeOnPlayer != null)
+        {
+            GrenadeOnPlayer.SetActive(true);
+        }
     }
 
     private void ThrowGrenade()
@@ -348,7 +354,12 @@ public class PlayerController : MonoBehaviour, IDamage
             }
 
             // Destroy the grenade after some time
-            Destroy(grenade, 5f);            
+            Destroy(grenade, 5f);
+
+            if (GrenadeOnPlayer != null)
+            {
+                GrenadeOnPlayer.SetActive(false);
+            }
 
             // Reset the flag since the grenade has been thrown
             hasGrenade = false;
