@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] public NavMeshAgent agent;
     [SerializeField] private Renderer model;
     [SerializeField] private Animator anim;
     [SerializeField] private Transform shootPos;
@@ -27,7 +27,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     private bool isShooting;
     private bool playerInRange;
-    private bool isAttacking;
     private bool isRoaming;
 
     private float angleToPlayer;
@@ -49,7 +48,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    private void Update()
+    public void Update()
     {
         var agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTrans));
