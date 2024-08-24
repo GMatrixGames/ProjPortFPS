@@ -12,12 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Assault Rifle
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 0}
-  shootDamage: 0
-  shootRate: 0
-  shootDist: 0
+  gunModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
+  shootDamage: 10
+  shootRate: 0.5
+  shootDist: 500
   ammoCurrent: 0
-  ammoMax: 0
-  hitEffect: {fileID: 0}
-  shootSounds: []
+  ammoMax: 15
+  hitEffect: {fileID: 5024009746357069192, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: 7b889162724f05c4f95da46adbd50ef7, type: 3}
+  - {fileID: 8300000, guid: b9bcff787e03ea4448419527c126e177, type: 3}
+  - {fileID: 8300000, guid: b39ec697f76aec04fb8081c0c4f6dbae, type: 3}
+  - {fileID: 8300000, guid: 6c641842185384646b603322cc7e7559, type: 3}
   shootVolume: 0.5
