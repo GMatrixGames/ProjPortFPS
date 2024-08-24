@@ -18,28 +18,28 @@ public class Melee : EnemyAI
     public new void Update()
     {
         base.Update();
-        Collider enemyCollider = GetComponent<Collider>();
+        var enemyCollider = GetComponent<Collider>();
 
-        bool inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
+        var inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
 
-        if (base.CanSeePlayer() && inMeleeRange && !isAttacking)
+        if (CanSeePlayer() && inMeleeRange && !isAttacking)
         {
             StartCoroutine(MeleeAttack());
         }
-        else if (base.CanSeePlayer() && !inMeleeRange && !isAttacking)
+        else if (CanSeePlayer() && !inMeleeRange && !isAttacking)
         {
             base.Update();
         }
     }
 
-    IEnumerator MeleeAttack()
+    private IEnumerator MeleeAttack()
     {
         isAttacking = true;
         agent.isStopped = true; // Stop moving while attacking
 
         // Check if the player is still in melee range before dealing damage
-        Collider enemyCollider = GetComponent<Collider>();
-        bool inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
+        var enemyCollider = GetComponent<Collider>();
+        var inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
 
         if (inMeleeRange)
         {

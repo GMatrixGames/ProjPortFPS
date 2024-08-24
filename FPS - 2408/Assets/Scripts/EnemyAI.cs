@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EnemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] public NavMeshAgent agent;
+    [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private Renderer model;
     [SerializeField] private Animator anim;
     [SerializeField] private Transform shootPos;
@@ -87,7 +87,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         isRoaming = false;
     }
 
-    private bool CanSeePlayer()
+    protected bool CanSeePlayer()
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
