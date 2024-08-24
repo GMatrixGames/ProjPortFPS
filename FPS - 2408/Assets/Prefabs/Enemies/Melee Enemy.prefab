@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1216963618316055731}
+  - component: {fileID: 7186709068668085840}
   - component: {fileID: 8671307777161182746}
   - component: {fileID: 3995709164325655114}
   - component: {fileID: 4352067726976129066}
@@ -33,9 +34,34 @@ Transform:
   m_LocalPosition: {x: -24.5, y: 1, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2529059747144305893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7186709068668085840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3605286144483204765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0d27bc618ffe66489b59e0df5ca5b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 1007209425161519615}
+  model: {fileID: 3995709164325655114}
+  shootPos: {fileID: 0}
+  headPos: {fileID: 2529059747144305893}
+  hp: 10
+  viewAngle: 90
+  facePlayerSpeed: 5
+  bullet: {fileID: 0}
+  shootRate: 0
+  playerInRange: 0
+  meleeDamage: 1
+  meleeRate: 0.75
 --- !u!33 &8671307777161182746
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -105,8 +131,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
+  m_Radius: 1
+  m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!135 &3701983622446376793
@@ -144,7 +170,7 @@ NavMeshAgent:
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 1
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -152,3 +178,34 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &8692058001368609078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2529059747144305893}
+  m_Layer: 0
+  m_Name: Head Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2529059747144305893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8692058001368609078}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1216963618316055731}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
