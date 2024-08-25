@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
+  m_Name: Gun - Shotgun
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 8276986080499376821, guid: e82f1152c2c33df459e1b1bd72c5d050, type: 3}
+  gunRotation: {x: 0, y: -90, z: 0, w: 0}
+  shootDamage: 15
+  minDamage: 10
+  maxDamage: 15
+  shootRate: 1
+  shootDist: 350
+  ammoCurrent: 0
+  ammoMax: 5
+  hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
+  - {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
+  - {fileID: 8300000, guid: e196615aab553a14ab4e1aeb462c195c, type: 3}
+  - {fileID: 8300000, guid: 159aa6b3153429349b06479ba4bcb8fc, type: 3}
+  shootVolume: 10.5
