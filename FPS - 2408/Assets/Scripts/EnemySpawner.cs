@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
     [SerializeField] GameObject enemyToSpawn;
     [SerializeField] int maxEnemiesToSpawn;
     [SerializeField] int timeBetweenSpawns;
+    [SerializeField] int distanceToSpawn;
 
     public int enemiesOnField;
     bool hasSpawnedRecently;
@@ -37,7 +38,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
 
         if (enemiesOnField < maxEnemiesToSpawn)
         {
-            Instantiate(enemyToSpawn, spawnPosition);
+            Instantiate(enemyToSpawn, Random.insideUnitSphere * distanceToSpawn, enemyToSpawn.transform.rotation);
             enemiesOnField++;
         }
 
