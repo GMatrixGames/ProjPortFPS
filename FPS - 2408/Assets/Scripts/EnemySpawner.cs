@@ -38,7 +38,8 @@ public class EnemySpawner : MonoBehaviour, IDamage
 
         if (enemiesOnField < maxEnemiesToSpawn)
         {
-            Instantiate(enemyToSpawn, Random.insideUnitSphere * distanceToSpawn, enemyToSpawn.transform.rotation);
+            var randomPos = spawnPosition.position + Random.insideUnitSphere * distanceToSpawn;
+            Instantiate(enemyToSpawn, randomPos, enemyToSpawn.transform.rotation);
             enemiesOnField++;
         }
 

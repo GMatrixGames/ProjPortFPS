@@ -268,7 +268,7 @@ MonoBehaviour:
   enemyToSpawn: {fileID: 7509744117725543746, guid: e48e9703af678f242bf2d10b0df6a770, type: 3}
   maxEnemiesToSpawn: 3
   timeBetweenSpawns: 1
-  distanceToSpawn: 2
+  distanceToSpawn: 5
   enemiesOnField: 0
 --- !u!1001 &165888432
 PrefabInstance:
