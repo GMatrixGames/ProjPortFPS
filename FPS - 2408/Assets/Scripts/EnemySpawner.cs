@@ -1,37 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour, IDamage
 {
-    [SerializeField] int spawnerHP;
-    [SerializeField] Transform spawnPosition;
-    [SerializeField] GameObject enemyToSpawn;
-    [SerializeField] int maxEnemiesToSpawn;
-    [SerializeField] int timeBetweenSpawns;
-    [SerializeField] int distanceToSpawn;
+    [SerializeField] private int spawnerHP;
+    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private GameObject enemyToSpawn;
+    [SerializeField] private int maxEnemiesToSpawn;
+    [SerializeField] private int timeBetweenSpawns;
+    [SerializeField] private int distanceToSpawn;
 
-    public int enemiesOnField;
-    bool hasSpawnedRecently;
-    bool isInsideRadius;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    private int enemiesOnField;
+    private bool hasSpawnedRecently;
+    private bool isInsideRadius;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (isInsideRadius == true && hasSpawnedRecently == false && enemiesOnField < maxEnemiesToSpawn)
+        if (isInsideRadius && hasSpawnedRecently == false && enemiesOnField < maxEnemiesToSpawn)
         {
             StartCoroutine(SpawnEnemies());
         }
     }
 
-    IEnumerator SpawnEnemies()
+    private IEnumerator SpawnEnemies()
     {
         hasSpawnedRecently = true;
         yield return new WaitForSeconds(timeBetweenSpawns);
@@ -44,7 +36,6 @@ public class EnemySpawner : MonoBehaviour, IDamage
         }
 
         hasSpawnedRecently = false;
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,10 +52,9 @@ public class EnemySpawner : MonoBehaviour, IDamage
     {
         spawnerHP -= amount;
 
-        if(spawnerHP <= 0)
+        if (spawnerHP <= 0)
         {
             Destroy(gameObject);
         }
     }
 }
-
