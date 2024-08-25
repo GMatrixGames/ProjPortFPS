@@ -452,7 +452,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 Debug.LogError("No Rigidbody found on grenade prefab.");
             }
 
-            grenade.tag = "ThrownGrenade";
+            grenade.tag = "Thrown Grenade";
             // Destroy the grenade after some time
             Destroy(grenade, 3f);
 
