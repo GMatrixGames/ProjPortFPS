@@ -362,7 +362,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void PickUpGrenade()
     {
-        hasGrenade = true; // Set the flag to true when the player picks up a grenade
+        hasGrenade = true; 
         if (GrenadeOnPlayer != null)
         {
             GrenadeOnPlayer.SetActive(true);
