@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Gun - Assault Rifle
   m_EditorClassIdentifier: 
   gunModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
+  gunRotationX: -90
   shootDamage: 10
+  minDamage: 5
+  maxDamage: 10
   shootRate: 0.5
   shootDist: 500
   ammoCurrent: 0

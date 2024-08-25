@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
-  m_Name: Gun - Heavy Machine Gun
+  m_Name: Gun - Launcher
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 100000, guid: fccd8e251d698f7449ed9aca4bacc50e, type: 3}
-  gunRotation: {x: -90, y: 180, z: 0, w: 0}
-  shootDamage: 20
-  minDamage: 15
-  maxDamage: 20
-  shootRate: 0.5
-  shootDist: 200
+  gunModel: {fileID: 919132149155446097, guid: 4311dac403f1e004db14392e31c92415, type: 3}
+  gunRotation: {x: -90, y: -90, z: 0, w: 0}
+  shootDamage: 0
+  minDamage: 0
+  maxDamage: 0
+  shootRate: 0
+  shootDist: 0
   ammoCurrent: 0
-  ammoMax: 20
-  hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
+  ammoMax: 0
+  hitEffect: {fileID: 0}
   shootSounds: []
   shootVolume: 0.5

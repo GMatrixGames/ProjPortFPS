@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Pistol
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 100000, guid: 589c90d4952cd7f4f99d50582f9da48d, type: 3}
-  shootDamage: 1
+  gunModel: {fileID: 5891155283769805884, guid: 945c8c3faa25f1342bb340511c5dd643, type: 3}
+  gunRotationX: 0
+  shootDamage: 5
+  minDamage: 1
+  maxDamage: 5
   shootRate: 0.5
   shootDist: 350
   ammoCurrent: 0

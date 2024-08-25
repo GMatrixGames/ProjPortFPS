@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [SerializeField] private float maxAcceleration;
     [SerializeField] private float accelerationTime;
- 
+
     #endregion
 
     #region Weapon
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if(Input.GetButton("Jetpack") && !hasExhaustedFuel)
+        if (Input.GetButton("Jetpack") && !hasExhaustedFuel)
         {
             JetPack();
         }
@@ -379,7 +379,11 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.transform.rotation = gun.gunModel.transform.rotation;
+        if (gun.gunRotation != default)
+        {
+            gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
+            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
+        }
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
@@ -404,37 +408,42 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gunList[selectedGun].shootRate;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        if (gunList[selectedGun].gunRotation != default)
+        {
+            gunModel.transform.localRotation = Quaternion.Euler(gunList[selectedGun].gunRotation.x, gunList[selectedGun].gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
+            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
+        }
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     private void ThrowGrenade()
     {
-        if (grenadePrefab != null && throwPoint != null)
+        if (grenadePrefab && throwPoint)
         {
             //Debug.Log("Throw point and grenade prefab are assigned.");
 
             // Instantiate the grenade at the throw point
-            GameObject grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
+            var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
             Debug.Log("Grenade instantiated at position: " + throwPoint.position);
 
 
-            Rigidbody rb = grenade.GetComponent<Rigidbody>();
-            if (rb != null)
+            var rb = grenade.GetComponent<Rigidbody>();
+            if (rb)
             {
                 // Ensure the grenade starts moving in the forward direction
-                Vector3 throwDirection = throwPoint.forward;
-                float angle = 45f;
-                float gravity = Physics.gravity.y;
-                float throwSpeed = throwForce;
+                var throwDirection = throwPoint.forward;
+                var angle = 45f;
+                var gravity = Physics.gravity.y;
+                var throwSpeed = throwForce;
 
                 // Calculate the initial velocity
-                float radians = angle * Mathf.Deg2Rad;
-                float horizontalSpeed = throwSpeed * Mathf.Cos(radians);
-                float verticalSpeed = throwSpeed * Mathf.Sin(radians);
-                Vector3 initialVelocity = throwDirection * horizontalSpeed;
+                var radians = angle * Mathf.Deg2Rad;
+                var horizontalSpeed = throwSpeed * Mathf.Cos(radians);
+                var verticalSpeed = throwSpeed * Mathf.Sin(radians);
+                var initialVelocity = throwDirection * horizontalSpeed;
                 initialVelocity.y = verticalSpeed;
 
-                
+
                 rb.velocity = initialVelocity;
                 rb.drag = 0.5f;
             }
@@ -442,7 +451,8 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 Debug.LogError("No Rigidbody found on grenade prefab.");
             }
-            grenade.tag = "ThrownGrenade"; 
+
+            grenade.tag = "ThrownGrenade";
             // Destroy the grenade after some time
             Destroy(grenade, 3f);
 
@@ -461,12 +471,13 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     #region JetPack Methods
+
     IEnumerator RegainFuel()
     {
         yield return new WaitForSeconds(.1f);
         fuel += fuelRecoveryRate;
 
-        if(fuel > maxFuel)
+        if (fuel > maxFuel)
         {
             fuel = maxFuel;
         }
@@ -492,5 +503,6 @@ public class PlayerController : MonoBehaviour, IDamage
             hasExhaustedFuel = true;
         }
     }
+
     #endregion
 }

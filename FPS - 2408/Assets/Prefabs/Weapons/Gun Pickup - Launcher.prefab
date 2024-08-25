@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d606fb4184a64f14a25ea1abfcdb9c10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gun: {fileID: 11400000, guid: 88fb804a9c14a9e4c8253696c2c23f67, type: 2}
+  gun: {fileID: 11400000, guid: 2de16d5ff8b59924d99a686d1c872a5e, type: 2}
 --- !u!33 &8639334526704161939
 MeshFilter:
   m_ObjectHideFlags: 0
