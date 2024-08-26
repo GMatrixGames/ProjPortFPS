@@ -194,7 +194,9 @@ public class PlayerController : MonoBehaviour, IDamage
         // you haven't, your gravity gets slowed for wallrunning. 
         if (runningOnWall && hasWallKicked == false)
         {
-            playerVelocity.y -= wallRunGravity * Time.deltaTime;
+            playerVelocity.y -= wallRunGravity * Time.deltaTime * .1f;
+            playerVelocity.x = move.x; // Maintain horizontal movement
+            playerVelocity.z = move.z; // Maintain horizontal movement
         }
         else // Otherwise, use normal gravity
         {

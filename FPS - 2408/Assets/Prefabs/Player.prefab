@@ -386,7 +386,7 @@ MonoBehaviour:
   hpMax: 10
   speed: 5
   sprintMod: 3
-  jumpMax: 2
+  jumpMax: 1
   jumpSpeed: 12
   gravity: 30
   cameraShake: {fileID: 3705740741484860386}
