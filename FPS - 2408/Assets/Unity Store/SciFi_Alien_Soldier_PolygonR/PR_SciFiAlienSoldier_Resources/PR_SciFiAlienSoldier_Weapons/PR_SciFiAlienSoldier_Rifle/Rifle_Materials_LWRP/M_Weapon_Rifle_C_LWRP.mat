@@ -2,21 +2,27 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_Weapon_Rifle_C_LWRP
-  m_Shader: {fileID: -6465566751694194690, guid: 062265b78e16abb4c8a66a68276fd2e4,
-    type: 3}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
+  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _EMISSION
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
+  m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -88,6 +94,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _BurningMix: 0
@@ -99,15 +106,19 @@ Material:
     - _EmissionFactor: 3
     - _EmissiveFactor: 1
     - _FrozenMix: 0
+    - _GlossMapScale: 1
     - _Glossiness: 1
+    - _GlossyReflections: 1
     - _Metallic: 1
     - _MetalnessFactor: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Outline: 0
     - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
     - _Specular: 1
     - _SpecularColorized: 0.5
+    - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TemperatureVFXScale: 1
     - _UVSec: 0
@@ -125,3 +136,4 @@ Material:
     - _MaskedColorB: {r: 0.109, g: 0.109, b: 0.109, a: 1}
     - _MaskedColorC: {r: 1, g: 0.062068876, b: 0, a: 1}
     - _OutlineColor: {r: 0.44117644, g: 0.8843815, b: 1, a: 0.39215687}
+  m_BuildTextureStacks: []
