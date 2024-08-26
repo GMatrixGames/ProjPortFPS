@@ -326,7 +326,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -24.62774
+      value: -27.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -334,7 +334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -13.375681
+      value: -220
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -434,10 +434,10 @@ MonoBehaviour:
   spawnerHP: 15
   model: {fileID: 4626053758163618995}
   spawnPosition: {fileID: 5169244925112140601}
-  enemyToSpawn: {fileID: 7509744117725543746, guid: e48e9703af678f242bf2d10b0df6a770, type: 3}
-  maxEnemiesToSpawn: 5
+  enemyToSpawn: {fileID: 6121393330375230451, guid: 75d3cbe10704b8c438d721d7afd6dfe3, type: 3}
+  maxEnemiesToSpawn: 3
   timeBetweenSpawns: 1
-  distanceToSpawn: 5
+  distanceToSpawn: 1
   hpBar: {fileID: 24627152503061885}
 --- !u!95 &469437648268784055
 Animator:
@@ -502,8 +502,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 25.024414
+  m_Center: {x: -7.012394, y: 0, z: 15.01188}
 --- !u!4 &6631298535431922520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
