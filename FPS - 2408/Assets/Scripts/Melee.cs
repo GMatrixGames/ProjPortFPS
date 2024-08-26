@@ -16,7 +16,7 @@ public class Melee : EnemyAI
         playerCollider = GameManager.instance.player.GetComponent<Collider>();
     }
 
-    public new void Update()
+    protected override void Update()
     {
         base.Update();
         var enemyCollider = GetComponent<Collider>();
@@ -46,6 +46,7 @@ public class Melee : EnemyAI
         {
             // Apply damage if still in range
             GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
+            anim.SetTrigger("Attack");
         }
 
         // Finish attack
