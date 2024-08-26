@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private GameObject gunModel;
     [SerializeField] private GameObject muzzleFlash;
     private List<GunStats> gunList = new();
-    private int shootDamage;
     private float shootRate;
     private int shootDist;
 
@@ -374,7 +373,8 @@ public class PlayerController : MonoBehaviour, IDamage
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
 
-        shootDamage = gun.shootDamage;
+        minDamage = gun.minDamage;
+        maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
@@ -403,7 +403,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
-        shootDamage = gunList[selectedGun].shootDamage;
+        minDamage = gunList[selectedGun].minDamage;
+        maxDamage = gunList[selectedGun].maxDamage;
         shootDist = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
 

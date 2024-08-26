@@ -38,13 +38,15 @@ public class EnemyAI : MonoBehaviour, IDamage
     private Color colorOriginal;
 
     // Start is called before the first frame update
-    private void Start()
+    protected virtual void Start()
     {
         maxHp = hp; // hp should initially be max
         colorOriginal = model.material.color;
         healthBar.fillAmount = maxHp;
         stoppingDistanceOriginal = agent.stoppingDistance;
         startingPos = transform.position;
+
+        GameManager.instance.UpdateGoalMax(1);
     }
 
     // Update is called once per frame

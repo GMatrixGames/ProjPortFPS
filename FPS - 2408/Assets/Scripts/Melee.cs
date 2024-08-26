@@ -10,8 +10,9 @@ public class Melee : EnemyAI
     [SerializeField] private float meleeRate;
     private Collider playerCollider;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         playerCollider = GameManager.instance.player.GetComponent<Collider>();
     }
 
