@@ -454,8 +454,16 @@ public class PlayerController : MonoBehaviour, IDamage
             }
 
             grenade.tag = "Thrown Grenade";
-            // Destroy the grenade after some time
-            Destroy(grenade, 3f);
+
+            var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
+            if (grenadeBehaviour != null)
+            {
+                grenadeBehaviour.ActivateExplosion();
+            }
+            else
+            {
+                Debug.LogError("GrenadeBehaviour component missing on grenade prefab.");
+            }
 
             if (GrenadeOnPlayer != null)
             {
