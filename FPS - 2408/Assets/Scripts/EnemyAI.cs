@@ -7,7 +7,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 {
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] private Renderer model;
-    [SerializeField] private Animator anim;
+    [SerializeField] protected Animator anim;
     [SerializeField] private Transform shootPos;
     [SerializeField] private Transform headPos;
     // [SerializeField] private Collider meleeCol;
@@ -50,10 +50,12 @@ public class EnemyAI : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    public void Update()
+    protected virtual void Update()
     {
         var agentSpeed = agent.velocity.normalized.magnitude;
         anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agentSpeed, Time.deltaTime * animSpeedTrans));
+
+        if (this is Melee) return; // Don't roam if this is a melee enemy
 
         if (playerInRange && !CanSeePlayer())
         {
