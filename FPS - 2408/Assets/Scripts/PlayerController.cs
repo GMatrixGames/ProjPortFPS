@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Attributes -----")]
     [SerializeField] [Range(0, 30)] private int hpMax;
     private float hpCurrent;
-    [SerializeField] [Range(1, 5)] private int speed;
+    [SerializeField] [Range(1, 15)] private int speed;
     [SerializeField] [Range(2, 4)] private int sprintMod;
     [SerializeField] [Range(1, 3)] private int jumpMax;
     [SerializeField] [Range(8, 20)] private int jumpSpeed;
@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private GameObject gunModel;
     [SerializeField] private GameObject muzzleFlash;
     private List<GunStats> gunList = new();
-    private int shootDamage;
     private float shootRate;
     private int shootDist;
 
@@ -362,7 +361,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void PickUpGrenade()
     {
-        hasGrenade = true; // Set the flag to true when the player picks up a grenade
+        hasGrenade = true; 
         if (GrenadeOnPlayer != null)
         {
             GrenadeOnPlayer.SetActive(true);
@@ -374,7 +373,8 @@ public class PlayerController : MonoBehaviour, IDamage
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
 
-        shootDamage = gun.shootDamage;
+        minDamage = gun.minDamage;
+        maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
 
@@ -403,7 +403,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
-        shootDamage = gunList[selectedGun].shootDamage;
+        minDamage = gunList[selectedGun].minDamage;
+        maxDamage = gunList[selectedGun].maxDamage;
         shootDist = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
 
@@ -452,7 +453,7 @@ public class PlayerController : MonoBehaviour, IDamage
                 Debug.LogError("No Rigidbody found on grenade prefab.");
             }
 
-            grenade.tag = "ThrownGrenade";
+            grenade.tag = "Thrown Grenade";
             // Destroy the grenade after some time
             Destroy(grenade, 3f);
 

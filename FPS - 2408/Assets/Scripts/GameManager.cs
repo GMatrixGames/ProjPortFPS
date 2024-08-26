@@ -44,11 +44,6 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-
-        // Initiailizes the total number of enemies in the level
-        // CM
-        totalEnemies = GameObject.FindGameObjectsWithTag("Enemy")?.Length ?? 0;
-        killCountText.text = $"00/{totalEnemies:D2}";
     }
 
     // Update is called once per frame
@@ -149,6 +144,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void UpdateGoalMax(int amount)
+    {
+        totalEnemies += amount;
+        killCountText.text = $"{killCount:D2}/{totalEnemies:D2}";
+    }
+
     /// <summary>
     /// Set state to lost
     /// </summary>
@@ -157,10 +158,5 @@ public class GameManager : MonoBehaviour
         StatePause();
         menuActive = menuLose;
         menuActive.SetActive(isPaused);
-    }
-
-    public void UpdateGrenadeInteractText(string text)
-    {
-        GrenadeInteractTxt.text = text;
     }
 }
