@@ -65,7 +65,7 @@ MonoBehaviour:
   explosionRadius: 15.5
   explosionDamage: 50
   explosionDelay: 3
-  ExplosionEffect: {fileID: 167042, guid: 5ff7098700dbdbf4a93dc6ab0d9d92a0, type: 3}
+  ExplosionEffect: {fileID: 188110, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
 --- !u!33 &4275657737627674394
 MeshFilter:
   m_ObjectHideFlags: 0

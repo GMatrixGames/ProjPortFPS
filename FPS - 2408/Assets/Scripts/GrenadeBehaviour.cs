@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GrenadeBehaviour : MonoBehaviour
 {
-    [SerializeField] private float explosionRadius = 5f; // Radius of the explosion
-    [SerializeField] private int explosionDamage = 50; // Damage dealt by the explosion
-    [SerializeField] private float explosionDelay = 3f; // Time before the grenade explodes
-    [SerializeField] private GameObject ExplosionEffect; // Explosion effect prefab
+    [SerializeField] private float explosionRadius = 5f; 
+    [SerializeField] private int explosionDamage = 50; 
+    [SerializeField] private float explosionDelay = 3f;
+    [SerializeField] private GameObject ExplosionEffect; 
 
     private bool isReadyToExplode = false;
 
@@ -23,22 +23,24 @@ public class GrenadeBehaviour : MonoBehaviour
         {
             isReadyToExplode = true;
             Debug.Log("Grenade timer started with a delay of " + explosionDelay + " seconds.");
-            Invoke("Explode", explosionDelay);
+            StartCoroutine(ExplodeAfterDelay());
         }
-        else
-        {
-            Debug.LogWarning("ActivateExplosion was called but grenade was already set to explode.");
-        }
+    }
+
+    private IEnumerator ExplodeAfterDelay()
+    {
+        yield return new WaitForSeconds(explosionDelay);
+        Explode();
     }
 
     private void Explode()
     {
-        Debug.Log("Explode method called."); // Check if this is printed
+        Debug.Log("Grenade exploded.");
 
         if (ExplosionEffect != null)
         {
-            Debug.Log("Instantiating explosion effect."); // Check if this is printed
-            Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+            GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 2f);
         }
         else
         {
@@ -46,28 +48,27 @@ public class GrenadeBehaviour : MonoBehaviour
         }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        Debug.Log($"Found {colliders.Length} colliders in range."); // Debug number of colliders found
+
         foreach (Collider collider in colliders)
         {
+            if (collider.CompareTag("Player"))
+            {
+                continue;
+            }
+
             IDamage damageable = collider.GetComponent<IDamage>();
             if (damageable != null)
             {
                 damageable.TakeDamage(explosionDamage);
             }
         }
+        StartCoroutine(DestroyAfterEffect());
+    }
+   
+    private IEnumerator DestroyAfterEffect()
+    {
+        yield return new WaitForSeconds(0.1f);
 
         Destroy(gameObject);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Log collision events for debugging
-        Debug.Log("Grenade collided with " + collision.collider.name);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // Log trigger events for debugging
-        Debug.Log("Grenade triggered by " + other.name);
     }
 }
