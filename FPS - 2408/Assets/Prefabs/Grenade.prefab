@@ -9,14 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7460717369280221313}
-  - component: {fileID: 4488945033683624299}
+  - component: {fileID: 3565887993042146948}
+  - component: {fileID: 8844802856266472991}
   - component: {fileID: 4275657737627674394}
   - component: {fileID: 3568513835733760516}
   - component: {fileID: 5235060854287861861}
   - component: {fileID: 6609531789419543885}
   m_Layer: 0
   m_Name: Grenade
-  m_TagString: Grenade
+  m_TagString: Thrown Grenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +37,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4488945033683624299
+--- !u!114 &3565887993042146948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,6 +50,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GrenadeOnPlayer: {fileID: 7587874016173025734, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
+--- !u!114 &8844802856266472991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945894502721705960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 120696edc87532b458c34d100c2982a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionRadius: 15.5
+  explosionDamage: 50
+  explosionDelay: 3
+  ExplosionEffect: {fileID: 19817552, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
 --- !u!33 &4275657737627674394
 MeshFilter:
   m_ObjectHideFlags: 0
