@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuLose;
 
     [SerializeField] private TMP_Text killCountText;
+    [SerializeField] private TMP_Text spawnersCountText;
     [SerializeField] private TMP_Text healthText;
-    [SerializeField] private TMP_Text GrenadeInteractTxt;
 
     #region Player
 
@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
     private int killCount;
     private int totalEnemies;
+    private int spawnersDestroyedCount;
+    private int spawnersCount;
 
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
@@ -60,6 +62,16 @@ public class GameManager : MonoBehaviour
             else if (menuActive == menuPause)
             {
                 StateUnpause();
+            }
+        }
+
+        if (killCount >= totalEnemies && spawnersDestroyedCount >= spawnersCount)
+        {
+            StatePause();
+            if (menuActive != menuWin)
+            {
+                menuActive = menuWin;
+                menuActive.SetActive(isPaused);
             }
         }
     }
@@ -131,23 +143,28 @@ public class GameManager : MonoBehaviour
     /// Update the goal amount.
     /// </summary>
     /// <param name="amount">Amount of enemies killed</param>
-    public void UpdateGoal(int amount)
+    public void UpdateEnemyGoal(int amount)
     {
         killCount += amount;
         killCountText.text = $"{killCount:D2}/{totalEnemies:D2}";
-
-        if (killCount >= totalEnemies)
-        {
-            StatePause();
-            menuActive = menuWin;
-            menuActive.SetActive(isPaused);
-        }
     }
 
-    public void UpdateGoalMax(int amount)
+    public void UpdateEnemyMax(int amount)
     {
         totalEnemies += amount;
         killCountText.text = $"{killCount:D2}/{totalEnemies:D2}";
+    }
+
+    public void UpdateSpawnersGoal(int amount)
+    {
+        spawnersDestroyedCount += amount;
+        spawnersCountText.text = $"{spawnersDestroyedCount:D2}/{spawnersCount:D2}";
+    }
+
+    public void UpdateSpawnersMax(int amount)
+    {
+        spawnersCount += amount;
+        spawnersCountText.text = $"{spawnersDestroyedCount:D2}/{spawnersCount:D2}";
     }
 
     /// <summary>

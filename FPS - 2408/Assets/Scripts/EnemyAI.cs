@@ -46,7 +46,7 @@ public class EnemyAI : MonoBehaviour, IDamage
         stoppingDistanceOriginal = agent.stoppingDistance;
         startingPos = transform.position;
 
-        GameManager.instance.UpdateGoalMax(1);
+        GameManager.instance.UpdateEnemyMax(1);
     }
 
     // Update is called once per frame
@@ -137,7 +137,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             hp = 0;
             // Increments the kill count in GameManager when this enemy dies
-            GameManager.instance.UpdateGoal(1);
+            GameManager.instance.UpdateEnemyGoal(1);
+            spawner.OnEnemyDeath(gameObject);
             Destroy(gameObject);
         }
     }
@@ -173,15 +174,12 @@ public class EnemyAI : MonoBehaviour, IDamage
         Instantiate(bullet, shootPos.position, transform.rotation);
     }
 
-    // public void MeleeColOn()
-    // {
-    //     meleeCol.enabled = true;
-    // }
-    //
-    // public void MeleeColOff()
-    // {
-    //     meleeCol.enabled = false;
-    // }
+    private EnemySpawner spawner;
+
+    public void SetSpawner(EnemySpawner newSpawner)
+    {
+        spawner = newSpawner;
+    }
 
     /// <summary>
     /// When the player enters the enemy's range, set playerInRange to true.

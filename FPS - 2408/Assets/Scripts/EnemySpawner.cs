@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
     private int enemiesOnField;
     private bool hasSpawnedRecently;
     private bool isInsideRadius;
+    private List<GameObject> spawnedEnemies = new();
 
     private Color colorOriginal;
 
@@ -25,6 +27,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
         hp = spawnerHP;
         hpBar.fillAmount = 1;
         colorOriginal = model.material.color;
+        GameManager.instance.UpdateSpawnersMax(1);
     }
 
     // Update is called once per frame
@@ -44,7 +47,10 @@ public class EnemySpawner : MonoBehaviour, IDamage
         if (enemiesOnField < maxEnemiesToSpawn)
         {
             var randomPos = spawnPosition.position + Random.insideUnitSphere * distanceToSpawn;
-            Instantiate(enemyToSpawn, randomPos, enemyToSpawn.transform.rotation);
+            var enemy = Instantiate(enemyToSpawn, randomPos, enemyToSpawn.transform.rotation);
+            var enemyAI = enemy.GetComponent<EnemyAI>();
+            enemyAI.SetSpawner(this);
+            spawnedEnemies.Add(enemy);
             enemiesOnField++;
         }
 
@@ -71,7 +77,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOriginal;
     }
-    
+
     public void TakeDamage(int amount)
     {
         hp -= amount;
@@ -81,7 +87,17 @@ public class EnemySpawner : MonoBehaviour, IDamage
 
         if (hp <= 0)
         {
+            GameManager.instance.UpdateSpawnersGoal(1);
             Destroy(gameObject);
+        }
+    }
+
+    public void OnEnemyDeath(GameObject enemy)
+    {
+        if (spawnedEnemies.Contains(enemy))
+        {
+            spawnedEnemies.Remove(enemy);
+            enemiesOnField--;
         }
     }
 }
