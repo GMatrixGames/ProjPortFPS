@@ -2089,16 +2089,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Grenade
       objectReference: {fileID: 0}
-    - target: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
-      propertyPath: m_TagString
-      value: Thrown Grenade
-      objectReference: {fileID: 0}
-    - target: {fileID: 4488945033683624299, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5235060854287861861, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
-      propertyPath: m_IsTrigger
+    - target: {fileID: 3565887993042146948, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+      propertyPath: GrenadeOnPlayer
+      value: 
+      objectReference: {fileID: 919132149173643649}
+    - target: {fileID: 6609531789419543885, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+      propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6609531789419543885, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
@@ -2145,14 +2141,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4488945033683624299, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+    - target: {fileID: 8844802856266472991, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+      propertyPath: ExplosionEffect
+      value: 
+      objectReference: {fileID: 19817552, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 8788578886090835820}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
 --- !u!1001 &2386067918014740960
 PrefabInstance:
@@ -2732,7 +2728,8 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2098559400460252982, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2255971209563409337, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       insertIndex: -1
@@ -2796,24 +2793,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e042dae5462c1e44fafda51325743a92, type: 3}
---- !u!1 &8788578886090835816 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
-  m_PrefabInstance: {fileID: 2207751207844165086}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8788578886090835820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8788578886090835816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f5f874393b2c004aa7c1ceb26d3a43f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GrenadeOnPlayer: {fileID: 919132149173643649}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

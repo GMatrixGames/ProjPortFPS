@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7460717369280221313}
-  - component: {fileID: 4488945033683624299}
+  - component: {fileID: 3565887993042146948}
   - component: {fileID: 8844802856266472991}
   - component: {fileID: 4275657737627674394}
   - component: {fileID: 3568513835733760516}
@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6609531789419543885}
   m_Layer: 0
   m_Name: Grenade
-  m_TagString: Grenade
+  m_TagString: Thrown Grenade
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +37,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4488945033683624299
+--- !u!114 &3565887993042146948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   explosionRadius: 15.5
   explosionDamage: 50
   explosionDelay: 3
-  ExplosionEffect: {fileID: 188110, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
+  ExplosionEffect: {fileID: 19817552, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
 --- !u!33 &4275657737627674394
 MeshFilter:
   m_ObjectHideFlags: 0
