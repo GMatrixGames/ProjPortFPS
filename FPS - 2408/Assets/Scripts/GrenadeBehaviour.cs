@@ -40,6 +40,9 @@ public class GrenadeBehaviour : MonoBehaviour
         if (ExplosionEffect != null)
         {
             GameObject effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
+
+            effect.transform.localScale = new Vector3(2f, 2f, 2f);
+
             Destroy(effect, 2f);
         }
         else
