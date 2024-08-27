@@ -17,7 +17,7 @@ MonoBehaviour:
   shootDamage: 15
   minDamage: 10
   maxDamage: 15
-  shootRate: 1
+  shootRate: 2
   shootDist: 350
   ammoCurrent: 0
   ammoMax: 5
@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
   - {fileID: 8300000, guid: e196615aab553a14ab4e1aeb462c195c, type: 3}
   - {fileID: 8300000, guid: 159aa6b3153429349b06479ba4bcb8fc, type: 3}
-  shootVolume: 10.5
+  shootVolume: 0.5

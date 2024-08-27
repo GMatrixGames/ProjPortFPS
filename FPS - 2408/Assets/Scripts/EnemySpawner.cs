@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour, IDamage
@@ -47,11 +48,13 @@ public class EnemySpawner : MonoBehaviour, IDamage
         if (enemiesOnField < maxEnemiesToSpawn)
         {
             var randomPos = spawnPosition.position + Random.insideUnitSphere * distanceToSpawn;
-            var enemy = Instantiate(enemyToSpawn, randomPos, enemyToSpawn.transform.rotation);
-            var enemyAI = enemy.GetComponent<EnemyAI>();
-            enemyAI.SetSpawner(this);
-            spawnedEnemies.Add(enemy);
-            enemiesOnField++;
+            if (NavMesh.SamplePosition(randomPos, out var hit, distanceToSpawn, NavMesh.AllAreas))
+            {
+                var enemy = Instantiate(enemyToSpawn, hit.position, enemyToSpawn.transform.rotation);
+                enemy.GetComponent<EnemyAI>().SetSpawner(this);
+                spawnedEnemies.Add(enemy);
+                enemiesOnField++;
+            }
         }
 
         hasSpawnedRecently = false;

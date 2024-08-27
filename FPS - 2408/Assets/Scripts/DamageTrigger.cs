@@ -31,8 +31,10 @@ public class DamageTrigger : MonoBehaviour
         if (other.isTrigger) return;
 
         var dmg = other.GetComponent<IDamage>();
-        dmg?.TakeDamage(damage);
-
-        if (type == DamageType.Bullet) Destroy(gameObject);
+        if (dmg != null && other.CompareTag("Player"))
+        {
+            dmg.TakeDamage(damage);
+            Destroy(gameObject);
+        }
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Gun - Pistol
   m_EditorClassIdentifier: 
   gunModel: {fileID: 5891155283769805884, guid: 945c8c3faa25f1342bb340511c5dd643, type: 3}
-  gunRotationX: 0
+  gunRotation: {x: 0, y: 0, z: 0, w: 0}
   shootDamage: 5
   minDamage: 1
   maxDamage: 5
@@ -27,4 +27,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5207b2a445fcb144281ab5395fe95c1d, type: 3}
   - {fileID: 8300000, guid: 1e940d15337ad1e43b0cc1b2430d7c06, type: 3}
   - {fileID: 8300000, guid: 70c97e425596b8142b7b9163256c0868, type: 3}
-  shootVolume: 0.5
+  shootVolume: 0.3

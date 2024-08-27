@@ -8,8 +8,9 @@ public class GrenadeBehaviour : MonoBehaviour
     [SerializeField] private int explosionDamage = 50; 
     [SerializeField] private float explosionDelay = 3f;
     [SerializeField] private ParticleSystem ExplosionEffect;
+    [SerializeField] private AudioClip explosionSound;
 
-    private bool isReadyToExplode = false;
+    private bool isReadyToExplode;
 
     private void Start()
     {
@@ -40,8 +41,9 @@ public class GrenadeBehaviour : MonoBehaviour
         if (ExplosionEffect != null)
         {
             var effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-            
             Destroy(effect.gameObject, 1f);
+
+            GetComponent<AudioSource>().PlayOneShot(explosionSound);
         }
         else
         {
@@ -68,7 +70,7 @@ public class GrenadeBehaviour : MonoBehaviour
    
     private IEnumerator DestroyAfterEffect()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
 
         Destroy(gameObject);
     }

@@ -410,7 +410,7 @@ MonoBehaviour:
   grenadePrefab: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
   throwPoint: {fileID: 4969544857447736237}
   throwForce: 15.5
-  GrenadeOnPlayer: {fileID: 7587874016173025734, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
+  GrenadeOnPlayer: {fileID: 2098559400460252982}
   minDamage: 1
   maxDamage: 5
   dropOffStart: 5
@@ -717,6 +717,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
+--- !u!1 &2098559400460252982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7587874016173025734, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
+  m_PrefabInstance: {fileID: 8381796563350298352}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4368279436582237716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5245884944662997220, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
