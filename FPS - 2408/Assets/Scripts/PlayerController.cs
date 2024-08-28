@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -17,6 +19,10 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] [Range(8, 20)] private int jumpSpeed;
     [SerializeField] [Range(15, 30)] private int gravity;
     [SerializeField] private CameraShake cameraShake;
+
+    [Header("----- Sounds -----")]
+    [SerializeField] private AudioClip[] audioSteps;
+    [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
@@ -82,6 +88,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private bool isSprinting;
     private bool isShooting;
+    private bool isPlayingStep;
 
     public bool hasGrenade = false;
     public GameObject grenadePrefab;
@@ -145,7 +152,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (Input.GetKeyDown(KeyCode.G) && hasGrenade)
         {
-            Debug.Log("G key pressed. Calling ThrowGrenade.");
+            // Debug.Log("G key pressed. Calling ThrowGrenade.");
             ThrowGrenade();
         }
     }
@@ -194,7 +201,9 @@ public class PlayerController : MonoBehaviour, IDamage
         // you haven't, your gravity gets slowed for wallrunning. 
         if (runningOnWall && hasWallKicked == false)
         {
-            playerVelocity.y -= wallRunGravity * Time.deltaTime;
+            playerVelocity.y -= wallRunGravity * Time.deltaTime * .1f;
+            playerVelocity.x = move.x; // Maintain horizontal movement
+            playerVelocity.z = move.z; // Maintain horizontal movement
         }
         else // Otherwise, use normal gravity
         {
@@ -211,7 +220,20 @@ public class PlayerController : MonoBehaviour, IDamage
             JetPack();
         }
 
+        if (controller.isGrounded && move.magnitude > 0.3f && !isPlayingStep)
+        {
+            StartCoroutine(PlayStep());
+        }
+
         GameManager.instance.UpdateFuelBar(fuel, maxFuel);
+    }
+
+    private IEnumerator PlayStep()
+    {
+        isPlayingStep = true;
+        GetComponent<AudioSource>().PlayOneShot(audioSteps[Random.Range(0, audioSteps.Length)], audioStepsVolume);
+        yield return new WaitForSeconds(isSprinting ? 0.3f : 0.5f);
+        isPlayingStep = false;
     }
 
     /// <summary>
@@ -239,6 +261,13 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         isShooting = true;
         StartCoroutine(FlashMuzzle());
+
+        var shootSounds = gunList[selectedGun].shootSounds ?? Array.Empty<AudioClip>();
+        if (shootSounds.Length > 0)
+        {
+            var randomSound = Random.Range(0, shootSounds.Length -1);
+            gunModel.GetComponent<AudioSource>().PlayOneShot(shootSounds[randomSound], gunList[selectedGun].shootVolume);
+        }
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out var hit, shootDist, ~ignoreMask))
         {
@@ -425,8 +454,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             // Instantiate the grenade at the throw point
             var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
-            Debug.Log("Grenade instantiated at position: " + throwPoint.position);
-
+            // Debug.Log("Grenade instantiated at position: " + throwPoint.position);
 
             var rb = grenade.GetComponent<Rigidbody>();
             if (rb)

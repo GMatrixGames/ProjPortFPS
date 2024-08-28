@@ -8,13 +8,14 @@ public class GrenadeBehaviour : MonoBehaviour
     [SerializeField] private int explosionDamage = 50; 
     [SerializeField] private float explosionDelay = 3f;
     [SerializeField] private ParticleSystem ExplosionEffect;
+    [SerializeField] private AudioClip explosionSound;
 
-    private bool isReadyToExplode = false;
+    private bool isReadyToExplode;
 
     private void Start()
     {
         // Ensure that the grenade does not explode immediately
-        Debug.Log("Grenade initialized with delay: " + explosionDelay);
+        // Debug.Log("Grenade initialized with delay: " + explosionDelay);
     }
 
     public void ActivateExplosion()
@@ -22,7 +23,7 @@ public class GrenadeBehaviour : MonoBehaviour
         if (!isReadyToExplode)
         {
             isReadyToExplode = true;
-            Debug.Log("Grenade timer started with a delay of " + explosionDelay + " seconds.");
+            // Debug.Log("Grenade timer started with a delay of " + explosionDelay + " seconds.");
             StartCoroutine(ExplodeAfterDelay());
         }
     }
@@ -35,17 +36,18 @@ public class GrenadeBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        Debug.Log("Grenade exploded.");
+        // Debug.Log("Grenade exploded.");
 
         if (ExplosionEffect != null)
         {
             var effect = Instantiate(ExplosionEffect, transform.position, Quaternion.identity);
-            
             Destroy(effect.gameObject, 1f);
+
+            GetComponent<AudioSource>().PlayOneShot(explosionSound, .3f);
         }
         else
         {
-            Debug.LogWarning("ExplosionEffect is not assigned.");
+            // Debug.LogWarning("ExplosionEffect is not assigned.");
         }
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
@@ -68,7 +70,7 @@ public class GrenadeBehaviour : MonoBehaviour
    
     private IEnumerator DestroyAfterEffect()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
 
         Destroy(gameObject);
     }

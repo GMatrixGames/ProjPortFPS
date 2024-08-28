@@ -267,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1827855056235892, guid: cfffbfee210ca3e4389450b599f36a5c, type: 3}
       propertyPath: m_Name
-      value: SciFi_Alien_Soldier_B_Ranged_LWRP Variant
+      value: Gunner Alien
       objectReference: {fileID: 0}
     - target: {fileID: 4698241757938732, guid: cfffbfee210ca3e4389450b599f36a5c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,9 +396,9 @@ MonoBehaviour:
   facePlayerSpeed: 5
   roamDistance: 15
   roamTimer: 3
-  animSpeedTrans: 5
+  animSpeedTrans: 10
   bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
-  shootRate: 1
+  shootRate: 2
   shootAngle: 45
 --- !u!195 &2406695971009466887
 NavMeshAgent:

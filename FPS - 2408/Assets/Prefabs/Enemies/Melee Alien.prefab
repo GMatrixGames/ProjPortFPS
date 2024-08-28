@@ -395,8 +395,8 @@ MonoBehaviour:
   viewAngle: 90
   facePlayerSpeed: 5
   roamDistance: 15
-  roamTimer: 3
-  animSpeedTrans: 5
+  roamTimer: 5
+  animSpeedTrans: 10
   bullet: {fileID: 0}
   shootRate: 0
   shootAngle: 0
