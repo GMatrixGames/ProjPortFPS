@@ -66,7 +66,7 @@ MonoBehaviour:
   explosionDamage: 20
   explosionDelay: 3
   ExplosionEffect: {fileID: 19817552, guid: eeb10f3a038431240a6690043924ec2e, type: 3}
-  explosionSound: {fileID: 8300000, guid: 07d86f38d24ec394398898718fd5e4fb, type: 3}
+  explosionSound: {fileID: 8300000, guid: c172df3801748834ca723686200a32a8, type: 3}
 --- !u!33 &4275657737627674394
 MeshFilter:
   m_ObjectHideFlags: 0

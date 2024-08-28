@@ -155,6 +155,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8844802856266472991, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+      propertyPath: explosionSound
+      value: 
+      objectReference: {fileID: 8300000, guid: c172df3801748834ca723686200a32a8, type: 3}
+    - target: {fileID: 8844802856266472991, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
       propertyPath: explosionDamage
       value: 20
       objectReference: {fileID: 0}

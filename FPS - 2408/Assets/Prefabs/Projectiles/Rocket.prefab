@@ -14,12 +14,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1104070711327506360, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
       propertyPath: m_Volume
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1104070711327506360, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 40e71b0f7bd610849b40f150553f4702, type: 3}
+      objectReference: {fileID: 8300000, guid: f0e4d20e5c5f43548876847677f686b3, type: 3}
     - target: {fileID: 3018562669261859786, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
       propertyPath: m_Time
       value: 0.2

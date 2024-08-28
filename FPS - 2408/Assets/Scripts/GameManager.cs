@@ -127,11 +127,11 @@ public class GameManager : MonoBehaviour
     ///<param name="fuelMax"> Players max Fuel</param>
     public void UpdateFuelBar(float fuelCurr, int fuelMax)
     {
-        Debug.Log($"Updating Fuel Bar: Current Fuel = {fuelCurr}/{fuelMax}");
+        // Debug.Log($"Updating Fuel Bar: Current Fuel = {fuelCurr}/{fuelMax}");
         if (fuelBar)
         {
             fuelBar.fillAmount = fuelCurr / fuelMax;
-            Debug.Log("Fuel Bar Fill Amount: " + fuelBar.fillAmount);
+            // Debug.Log("Fuel Bar Fill Amount: " + fuelBar.fillAmount);
         }
         else
         {
