@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Components -----")]
     [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
+    [SerializeField] private GrapplingGun grapplingGun;
 
     [Header("----- Attributes -----")]
     [SerializeField] [Range(0, 30)] private int hpMax;
@@ -213,11 +214,6 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
         {
             StartCoroutine(Shoot());
-        }
-
-        if (Input.GetButton("Jetpack") && !hasExhaustedFuel)
-        {
-            JetPack();
         }
 
         if (controller.isGrounded && move.magnitude > 0.3f && !isPlayingStep)
@@ -504,6 +500,14 @@ public class PlayerController : MonoBehaviour, IDamage
         else
         {
             Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
+        }
+    }
+
+    void PullToPoint()
+    {
+        if (grapplingGun.isGrappling == true)
+        {
+
         }
     }
 
