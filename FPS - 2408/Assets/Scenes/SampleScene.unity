@@ -2910,7 +2910,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: pullSpeed
-      value: 50
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: grapplingGun
@@ -2922,7 +2922,7 @@ PrefabInstance:
       objectReference: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: pullThreshold
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: GrenadeOnPlayer

@@ -215,6 +215,10 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVelocity.x = move.x; // Maintain horizontal movement
             playerVelocity.z = move.z; // Maintain horizontal movement
         }
+        else if (grapplingGun.isGrappling)
+        {
+            playerVelocity.y = move.y; 
+        }
         else // Otherwise, use normal gravity
         {
             playerVelocity.y -= gravity * Time.deltaTime;
