@@ -504,9 +504,11 @@ MonoBehaviour:
   grappleLayer:
     serializedVersion: 2
     m_Bits: 256
+  grapplePoint: {x: 0, y: 0, z: 0}
   grappleTip: {fileID: 1706105878}
   cameraPoint: {fileID: 344532670}
   maxDistance: 100
+  isGrappling: 0
 --- !u!120 &394092048
 LineRenderer:
   serializedVersion: 2
@@ -2903,6 +2905,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: jumpMax
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: pullSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: grapplingGun
       value: 
       objectReference: {fileID: 394092047}
@@ -2910,6 +2920,10 @@ PrefabInstance:
       propertyPath: grenadePrefab
       value: 
       objectReference: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: pullThreshold
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: GrenadeOnPlayer
       value: 

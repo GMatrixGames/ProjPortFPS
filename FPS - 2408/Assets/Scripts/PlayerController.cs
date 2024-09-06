@@ -68,6 +68,13 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    #region Grapple Variables
+
+    [SerializeField] float pullThreshold;
+    [SerializeField] float pullSpeed;
+
+    #endregion
+
     #region Weapon
 
     [Header("----- Weapon -----")]
@@ -175,8 +182,10 @@ public class PlayerController : MonoBehaviour, IDamage
             }
         }
 
-        // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        // transform.position += move * speed * Time.deltaTime;
+        if (grapplingGun.isGrappling)
+        {
+            PullToPoint();
+        }
 
         move = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
         controller.Move(move * (speed * Time.deltaTime));
@@ -505,9 +514,16 @@ public class PlayerController : MonoBehaviour, IDamage
 
     void PullToPoint()
     {
-        if (grapplingGun.isGrappling == true)
-        {
+        Vector3 direction = grapplingGun.grapplePoint - transform.position;
 
+        if (direction.magnitude > pullThreshold)
+        {
+            direction.Normalize();
+            controller.Move(direction * pullSpeed * Time.deltaTime);
+        }
+        else
+        {
+            grapplingGun.StopGrapple();
         }
     }
 

@@ -40,7 +40,7 @@ public class GrapplingGun : MonoBehaviour
         }
     }
 
-    void StartGrapple()
+    public void StartGrapple()
     {
         RaycastHit hit;
 
@@ -53,7 +53,7 @@ public class GrapplingGun : MonoBehaviour
         lineRenderer.positionCount = 2;
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {
         lineRenderer.positionCount = 0;
         isGrappling = false;
