@@ -8,7 +8,7 @@ public class GrapplingGun : MonoBehaviour
     [SerializeField] LayerMask grappleLayer;
     public Vector3 grapplePoint;
     [SerializeField] Transform grappleTip, cameraPoint;
-    [SerializeField] float maxDistance = 100f;
+    [SerializeField] float maxDistance = 50f;
 
     bool shouldDrawRope;
     public bool isGrappling;
@@ -42,6 +42,7 @@ public class GrapplingGun : MonoBehaviour
 
     public void StartGrapple()
     {
+        grapplePoint = transform.position;
         RaycastHit hit;
 
         if(Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
