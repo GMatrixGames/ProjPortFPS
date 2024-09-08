@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
 public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
@@ -14,7 +15,9 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Attributes -----")]
     [SerializeField] [Range(0, 30)] private int hpMax;
     private float hpCurrent;
-    [SerializeField] [Range(1, 15)] private int speed;
+    [SerializeField] [Range(1, 15)] private float maxSpeed;
+    private float speedCurrent;
+    [SerializeField] private float slowdownTimer;
     [SerializeField] [Range(2, 4)] private int sprintMod;
     [SerializeField] [Range(1, 3)] private int jumpMax;
     [SerializeField] [Range(8, 20)] private int jumpSpeed;
@@ -165,11 +168,13 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+
     /// <summary>
     /// Handling of sprinting mechanic.
     /// </summary>
     private void Movement()
     {
+        
         if (controller.isGrounded)
         {
             jumpCount = 0;
@@ -185,10 +190,10 @@ public class PlayerController : MonoBehaviour, IDamage
         if (grapplingGun.isGrappling)
         {
             PullToPoint();
-        }
+        } 
 
         move = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
-        controller.Move(move * (speed * Time.deltaTime));
+        controller.Move(move * (speedCurrent * Time.deltaTime));
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
@@ -217,7 +222,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else if (grapplingGun.isGrappling)
         {
-            playerVelocity.y = move.y; 
+            playerVelocity.y += move.y; 
         }
         else // Otherwise, use normal gravity
         {
@@ -233,6 +238,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             StartCoroutine(PlayStep());
         }
+
+        speedCurrent = Mathf.Lerp(speedCurrent, maxSpeed, slowdownTimer);
 
         GameManager.instance.UpdateFuelBar(fuel, maxFuel);
     }
@@ -252,12 +259,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            speed *= sprintMod;
+            maxSpeed *= sprintMod;
             isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            speed /= sprintMod;
+            maxSpeed /= sprintMod;
             isSprinting = false;
         }
     }

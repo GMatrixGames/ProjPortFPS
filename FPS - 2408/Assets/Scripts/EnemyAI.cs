@@ -136,8 +136,8 @@ public class EnemyAI : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             // Increments the kill count in GameManager when this enemy dies
-            Destroy(gameObject);
             GameManager.instance.UpdateEnemyGoal(1);
+            Destroy(gameObject);
             spawner.OnEnemyDeath(gameObject);
             
         }
