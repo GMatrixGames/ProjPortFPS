@@ -2945,12 +2945,20 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: wallRunGravity
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: GrenadeOnPlayer
       value: 
       objectReference: {fileID: 7587874016173025734, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: accelerationSpeed
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 586509039336530207, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 586509039336530207, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_Constraints

@@ -195,11 +195,14 @@ public class PlayerController : MonoBehaviour, IDamage
             PullToPoint();
         }
 
+        //Movement logic. 
         move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         Vector3 moveVector = transform.TransformDirection(move) * accelerationSpeed;
 
         rb.AddForce(moveVector.x, 0, moveVector.z);
 
+        //Counter movement, to clamp speed.
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, maxSpeed, slowdownTimer));
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
