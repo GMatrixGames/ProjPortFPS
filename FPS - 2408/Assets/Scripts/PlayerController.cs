@@ -8,20 +8,20 @@ using Random = UnityEngine.Random;
 public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
-    [SerializeField] private CharacterController controller;
     [SerializeField] private LayerMask ignoreMask;
     [SerializeField] private GrapplingGun grapplingGun;
 
     [Header("----- Attributes -----")]
     [SerializeField] [Range(0, 30)] private int hpMax;
     private float hpCurrent;
-    [SerializeField] [Range(1, 15)] private float maxSpeed;
+    [SerializeField] private float accelerationSpeed;
+    [SerializeField] private float maxSpeed;
     private float speedCurrent;
     [SerializeField] private float slowdownTimer;
     [SerializeField] [Range(2, 4)] private int sprintMod;
     [SerializeField] [Range(1, 3)] private int jumpMax;
     [SerializeField] [Range(8, 20)] private int jumpSpeed;
-    [SerializeField] [Range(15, 30)] private int gravity;
+    [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
     [Header("----- Sounds -----")]
@@ -108,6 +108,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public GameObject GrenadeOnPlayer;
 
+    private Rigidbody rb;
+
     #region Damage & Dropoff
 
     [SerializeField] private int minDamage;
@@ -122,6 +124,7 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpOrig = hpMax;
         SpawnPlayer();
+        rb = GetComponent<Rigidbody>();
     }
 
     public void SpawnPlayer()
@@ -130,14 +133,13 @@ public class PlayerController : MonoBehaviour, IDamage
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         fuel = maxFuel;
         GameManager.instance.UpdateFuelBar(fuel, maxFuel);
-        controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
-        controller.enabled = true;
     }
 
     // Update is called once per frame
     private void Update()
     {
+
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
@@ -166,6 +168,8 @@ public class PlayerController : MonoBehaviour, IDamage
             // Debug.Log("G key pressed. Calling ThrowGrenade.");
             ThrowGrenade();
         }
+
+        speedCurrent = rb.velocity.magnitude;
     }
 
 
@@ -174,8 +178,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void Movement()
     {
-        
-        if (controller.isGrounded)
+        if (rb.velocity.y == 0)
         {
             jumpCount = 0;
             playerVelocity = Vector3.zero;
@@ -190,15 +193,18 @@ public class PlayerController : MonoBehaviour, IDamage
         if (grapplingGun.isGrappling)
         {
             PullToPoint();
-        } 
+        }
 
-        move = Input.GetAxis("Vertical") * transform.forward + Input.GetAxis("Horizontal") * transform.right;
-        controller.Move(move * (speedCurrent * Time.deltaTime));
+        move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        Vector3 moveVector = transform.TransformDirection(move) * accelerationSpeed;
+
+        rb.AddForce(moveVector.x, 0, moveVector.z);
+
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
         {
             jumpCount++;
-            playerVelocity.y = jumpSpeed;
+            rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         }
 
         // Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
@@ -206,27 +212,18 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             // Debug.Log($"Wallkick {wallKickCount}");
             wallKickCount++;
-            playerVelocity.y = wallKickSpeed;
+            rb.AddForce(Vector3.up * wallKickSpeed, ForceMode.Impulse);
             hasWallKicked = true;
         }
-
-        controller.Move(playerVelocity * Time.deltaTime);
 
         // Basically checks if you're wallrunning, and you haven't already kicked off this wall. If
         // you haven't, your gravity gets slowed for wallrunning. 
         if (runningOnWall && hasWallKicked == false)
         {
-            playerVelocity.y -= wallRunGravity * Time.deltaTime * .1f;
-            playerVelocity.x = move.x; // Maintain horizontal movement
-            playerVelocity.z = move.z; // Maintain horizontal movement
-        }
-        else if (grapplingGun.isGrappling)
+            rb.AddForce(Vector3.down * wallRunGravity * Time.deltaTime);
+        }else // Otherwise, use normal gravity
         {
-            playerVelocity.y += move.y; 
-        }
-        else // Otherwise, use normal gravity
-        {
-            playerVelocity.y -= gravity * Time.deltaTime;
+            rb.AddForce(Vector3.down * gravity * Time.deltaTime);
         }
 
         if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
@@ -234,12 +231,12 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (controller.isGrounded && move.magnitude > 0.3f && !isPlayingStep)
+        if (rb.velocity.y == 0 && move.magnitude > 0.3f && !isPlayingStep)
         {
             StartCoroutine(PlayStep());
         }
 
-        speedCurrent = Mathf.Lerp(speedCurrent, maxSpeed, slowdownTimer);
+        speedCurrent = Mathf.Lerp(speedCurrent, accelerationSpeed, slowdownTimer);
 
         GameManager.instance.UpdateFuelBar(fuel, maxFuel);
     }
@@ -259,12 +256,12 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Sprint"))
         {
-            maxSpeed *= sprintMod;
+            accelerationSpeed *= sprintMod;
             isSprinting = true;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
-            maxSpeed /= sprintMod;
+            accelerationSpeed /= sprintMod;
             isSprinting = false;
         }
     }
@@ -530,7 +527,7 @@ public class PlayerController : MonoBehaviour, IDamage
         if (direction.magnitude > pullThreshold)
         {
             direction.Normalize();
-            controller.Move(direction * pullSpeed * Time.deltaTime);
+            rb.AddForce(direction * pullSpeed * Time.deltaTime, ForceMode.Impulse);
         }
         else
         {

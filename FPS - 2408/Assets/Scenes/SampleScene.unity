@@ -2905,20 +2905,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: gravity
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: jumpMax
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: maxSpeed
-      value: 10
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: pullSpeed
-      value: 35
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: sprintMod
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: grapplingGun
@@ -2934,12 +2942,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: slowdownTimer
-      value: 3
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: GrenadeOnPlayer
       value: 
       objectReference: {fileID: 7587874016173025734, guid: 3d8780ab42fd3af4aacd9823626fdfb8, type: 3}
+    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: accelerationSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 586509039336530207, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 586509039336530207, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 692860436970780126, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2992,11 +3012,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3838082731397906876, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7609893449189220777, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4598826797301015484, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
     m_RemovedGameObjects:
     - {fileID: 2098559400460252982, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
     m_AddedGameObjects:
