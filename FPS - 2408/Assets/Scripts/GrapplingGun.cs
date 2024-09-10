@@ -13,6 +13,8 @@ public class GrapplingGun : MonoBehaviour
     bool shouldDrawRope;
     public bool isGrappling;
 
+    RaycastHit hit;
+
     private void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -43,7 +45,6 @@ public class GrapplingGun : MonoBehaviour
     public void StartGrapple()
     {
         grapplePoint = transform.position;
-        RaycastHit hit;
 
         if(Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
         {
@@ -62,6 +63,7 @@ public class GrapplingGun : MonoBehaviour
 
     void DrawLine()
     {
+        
         lineRenderer.SetPosition(0, grappleTip.position);
         lineRenderer.SetPosition(1, grapplePoint);
     }
