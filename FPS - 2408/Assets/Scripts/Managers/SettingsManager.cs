@@ -14,7 +14,7 @@ public class SettingsManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (!instance)
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // This is static across ALL scenes
@@ -40,9 +40,9 @@ public class SettingsManager : MonoBehaviour
             var json = File.ReadAllText(settingsPath);
             settings = JsonUtility.FromJson<Settings>(json);
         }
-        else // Default
+        else
         {
-            Save();
+            Save(); // Save default settings for next start
         }
     }
 }
