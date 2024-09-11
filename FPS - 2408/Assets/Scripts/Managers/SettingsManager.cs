@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Utils;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -52,7 +52,7 @@ public class Settings
 {
     public float volume = .5f;
 
-    public Dictionary<string, KeyCode> keyBindings = new()
+    public SerializableDictionary<string, KeyCode> keyBindings = new()
     {
         { "Forward", KeyCode.W },
         { "Left", KeyCode.A },
