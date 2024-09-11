@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private float hpCurrent;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float airMaxSpeed;
     private float speedCurrent;
     [SerializeField] private float slowdownTimer;
     [SerializeField] [Range(2, 4)] private int sprintMod;
@@ -202,9 +203,17 @@ public class PlayerController : MonoBehaviour, IDamage
         rb.AddForce(moveVector.x, 0, moveVector.z);
 
         //Counter movement, to clamp speed.
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, maxSpeed, slowdownTimer));
+        if (rb.velocity.y == 0)
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, maxSpeed, slowdownTimer));
+        }
+        else
+        {
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, airMaxSpeed, slowdownTimer));
+        }
+              
 
-        if(rb.velocity.y == 0 && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if (rb.velocity.y == 0 && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
             //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
             //How do I do this?
