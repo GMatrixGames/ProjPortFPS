@@ -40,6 +40,11 @@ public class EnemySpawner : MonoBehaviour, IDamage
         }
     }
 
+    private void LateUpdate()
+    {
+        hpBar.transform.forward = Camera.main.transform.forward;
+    }
+
     private IEnumerator SpawnEnemies()
     {
         hasSpawnedRecently = true;

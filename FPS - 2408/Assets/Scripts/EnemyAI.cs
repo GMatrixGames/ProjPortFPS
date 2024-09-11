@@ -73,6 +73,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
+    private void LateUpdate()
+    {
+        healthBar.transform.LookAt(Camera.main.transform.position);
+    }
+
     private IEnumerator Roam()
     {
         isRoaming = true;

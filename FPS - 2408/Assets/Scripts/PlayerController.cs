@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int wallRunGravity;
     [SerializeField] private int wallKickMax;
     [SerializeField] private int wallKickSpeed;
-    [SerializeField] private bool runningOnWall;
+    public bool runningOnWall;
 
     private GameObject lastTouchedWall;
     private bool hasWallKicked;
