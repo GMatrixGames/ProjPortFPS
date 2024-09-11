@@ -2503,26 +2503,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: maxSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: pullSpeed
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: airMaxSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: slowdownTimer
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: accelerationSpeed
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 3838082731397906876, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.3
@@ -2566,14 +2546,6 @@ PrefabInstance:
     - target: {fileID: 7609893449189220777, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894514875801090046, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8894514875801090046, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: m_ProvidesContacts
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

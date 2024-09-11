@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
             //How do I do this?
-            rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z);
+            rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z, ForceMode.Force);
         }
 
         if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
@@ -552,6 +552,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             grapplingGun.StopGrapple();
         }
+
     }
 
     #region JetPack Methods

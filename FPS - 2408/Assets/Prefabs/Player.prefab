@@ -693,9 +693,10 @@ MonoBehaviour:
     m_Bits: 8
   grapplingGun: {fileID: 3633604879912809816}
   hpMax: 30
-  accelerationSpeed: 10
-  maxSpeed: 25
-  slowdownTimer: 0.1
+  accelerationSpeed: 20
+  maxSpeed: 20
+  airMaxSpeed: 35
+  slowdownTimer: 1.5
   sprintMod: 2
   jumpMax: 2
   jumpSpeed: 12
@@ -712,9 +713,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a5dd663d769890440a20f49ffc2f89a6, type: 3}
   - {fileID: 8300000, guid: b0e25cfae408afa418c0ad79dc88026c, type: 3}
   audioStepsVolume: 0.1
-  wallRunGravity: 500
+  wallRunGravity: 800
   wallKickMax: 1
-  wallKickSpeed: 20
+  wallKickSpeed: 12
   runningOnWall: 0
   healthRegenRate: 0.5
   maxFuel: 100
@@ -724,7 +725,7 @@ MonoBehaviour:
   jetPackFuelCost: 40
   maxAcceleration: 10
   accelerationTime: 3
-  pullThreshold: 1
+  pullThreshold: 3
   pullSpeed: 150
   headshotMultiplier: 2
   gunModel: {fileID: 8933824663232001653}
@@ -807,7 +808,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.001
+  m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
