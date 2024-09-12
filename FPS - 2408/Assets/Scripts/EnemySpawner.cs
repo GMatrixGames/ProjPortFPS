@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using TMPro;
+
 public class EnemySpawner : MonoBehaviour, IDamage
 {
     [SerializeField] private int spawnerHP;
@@ -54,11 +55,11 @@ public class EnemySpawner : MonoBehaviour, IDamage
         if (timerActive)
         {
             countdownTimer -= Time.deltaTime;
-            countdownText.text = Mathf.CeilToInt(countdownTimer).ToString();
+            countdownText.text = "Destroy in: " + Mathf.CeilToInt(countdownTimer);
             if (countdownTimer <= 0)
-            {                
+            {
                 OnCountdownEnd();
-            }            
+            }
         }
     }
 
@@ -126,6 +127,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
             countdownText.text = Mathf.Max(0, Mathf.Round(countdownTimer)).ToString("0");
         }
     }
+
     public void IncreaseEnemySpawning()
     {
         maxEnemiesToSpawn += 5; // Increase the limit of enemies to spawn
