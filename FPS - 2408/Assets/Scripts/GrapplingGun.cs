@@ -22,10 +22,11 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !GameManager.instance.grappleShouldCooldown)
         {
             StartGrapple();
             shouldDrawRope = true;
+            GameManager.instance.UpdateGrappleCD();
         }
         else if (Input.GetMouseButtonUp(1))
         {

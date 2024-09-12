@@ -21,7 +21,17 @@ public class GameManager : MonoBehaviour
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
+    public Image grappleCooldownImage;
+    [SerializeField] TMP_Text grappleCooldownText;
     public GameObject damageFlash;
+
+    #endregion
+
+    #region GrappleCD
+
+    public bool grappleShouldCooldown;
+    [SerializeField] float grappleCooldownTime;
+    private float grappleCooldownTimer = 0f;
 
     #endregion
 
@@ -45,6 +55,11 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+    }
+
+    private void Start()
+    {
+        grappleCooldownImage.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -72,6 +87,11 @@ public class GameManager : MonoBehaviour
                 menuActive = menuWin;
                 menuActive.SetActive(isPaused);
             }
+        }
+
+        if(grappleShouldCooldown)
+        {
+            GrappleCooldown();
         }
     }
 
@@ -116,6 +136,37 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Health Bar reference is missing!");
+        }
+    }
+
+    void GrappleCooldown()
+    {
+        grappleCooldownTimer -= Time.deltaTime;
+
+        if( grappleCooldownTimer < 0f )
+        {
+            grappleShouldCooldown = false;
+            grappleCooldownText.gameObject.SetActive(false);
+            grappleCooldownImage.fillAmount = 0f;   
+        }
+        else
+        {
+            grappleCooldownText.text = grappleCooldownTimer.ToString("F1");
+            grappleCooldownImage.fillAmount = grappleCooldownTimer / grappleCooldownTime;
+        }
+    }
+
+    public void UpdateGrappleCD()
+    {
+        if(grappleShouldCooldown)
+        {
+            return;
+        }
+        else
+        {
+            grappleShouldCooldown = true;
+            grappleCooldownText.gameObject.SetActive(true);
+            grappleCooldownTimer = grappleCooldownTime;
         }
     }
 
