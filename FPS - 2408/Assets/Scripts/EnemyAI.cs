@@ -142,9 +142,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         {
             // Increments the kill count in GameManager when this enemy dies
             GameManager.instance.UpdateEnemyGoal(1);
-            Destroy(gameObject);
-            spawner.OnEnemyDeath(gameObject);
-            
+
+            if (spawner)
+            {
+                spawner.OnEnemyDeath(gameObject);
+            }
         }
     }
 

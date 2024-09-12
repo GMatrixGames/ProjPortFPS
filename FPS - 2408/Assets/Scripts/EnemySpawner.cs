@@ -107,5 +107,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
             spawnedEnemies.Remove(enemy);
             enemiesOnField--;
         }
+
+        Destroy(enemy);
     }
 }

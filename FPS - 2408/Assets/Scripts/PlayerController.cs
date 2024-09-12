@@ -54,24 +54,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
-    #region JetPack Variables
-
-    // Currently deciding weather or not this should be implemented. I'm leaning towards no atm. We'll see.
-    [Header("----- Jetpack -----")]
-    [SerializeField] private int maxFuel;
-    [SerializeField] private float fuel;
-    [SerializeField] private float fuelRecoveryRate;
-    [SerializeField] private float fuelWaitTime;
-    [SerializeField] private float jetPackFuelCost;
-
-    private bool isUsingFuel;
-    private bool hasExhaustedFuel;
-
-    [SerializeField] private float maxAcceleration;
-    [SerializeField] private float accelerationTime;
-
-    #endregion
-
     #region Grapple Variables
 
     [SerializeField] float pullThreshold;
@@ -132,8 +114,6 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
-        fuel = maxFuel;
-        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
     }
 
@@ -184,11 +164,6 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount = 0;
             playerVelocity = Vector3.zero;
             lastTouchedWall = null;
-            hasExhaustedFuel = false;
-            if (fuel < maxFuel && !isUsingFuel)
-            {
-                StartCoroutine(RegainFuel());
-            }
         }
 
         if (grapplingGun.isGrappling)
@@ -255,8 +230,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
         speedCurrent = Mathf.Lerp(speedCurrent, accelerationSpeed, slowdownTimer);
-
-        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
     }
 
     private IEnumerator PlayStep()
@@ -553,40 +526,4 @@ public class PlayerController : MonoBehaviour, IDamage
         }
 
     }
-
-    #region JetPack Methods
-
-    IEnumerator RegainFuel()
-    {
-        yield return new WaitForSeconds(.1f);
-        fuel += fuelRecoveryRate;
-
-        if (fuel > maxFuel)
-        {
-            fuel = maxFuel;
-        }
-    }
-
-    IEnumerator StopRegainingFuel()
-    {
-        yield return new WaitForSeconds(fuelWaitTime);
-        isUsingFuel = false;
-    }
-
-    void JetPack()
-    {
-        isUsingFuel = true;
-        StartCoroutine(StopRegainingFuel());
-
-        playerVelocity.y = Mathf.Lerp(playerVelocity.y, maxAcceleration, accelerationTime);
-
-        fuel -= jetPackFuelCost * Time.deltaTime;
-
-        if (fuel <= 0)
-        {
-            hasExhaustedFuel = true;
-        }
-    }
-
-    #endregion
 }
