@@ -8,7 +8,7 @@ public class SettingsManager : MonoBehaviour
     public static SettingsManager instance;
 
     [Header("Settings")]
-    public Settings settings;
+    public GameSettings settings;
 
     private string settingsPath;
 
@@ -38,7 +38,7 @@ public class SettingsManager : MonoBehaviour
         if (File.Exists(settingsPath))
         {
             var json = File.ReadAllText(settingsPath);
-            settings = JsonUtility.FromJson<Settings>(json);
+            settings = JsonUtility.FromJson<GameSettings>(json);
         }
         else
         {
@@ -48,9 +48,10 @@ public class SettingsManager : MonoBehaviour
 }
 
 [Serializable]
-public class Settings
+public class GameSettings
 {
     public float volume = .5f;
+    public bool hudVisible = true;
 
     public SerializableDictionary<string, KeyCode> keyBindings = new()
     {
