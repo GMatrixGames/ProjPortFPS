@@ -147,6 +147,10 @@ public class EnemyAI : MonoBehaviour, IDamage
             {
                 spawner.OnEnemyDeath(gameObject);
             }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
