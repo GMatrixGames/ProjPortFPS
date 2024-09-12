@@ -1,59 +1,76 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Melee : EnemyAI
 {
-    private bool isAttacking;
-    [SerializeField] private int meleeDamage;
+    private bool isAttacking;  
+    [SerializeField] private int meleeDamage;  
     [SerializeField] private float meleeRate;
-    private Collider playerCollider;
+    [SerializeField] private float meleeRange;
+
+    private Collider playerCollider; 
 
     protected override void Start()
     {
-        base.Start();
+        // Calls the base class Start method
+        base.Start();  
+
+        // Sets the stopping distance to prevent the enemy from getting too close
+        agent.stoppingDistance = meleeRange;
+
+        // Gets reference to the player's collider
         playerCollider = GameManager.instance.player.GetComponent<Collider>();
+
+        // Disables the physical collision between the enemy and the player
+        // Keeping the enemy from pushing the player around when attacking
+        Physics.IgnoreCollision(playerCollider, GetComponent<Collider>());
     }
 
     protected override void Update()
     {
-        base.Update();
-        var enemyCollider = GetComponent<Collider>();
+        // Calls the base class Update method
+        base.Update(); 
 
-        var inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
+        // Calculates the distance between the enemy and the player
+        float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 
-        if (CanSeePlayer() && inMeleeRange && !isAttacking)
+        // If the enemy is not already attacking and is within melee range
+        if (!isAttacking && distanceToPlayer <= meleeRange)
         {
+            // Stops the enemy from moving and begins the attack
+            agent.isStopped = true;
             StartCoroutine(MeleeAttack());
         }
-        else if (CanSeePlayer() && !inMeleeRange && !isAttacking)
+        // If the enemy is not attacking and is outside of melee range
+        else if (!isAttacking && distanceToPlayer > meleeRange)
         {
-            base.Update();
+            // Continue moving towards the player while maintaining the stopping distance
+            agent.isStopped = false;
+            agent.SetDestination(GameManager.instance.player.transform.position);
         }
     }
 
+    // Coroutine to handle melee attacks
     private IEnumerator MeleeAttack()
     {
+        // Preventa multiple attacks at once
         isAttacking = true;
-        agent.isStopped = true; // Stop moving while attacking
 
-        // Check if the player is still in melee range before dealing damage
-        var enemyCollider = GetComponent<Collider>();
-        var inMeleeRange = enemyCollider.bounds.Intersects(playerCollider.bounds);
+        // Makes sure the enemy stops moving during the attack
+        agent.isStopped = true;  
 
-        if (inMeleeRange)
-        {
-            // Apply damage if still in range
-            GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
-            anim.SetTrigger("Attack");
-        }
+        // Deal damage to the player
+        GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
 
-        // Finish attack
+        // Triggers the attack animation
+        anim.SetTrigger("Attack");
+
+        // Wait for the attack cooldown duration
         yield return new WaitForSeconds(meleeRate);
 
-        // Resume movement
-        agent.isStopped = false;
+        // After the cooldown allow movement and set attack to false
         isAttacking = false;
+        agent.isStopped = false;
     }
 }
