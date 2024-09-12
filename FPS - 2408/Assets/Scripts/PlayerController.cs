@@ -76,6 +76,9 @@ public class PlayerController : MonoBehaviour, IDamage
     private List<GunStats> gunList = new();
     private float shootRate;
     private int shootDist;
+    private float currentShots;
+    private int maxShots;
+    private float shootCooldown;
 
     #endregion
 
@@ -154,6 +157,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             // Debug.Log("G key pressed. Calling ThrowGrenade.");
             ThrowGrenade();
+        }
+
+        if (!isShooting)
+        {
+            currentShots -= shootCooldown * Time.deltaTime;
         }
     }
 
@@ -260,6 +268,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private IEnumerator Shoot()
     {
         isShooting = true;
+        currentShots++;
         StartCoroutine(FlashMuzzle());
 
         var shootSounds = gunList[selectedGun].shootSounds ?? Array.Empty<AudioClip>();
@@ -406,6 +415,9 @@ public class PlayerController : MonoBehaviour, IDamage
         maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
+        maxShots = gun.maxShots;
+        shootCooldown = gun.shootCooldown;
+
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gun.gunRotation != default)
@@ -436,6 +448,8 @@ public class PlayerController : MonoBehaviour, IDamage
         maxDamage = gunList[selectedGun].maxDamage;
         shootDist = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
+        maxShots = gunList[selectedGun].maxShots;
+        shootCooldown = gunList[selectedGun].shootCooldown;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gunList[selectedGun].gunRotation != default)

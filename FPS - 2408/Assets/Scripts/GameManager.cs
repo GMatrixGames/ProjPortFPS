@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public Image healthBar;
     public Image fuelBar;
     public GameObject damageFlash;
+    public Image shootCooldownBar;
 
     #endregion
 
@@ -138,6 +139,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Fuel Bar reference is missing!");
         }
     }
+
 
     /// <summary>
     /// Update the goal amount.
