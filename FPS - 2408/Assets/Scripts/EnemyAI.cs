@@ -73,6 +73,11 @@ public class EnemyAI : MonoBehaviour, IDamage
         }
     }
 
+    private void LateUpdate()
+    {
+        healthBar.transform.LookAt(Camera.main.transform.position);
+    }
+
     private IEnumerator Roam()
     {
         isRoaming = true;
@@ -135,11 +140,17 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (hp <= 0)
         {
-            hp = 0;
             // Increments the kill count in GameManager when this enemy dies
             GameManager.instance.UpdateEnemyGoal(1);
-            spawner.OnEnemyDeath(gameObject);
-            Destroy(gameObject);
+
+            if (spawner)
+            {
+                spawner.OnEnemyDeath(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

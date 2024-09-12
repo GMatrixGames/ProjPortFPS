@@ -21,8 +21,17 @@ public class GameManager : MonoBehaviour
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
-    public Image fuelBar;
+    public Image grappleCooldownImage;
+    [SerializeField] TMP_Text grappleCooldownText;
     public GameObject damageFlash;
+
+    #endregion
+
+    #region GrappleCD
+
+    public bool grappleShouldCooldown;
+    [SerializeField] float grappleCooldownTime;
+    private float grappleCooldownTimer = 0f;
 
     #endregion
 
@@ -46,6 +55,11 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+    }
+
+    private void Start()
+    {
+        grappleCooldownImage.fillAmount = 0f;
     }
 
     // Update is called once per frame
@@ -73,6 +87,11 @@ public class GameManager : MonoBehaviour
                 menuActive = menuWin;
                 menuActive.SetActive(isPaused);
             }
+        }
+
+        if(grappleShouldCooldown)
+        {
+            GrappleCooldown();
         }
     }
 
@@ -120,22 +139,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Update the Fuel bar fill amount.
-    /// </summary>
-    ///<param name="fuelCurr"> Players current Fuel</param>
-    ///<param name="fuelMax"> Players max Fuel</param>
-    public void UpdateFuelBar(float fuelCurr, int fuelMax)
+    void GrappleCooldown()
     {
-        // Debug.Log($"Updating Fuel Bar: Current Fuel = {fuelCurr}/{fuelMax}");
-        if (fuelBar)
+        grappleCooldownTimer -= Time.deltaTime;
+
+        if( grappleCooldownTimer < 0f )
         {
-            fuelBar.fillAmount = fuelCurr / fuelMax;
-            // Debug.Log("Fuel Bar Fill Amount: " + fuelBar.fillAmount);
+            grappleShouldCooldown = false;
+            grappleCooldownText.gameObject.SetActive(false);
+            grappleCooldownImage.fillAmount = 0f;   
         }
         else
         {
-            Debug.LogError("Fuel Bar reference is missing!");
+            grappleCooldownText.text = grappleCooldownTimer.ToString("F1");
+            grappleCooldownImage.fillAmount = grappleCooldownTimer / grappleCooldownTime;
+        }
+    }
+
+    public void UpdateGrappleCD()
+    {
+        if(grappleShouldCooldown)
+        {
+            return;
+        }
+        else
+        {
+            grappleShouldCooldown = true;
+            grappleCooldownText.gameObject.SetActive(true);
+            grappleCooldownTimer = grappleCooldownTime;
         }
     }
 
