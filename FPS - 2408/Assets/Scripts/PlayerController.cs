@@ -275,14 +275,15 @@ public class PlayerController : MonoBehaviour, IDamage
     private IEnumerator Slide() 
     {
         isSliding = true; 
-        var originalScale = playerModel.localScale; 
-        playerModel.localScale = new Vector3(originalScale.x, slideHeight, originalScale.z); 
+        var cameraOriginalPos = Camera.main.transform.localPosition; // Use cam position so it doesn't squish things attached to it.
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z); 
 
         yield return new WaitForSeconds(slideDuration); 
 
-        playerModel.localScale = new Vector3(originalScale.x, originalHeight, originalScale.z); 
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z); 
         isSliding = false; 
     }
+
     /// <summary>
     /// Handling of shooting mechanic via raycast.
     /// </summary>
