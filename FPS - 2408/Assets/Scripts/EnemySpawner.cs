@@ -54,14 +54,11 @@ public class EnemySpawner : MonoBehaviour, IDamage
         if (timerActive)
         {
             countdownTimer -= Time.deltaTime;
+            countdownText.text = Mathf.CeilToInt(countdownTimer).ToString();
             if (countdownTimer <= 0)
             {                
                 OnCountdownEnd();
-            }
-            if (countdownText != null) 
-            {
-                countdownText.text = countdownTimer.ToString("F1"); 
-            }
+            }            
         }
     }
 
