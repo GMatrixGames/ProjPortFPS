@@ -51,7 +51,6 @@ public class SettingsManager : MonoBehaviour
 public class GameSettings
 {
     public float volume = .5f;
-    public bool hudVisible = true;
 
     public SerializableDictionary<string, KeyCode> keyBindings = new()
     {
