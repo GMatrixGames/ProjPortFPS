@@ -20,6 +20,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
 
     private float countdownTimer;
     private bool timerActive;
+    private bool isFlashing;
 
     private int hp;
     private int enemiesOnField;
@@ -28,12 +29,14 @@ public class EnemySpawner : MonoBehaviour, IDamage
     private List<GameObject> spawnedEnemies = new();
 
     private Color colorOriginal;
+    private Color countdownColorOriginal;
 
     private void Start()
     {
         hp = spawnerHP;
         hpBar.fillAmount = 1;
         colorOriginal = model.material.color;
+        countdownColorOriginal = countdownText.color;
         GameManager.instance.UpdateSpawnersMax(1);
         countdownTimer = countdownDuration;
 
@@ -56,11 +59,33 @@ public class EnemySpawner : MonoBehaviour, IDamage
         {
             countdownTimer -= Time.deltaTime;
             countdownText.text = "Destroy in: " + Mathf.CeilToInt(countdownTimer);
+            // Check if the timer is below or equal to 3 seconds
+            if (countdownTimer <= 3f && !isFlashing)
+            {
+                StartCoroutine(FlashCountdownText());
+            }
+
             if (countdownTimer <= 0)
             {
                 OnCountdownEnd();
             }
         }
+    }
+
+    private IEnumerator FlashCountdownText()
+    {
+        isFlashing = true;
+        while (countdownTimer > 0 && countdownTimer <= 3f)
+        {
+            // Toggle the text color between red and the original color
+            countdownText.color = countdownText.color == Color.red ? countdownColorOriginal : Color.red;
+
+            yield return new WaitForSeconds(0.5f); 
+        }
+
+        // Restore original color when done
+        countdownText.color = countdownColorOriginal;
+        isFlashing = false;
     }
 
     private IEnumerator SpawnEnemies()
