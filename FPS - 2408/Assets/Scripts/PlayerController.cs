@@ -196,22 +196,20 @@ public class PlayerController : MonoBehaviour, IDamage
             PullToPoint();
         }
 
-        //Movement logic. 
+        // Movement logic. 
         move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
-        Vector3 moveVector = transform.TransformDirection(move) * accelerationSpeed;
+        var moveVector = transform.TransformDirection(move) * accelerationSpeed;
 
-        rb.AddForce(moveVector.x, 0, moveVector.z);
+        // Directly set the velocity for more responsive control
+        var targetVelocity = moveVector;
+        targetVelocity.y = rb.velocity.y; // Preserve the vertical velocity
+        rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * slowdownTimer);
 
-        //Counter movement, to clamp speed.
-        if (rb.velocity.y == 0)
+        // Counter movement to stop quickly when no input is given
+        if (rb.velocity.y == 0 && move.magnitude == 0)
         {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, maxSpeed, slowdownTimer));
+            rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * slowdownTimer);
         }
-        else
-        {
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, Mathf.Lerp(rb.velocity.magnitude, airMaxSpeed, slowdownTimer));
-        }
-              
 
         if (rb.velocity.y == 0 && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
@@ -239,10 +237,11 @@ public class PlayerController : MonoBehaviour, IDamage
         // you haven't, your gravity gets slowed for wallrunning. 
         if (runningOnWall && hasWallKicked == false)
         {
-            rb.AddForce(Vector3.down * wallRunGravity * Time.deltaTime);
-        }else // Otherwise, use normal gravity
+            rb.AddForce(Vector3.down * (wallRunGravity * Time.deltaTime));
+        }
+        else // Otherwise, use normal gravity
         {
-            rb.AddForce(Vector3.down * gravity * Time.deltaTime);
+            rb.AddForce(Vector3.down * (gravity * Time.deltaTime));
         }
 
         if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
