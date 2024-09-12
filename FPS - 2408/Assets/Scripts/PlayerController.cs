@@ -25,6 +25,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
+    [Header("----- Slide Attributes -----")]
+    [SerializeField] private float slideSpeed = 10f; 
+    [SerializeField] private float slideDuration = 0.5f;
+    [SerializeField] private float slideHeight = 0.5f; 
+    [SerializeField] private Transform playerModel; 
+
+    private bool isSliding; 
+    private float originalHeight; 
+
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
     [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
@@ -108,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamage
         hpOrig = hpMax;
         SpawnPlayer();
         rb = GetComponent<Rigidbody>();
+        originalHeight = playerModel.localScale.y;
     }
 
     public void SpawnPlayer()
@@ -127,6 +137,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Movement();
             SelectGun();
+
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0) 
+            {
+                StartCoroutine(Slide()); 
+            }
         }
 
         Sprint();
@@ -257,6 +272,17 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
+    private IEnumerator Slide() 
+    {
+        isSliding = true; 
+        var originalScale = playerModel.localScale; 
+        playerModel.localScale = new Vector3(originalScale.x, slideHeight, originalScale.z); 
+
+        yield return new WaitForSeconds(slideDuration); 
+
+        playerModel.localScale = new Vector3(originalScale.x, originalHeight, originalScale.z); 
+        isSliding = false; 
+    }
     /// <summary>
     /// Handling of shooting mechanic via raycast.
     /// </summary>
