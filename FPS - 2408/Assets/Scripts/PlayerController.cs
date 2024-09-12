@@ -265,7 +265,7 @@ public class PlayerController : MonoBehaviour, IDamage
         var shootSounds = gunList[selectedGun].shootSounds ?? Array.Empty<AudioClip>();
         if (shootSounds.Length > 0)
         {
-            var randomSound = Random.Range(0, shootSounds.Length -1);
+            var randomSound = Random.Range(0, shootSounds.Length - 1);
             gunModel.GetComponent<AudioSource>().PlayOneShot(shootSounds[randomSound], gunList[selectedGun].shootVolume);
         }
 
