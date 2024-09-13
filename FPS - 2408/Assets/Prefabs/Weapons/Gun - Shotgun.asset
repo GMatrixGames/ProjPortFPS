@@ -23,8 +23,10 @@ MonoBehaviour:
   ammoMax: 5
   hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
   shootSounds:
-  - {fileID: 8300000, guid: 08f78eba48bb21c44ac5a74ca84efc83, type: 3}
-  - {fileID: 8300000, guid: 3dc7b4438e9f788479f2eba0e75191b1, type: 3}
-  - {fileID: 8300000, guid: e196615aab553a14ab4e1aeb462c195c, type: 3}
-  - {fileID: 8300000, guid: 159aa6b3153429349b06479ba4bcb8fc, type: 3}
+  - {fileID: 8300000, guid: 1df1429981f76644097c7fd47fc5f239, type: 3}
+  - {fileID: 8300000, guid: 517cb4111b60bc444813bbc62a479e05, type: 3}
+  - {fileID: 8300000, guid: 6349a640dc07c3b4389c205f5b5a5145, type: 3}
+  - {fileID: 8300000, guid: 67535d6a9b045954e925424a157be5d5, type: 3}
+  - {fileID: 8300000, guid: b527b67e65d45b741b1e55da12b8b297, type: 3}
+  - {fileID: 8300000, guid: b7c83d02d034c2b4c9fd14359cb69164, type: 3}
   shootVolume: 0.5

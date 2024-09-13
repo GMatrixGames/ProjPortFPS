@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
   gunRotation: {x: -90, y: 0, z: 0, w: 0}
-  shootDamage: 10
+  shootDamage: 5
   minDamage: 5
   maxDamage: 10
-  shootRate: 0.5
+  shootRate: 0.15
   shootDist: 500
   ammoCurrent: 0
   ammoMax: 15
   hitEffect: {fileID: 5024009746357069192, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   shootSounds:
-  - {fileID: 8300000, guid: 7b889162724f05c4f95da46adbd50ef7, type: 3}
-  - {fileID: 8300000, guid: b9bcff787e03ea4448419527c126e177, type: 3}
-  - {fileID: 8300000, guid: b39ec697f76aec04fb8081c0c4f6dbae, type: 3}
-  - {fileID: 8300000, guid: 6c641842185384646b603322cc7e7559, type: 3}
+  - {fileID: 8300000, guid: 1b145bcffd767854fb0c71c37678ebaa, type: 3}
+  - {fileID: 8300000, guid: f19e3fdb9c8082647a2c32beca28ba84, type: 3}
+  - {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
+  - {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
   shootVolume: 0.3
