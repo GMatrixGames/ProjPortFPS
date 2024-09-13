@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
     public Image fuelBar;
+    public Image heatBar;
     public GameObject damageFlash;
     public Image shootCooldownBar;
 
@@ -137,6 +138,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Fuel Bar reference is missing!");
+        }
+    }
+
+    public void UpdateWeaponHeat(float currShots, float maxShots)
+    {
+        if(heatBar)
+        {
+            heatBar.fillAmount = currShots / maxShots; 
+        }
+        else
+        {
+            Debug.LogError("Ayo you missin' shit.");
         }
     }
 

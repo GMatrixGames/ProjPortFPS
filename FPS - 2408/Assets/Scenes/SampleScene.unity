@@ -1331,6 +1331,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
+--- !u!114 &1224279841 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2783919759243408365, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+  m_PrefabInstance: {fileID: 6920340972759494651}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1440789594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2516,6 +2527,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 2414281652979432760, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: Heat Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547522994251808288, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 895
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547522994251808288, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 189
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783919759243408365, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Color.b
+      value: 0.18358421
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783919759243408365, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Color.g
+      value: 0.172549
+      objectReference: {fileID: 0}
+    - target: {fileID: 2783919759243408365, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2596,6 +2631,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5869089252780513653, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_Name
+      value: Player Gun Heat Bar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958310061344574262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: fuelBar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958310061344574262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: heatBar
+      value: 
+      objectReference: {fileID: 1224279841}
     - target: {fileID: 7958310061344574262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: killCountText
       value: 

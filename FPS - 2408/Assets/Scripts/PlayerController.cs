@@ -76,9 +76,10 @@ public class PlayerController : MonoBehaviour, IDamage
     private List<GunStats> gunList = new();
     private float shootRate;
     private int shootDist;
-    private float currentShots;
+    [SerializeField] private float currentShots;
     private int maxShots;
     private float shootCooldown;
+    public bool isCoolingDown;
 
     #endregion
 
@@ -161,8 +162,19 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (!isShooting)
         {
-            currentShots -= shootCooldown * Time.deltaTime;
+            currentShots = Mathf.Clamp(currentShots - shootCooldown * Time.deltaTime, 0, 1000);
         }
+
+        if(currentShots == 0)
+        {
+            isCoolingDown = false;
+        }
+
+        if (currentShots > gunList[selectedGun].maxShots)
+        {
+            isCoolingDown = true;
+        }
+
     }
 
     /// <summary>
@@ -218,7 +230,7 @@ public class PlayerController : MonoBehaviour, IDamage
             playerVelocity.y -= gravity * Time.deltaTime;
         }
 
-        if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
+        if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0 && !isCoolingDown)
         {
             StartCoroutine(Shoot());
         }
@@ -233,7 +245,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(PlayStep());
         }
 
-        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
+        GameManager.instance.UpdateWeaponHeat(currentShots, maxShots);
     }
 
     private IEnumerator PlayStep()
