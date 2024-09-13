@@ -1,5 +1,5 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuPause;
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
+    [SerializeField] private GameObject menuOptions;
+    [SerializeField] private GameObject menuKeybinds;
 
     [SerializeField] private TMP_Text killCountText;
     [SerializeField] private TMP_Text spawnersCountText;
@@ -43,7 +45,7 @@ public class GameManager : MonoBehaviour
     private int totalEnemies;
     private int spawnersDestroyedCount;
     private int spawnersCount;
-
+    
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
 
@@ -117,6 +119,36 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(isPaused);
         menuActive = null;
+    }
+
+    public void OpenKeybindsMenu()
+    {
+        if (menuActive) menuActive.SetActive(false);
+        menuActive = menuKeybinds;
+        menuActive.SetActive(true);
+    }
+
+    /// <summary>
+    /// Open the options menu
+    /// </summary>
+    public void OpenOptionsMenu()
+    {
+        if (menuActive) menuActive.SetActive(false);
+        menuActive = menuOptions;
+        menuActive.SetActive(true);
+    }
+
+    /// <summary>
+    /// Re-open the previous window
+    /// </summary>
+    public void ReopenPreviousWindow()
+    {
+        if (menuActive)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuPause; // Assuming the previous window is the pause menu
+        menuActive.SetActive(true);
     }
 
     /// <summary>
