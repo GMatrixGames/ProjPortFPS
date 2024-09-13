@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Showcase.unity
     guid: 7feb9211a6ae858488c10a1719ff8079
   - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
+    path: Assets/Scenes/Gameplay_OLD.unity
     guid: 3e00af26326b3204d8c46d27a9e7577d
   m_configObjects: {}
