@@ -17,9 +17,9 @@ MonoBehaviour:
   shootDamage: 20
   minDamage: 15
   maxDamage: 20
-  shootRate: 0.5
+  shootRate: 0.1
   shootDist: 200
-  maxShots: 5
+  maxShots: 30
   shootCooldown: 2
   hitEffect: {fileID: 1301697207402410478, guid: 39f852c28f9c3fd45a427c24f3564ba7, type: 3}
   shootSounds: []
