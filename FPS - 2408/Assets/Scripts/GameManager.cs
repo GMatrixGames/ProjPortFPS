@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
-    public Image fuelBar;
     public Image heatBar;
     public GameObject damageFlash;
     public Image shootCooldownBar;
@@ -119,25 +118,6 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("Health Bar reference is missing!");
-        }
-    }
-
-    /// <summary>
-    /// Update the Fuel bar fill amount.
-    /// </summary>
-    ///<param name="fuelCurr"> Players current Fuel</param>
-    ///<param name="fuelMax"> Players max Fuel</param>
-    public void UpdateFuelBar(float fuelCurr, int fuelMax)
-    {
-        // Debug.Log($"Updating Fuel Bar: Current Fuel = {fuelCurr}/{fuelMax}");
-        if (fuelBar)
-        {
-            fuelBar.fillAmount = fuelCurr / fuelMax;
-            // Debug.Log("Fuel Bar Fill Amount: " + fuelBar.fillAmount);
-        }
-        else
-        {
-            Debug.LogError("Fuel Bar reference is missing!");
         }
     }
 

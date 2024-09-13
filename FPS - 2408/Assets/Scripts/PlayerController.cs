@@ -49,24 +49,6 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
-    #region JetPack Variables
-
-    // Currently deciding weather or not this should be implemented. I'm leaning towards no atm. We'll see.
-    [Header("----- Jetpack -----")]
-    [SerializeField] private int maxFuel;
-    [SerializeField] private float fuel;
-    [SerializeField] private float fuelRecoveryRate;
-    [SerializeField] private float fuelWaitTime;
-    [SerializeField] private float jetPackFuelCost;
-
-    private bool isUsingFuel;
-    private bool hasExhaustedFuel;
-
-    [SerializeField] private float maxAcceleration;
-    [SerializeField] private float accelerationTime;
-
-    #endregion
-
     #region Weapon
 
     [Header("----- Weapon -----")]
@@ -121,8 +103,6 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
-        fuel = maxFuel;
-        GameManager.instance.UpdateFuelBar(fuel, maxFuel);
         controller.enabled = false; // CharacterController doesn't allow transform to be modified directly, so we disable it temporarily
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
@@ -170,7 +150,7 @@ public class PlayerController : MonoBehaviour, IDamage
             isCoolingDown = false;
         }
 
-        if (currentShots > gunList[selectedGun].maxShots)
+        if (currentShots >= gunList[selectedGun].maxShots)
         {
             isCoolingDown = true;
         }
@@ -187,11 +167,6 @@ public class PlayerController : MonoBehaviour, IDamage
             jumpCount = 0;
             playerVelocity = Vector3.zero;
             lastTouchedWall = null;
-            hasExhaustedFuel = false;
-            if (fuel < maxFuel && !isUsingFuel)
-            {
-                StartCoroutine(RegainFuel());
-            }
         }
 
         // move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -233,11 +208,6 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0 && !isCoolingDown)
         {
             StartCoroutine(Shoot());
-        }
-
-        if (Input.GetButton("Jetpack") && !hasExhaustedFuel)
-        {
-            JetPack();
         }
 
         if (controller.isGrounded && move.magnitude > 0.3f && !isPlayingStep)
@@ -532,40 +502,4 @@ public class PlayerController : MonoBehaviour, IDamage
             Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
-
-    #region JetPack Methods
-
-    IEnumerator RegainFuel()
-    {
-        yield return new WaitForSeconds(.1f);
-        fuel += fuelRecoveryRate;
-
-        if (fuel > maxFuel)
-        {
-            fuel = maxFuel;
-        }
-    }
-
-    IEnumerator StopRegainingFuel()
-    {
-        yield return new WaitForSeconds(fuelWaitTime);
-        isUsingFuel = false;
-    }
-
-    void JetPack()
-    {
-        isUsingFuel = true;
-        StartCoroutine(StopRegainingFuel());
-
-        playerVelocity.y = Mathf.Lerp(playerVelocity.y, maxAcceleration, accelerationTime);
-
-        fuel -= jetPackFuelCost * Time.deltaTime;
-
-        if (fuel <= 0)
-        {
-            hasExhaustedFuel = true;
-        }
-    }
-
-    #endregion
 }
