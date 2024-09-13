@@ -38,4 +38,15 @@ public class ButtonHandler : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void GoToLevel1()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 }
