@@ -80,7 +80,7 @@ public class BossAI : EnemyAI
         isShooting = true;
 
         // Trigger the melee attack animation
-        anim.SetTrigger("Attack");
+        // anim.SetTrigger("Attack");
 
         yield return new WaitForSeconds(0.5f);
 
@@ -115,13 +115,13 @@ public class BossAI : EnemyAI
         if (hp <= 0)
         {
             // Trigger the death animation
-            anim.SetTrigger("IsDead");
+            // anim.SetTrigger("IsDead");
             Destroy(gameObject);
         }
         else
         {
             // Trigger a damage animation
-            DamageAnimation();
+            // DamageAnimation();
         }
     }
 
@@ -150,7 +150,7 @@ public class BossAI : EnemyAI
         if (canTaunt)
         {
             // Trigger the taunt animation
-            anim.SetTrigger("Taunt");
+            // anim.SetTrigger("Taunt");
 
             // Start a cooldown so the boss doesn't taunt too frequently
             StartCoroutine(TauntCooldown());

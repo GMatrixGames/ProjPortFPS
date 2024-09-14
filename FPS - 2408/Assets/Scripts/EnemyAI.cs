@@ -59,23 +59,18 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         if (playerInRange && !CanSeePlayer())
         {
-            if (!isRoaming && agent.remainingDistance < 0.05)
+            if (this is not BossAI && !isRoaming && agent.remainingDistance < 0.05)
             {
                 StartCoroutine(Roam());
             }
         }
         else if (!playerInRange)
         {
-            if (!isRoaming && agent.remainingDistance < 0.05)
+            if (this is not BossAI && !isRoaming && agent.remainingDistance < 0.05)
             {
                 StartCoroutine(Roam());
             }
         }
-    }
-
-    private void LateUpdate()
-    {
-        healthBar.transform.LookAt(Camera.main.transform.position);
     }
 
     private IEnumerator Roam()
