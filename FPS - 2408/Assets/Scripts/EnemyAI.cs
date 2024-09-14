@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour, IDamage
     // [SerializeField] private Collider meleeCol;
 
     [SerializeField] private Image healthBar;
-    [SerializeField] private int hp;
+    [SerializeField] protected int hp;
     private int maxHp;
     [SerializeField] private int viewAngle;
     [SerializeField] private int facePlayerSpeed;
@@ -22,11 +22,11 @@ public class EnemyAI : MonoBehaviour, IDamage
     [SerializeField] private int animSpeedTrans;
 
     [SerializeField] private GameObject bullet;
-    [SerializeField] private float shootRate;
+    [SerializeField] protected float shootRate;
     [SerializeField] private int shootAngle;
 
-    private bool isShooting;
-    private bool playerInRange;
+    protected bool isShooting;
+    protected bool playerInRange;
     private bool isRoaming;
 
     private float angleToPlayer;
@@ -121,14 +121,14 @@ public class EnemyAI : MonoBehaviour, IDamage
         return false;
     }
 
-    private void FacePlayer()
+    protected void FacePlayer()
     {
         var rot = Quaternion.LookRotation(playerDir);
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * facePlayerSpeed);
     }
 
     /// <inheritdoc/>
-    public void TakeDamage(int amount)
+    virtual public void TakeDamage(int amount)
     {
         hp -= amount;
         agent.SetDestination(GameManager.instance.player.transform.position);
@@ -136,7 +136,7 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         StartCoroutine(FlashRed());
 
-        healthBar.fillAmount = (float) hp / maxHp;
+        healthBar.fillAmount = (float)hp / maxHp;
 
         if (hp <= 0)
         {
