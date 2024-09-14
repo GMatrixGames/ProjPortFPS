@@ -486,6 +486,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
+        currentShots = 0;
         minDamage = gunList[selectedGun].minDamage;
         maxDamage = gunList[selectedGun].maxDamage;
         shootDist = gunList[selectedGun].shootDist;
