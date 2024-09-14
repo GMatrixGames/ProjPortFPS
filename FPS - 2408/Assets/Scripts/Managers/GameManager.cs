@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
     [SerializeField] private GameObject menuOptions;
-    [SerializeField] private GameObject menuKeybinds;
 
     [SerializeField] private TMP_Text killCountText;
     [SerializeField] private TMP_Text spawnersCountText;

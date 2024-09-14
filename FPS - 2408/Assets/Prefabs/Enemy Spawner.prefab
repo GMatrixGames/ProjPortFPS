@@ -511,7 +511,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -56.25
+      value: -24.62774
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -519,7 +519,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -220
+      value: -13.375681
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e1bbd78d34a51b548a1204008544db6a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -625,7 +625,7 @@ MonoBehaviour:
   distanceToSpawn: 1
   hpBar: {fileID: 24627152503061885}
   countdownText: {fileID: 405735254672766970}
-  countdownDuration: 10
+  countdownDuration: 60
 --- !u!95 &469437648268784055
 Animator:
   serializedVersion: 5
