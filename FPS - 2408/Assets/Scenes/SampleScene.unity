@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 271e0a7e9c6314f409bca22588d21e0c, type: 2}
+--- !u!1 &102110881 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6720996500458319923, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+  m_PrefabInstance: {fileID: 6920340972759494651}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &165888432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2526,6 +2531,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6720996500458319923, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958310061344574262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: heatBarParent
+      value: 
+      objectReference: {fileID: 102110881}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

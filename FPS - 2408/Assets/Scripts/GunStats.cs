@@ -14,4 +14,5 @@ public class GunStats : ScriptableObject
     public ParticleSystem hitEffect;
     public AudioClip[] shootSounds;
     public float shootVolume = .5f;
+    public bool displayHeat = true;
 }
