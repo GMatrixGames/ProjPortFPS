@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour
 
         if (killCount >= totalEnemies && spawnersDestroyedCount >= spawnersCount)
         {
-            if (menuActive != menuWin) // Since we're handling this in Update instead of in the goal updates, we need to check if the menu is already active.
+            if (menuActive != menuWin) // Since we're handling this in Update instead of in the goal updates,
+                                       // we need to check if the menu is already active.
             {
                 StatePause();
                 menuActive = menuWin;
