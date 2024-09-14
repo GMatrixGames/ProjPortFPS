@@ -150,11 +150,10 @@ public class PlayerController : MonoBehaviour, IDamage
             isCoolingDown = false;
         }
 
-        if (currentShots >= gunList[selectedGun].maxShots)
+        if (gunList.Count > 0 && currentShots >= gunList[selectedGun].maxShots)
         {
             isCoolingDown = true;
         }
-
     }
 
     /// <summary>
