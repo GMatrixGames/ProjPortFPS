@@ -297,10 +297,13 @@ public class PlayerController : MonoBehaviour, IDamage
         var cameraOriginalPos = Camera.main.transform.localPosition; // Use cam position so it doesn't squish things attached to it.
         Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z); 
 
-        yield return new WaitForSeconds(slideDuration); 
+        var slideDirection = transform.forward * slideSpeed;
+        rb.velocity += new Vector3(slideDirection.x, 0, slideDirection.z);
+
+        yield return new WaitForSeconds(slideDuration);
 
         Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z); 
-        isSliding = false; 
+        isSliding = false;
     }
 
     /// <summary>
