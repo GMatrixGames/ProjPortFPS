@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class ButtonHandler : MonoBehaviour
 {
     [SerializeField] private GameObject settingsMenu;
+    [SerializeField] private GameObject creditsMenu;
 
     /// <summary>
     /// Resume game from pause menu.
@@ -76,6 +77,22 @@ public class ButtonHandler : MonoBehaviour
             SettingsManager.instance.Load(); // Load previous settings
 
             settingsMenu.SetActive(false);
+        }
+    }
+
+    public void CreditsMenuOn()
+    {
+        if (creditsMenu.activeInHierarchy == false)
+        { 
+            creditsMenu.SetActive(true);
+        }
+    }
+
+    public void CreditsMenuExit()
+    {
+        if (creditsMenu.activeInHierarchy)
+        {
+            creditsMenu.SetActive(false);
         }
     }
 }
