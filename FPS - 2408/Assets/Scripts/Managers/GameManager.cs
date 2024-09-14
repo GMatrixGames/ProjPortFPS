@@ -103,7 +103,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StatePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None; // GK: Personally dislike exclusive windowed, so it's None.
@@ -114,18 +114,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScale; // GK: Utilize stored timescale.
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(isPaused);
+        menuActive.SetActive(false);
         menuActive = null;
     }
 
-    public void OpenKeybindsMenu()
+    public void OpenPauseMenu()
     {
         if (menuActive) menuActive.SetActive(false);
-        menuActive = menuKeybinds;
+        menuActive = menuPause;
         menuActive.SetActive(true);
     }
 

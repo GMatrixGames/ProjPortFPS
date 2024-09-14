@@ -703,7 +703,7 @@ MonoBehaviour:
   cameraShake: {fileID: 3705740741484860386}
   slideSpeed: 10
   slideDuration: 1
-  slideHeight: 0.5
+  slideHeight: 0.2
   playerModel: {fileID: 3838082731397906876}
   audioSteps:
   - {fileID: 8300000, guid: 1eb96f10ec51b6d44932e631f1918e6a, type: 3}

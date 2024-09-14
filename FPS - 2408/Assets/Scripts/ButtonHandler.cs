@@ -4,9 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class ButtonHandler : MonoBehaviour
 {
-
     [SerializeField] private GameObject settingsMenu;
- 
+
     /// <summary>
     /// Resume game from pause menu.
     /// </summary>
@@ -54,16 +53,28 @@ public class ButtonHandler : MonoBehaviour
 
     public void SettingsMenuOn()
     {
-        if(settingsMenu.activeInHierarchy == false)
+        if (!settingsMenu.activeInHierarchy)
         {
             settingsMenu.SetActive(true);
         }
     }
 
-    public void SettingsMenuOff()
+    public void SettingsMenuSaveExit()
     {
-        if (settingsMenu.activeInHierarchy == true)
+        if (settingsMenu.activeInHierarchy)
         {
+            SettingsManager.instance.Save();
+
+            settingsMenu.SetActive(false);
+        }
+    }
+
+    public void SettingsMenuExit()
+    {
+        if (settingsMenu.activeInHierarchy)
+        {
+            SettingsManager.instance.Load(); // Load previous settings
+
             settingsMenu.SetActive(false);
         }
     }
