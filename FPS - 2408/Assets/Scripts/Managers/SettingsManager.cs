@@ -17,7 +17,7 @@ public class SettingsManager : MonoBehaviour
         if (!instance)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // This is static across ALL scenes
+            // DontDestroyOnLoad(gameObject); // This is static across ALL scenes
             settingsPath = Path.Combine(Application.persistentDataPath, "settings.json");
             Load(); // Load settings on awake
         }

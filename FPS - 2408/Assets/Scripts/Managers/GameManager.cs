@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject menuWin;
     [SerializeField] private GameObject menuLose;
     [SerializeField] private GameObject menuOptions;
-    [SerializeField] private GameObject menuKeybinds;
 
     [SerializeField] private TMP_Text killCountText;
     [SerializeField] private TMP_Text spawnersCountText;
@@ -23,9 +22,11 @@ public class GameManager : MonoBehaviour
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
+    public Image heatBar;
     public Image grappleCooldownImage;
     [SerializeField] TMP_Text grappleCooldownText;
     public GameObject damageFlash;
+    public Image shootCooldownBar;
 
     #endregion
 
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     private int totalEnemies;
     private int spawnersDestroyedCount;
     private int spawnersCount;
-    
+
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
 
@@ -83,7 +84,8 @@ public class GameManager : MonoBehaviour
 
         if (killCount >= totalEnemies && spawnersDestroyedCount >= spawnersCount)
         {
-            if (menuActive != menuWin) // Since we're handling this in Update instead of in the goal updates, we need to check if the menu is already active.
+            if (menuActive != menuWin) // Since we're handling this in Update instead of in the goal updates,
+                // we need to check if the menu is already active.
             {
                 StatePause();
                 menuActive = menuWin;
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(grappleShouldCooldown)
+        if (grappleShouldCooldown)
         {
             GrappleCooldown();
         }
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StatePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None; // GK: Personally dislike exclusive windowed, so it's None.
@@ -113,18 +115,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void StateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScale; // GK: Utilize stored timescale.
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(isPaused);
+        menuActive.SetActive(false);
         menuActive = null;
     }
 
-    public void OpenKeybindsMenu()
+    public void OpenPauseMenu()
     {
         if (menuActive) menuActive.SetActive(false);
-        menuActive = menuKeybinds;
+        menuActive = menuPause;
         menuActive.SetActive(true);
     }
 
@@ -147,8 +149,21 @@ public class GameManager : MonoBehaviour
         {
             menuActive.SetActive(false);
         }
+
         menuActive = menuPause; // Assuming the previous window is the pause menu
         menuActive.SetActive(true);
+    }
+
+    public void UpdateWeaponHeat(float currShots, float maxShots)
+    {
+        if (heatBar)
+        {
+            heatBar.fillAmount = currShots / maxShots;
+        }
+        else
+        {
+            Debug.LogError("Ayo you missin' shit.");
+        }
     }
 
     /// <summary>
@@ -175,11 +190,11 @@ public class GameManager : MonoBehaviour
     {
         grappleCooldownTimer -= Time.deltaTime;
 
-        if( grappleCooldownTimer < 0f )
+        if (grappleCooldownTimer < 0f)
         {
             grappleShouldCooldown = false;
             grappleCooldownText.gameObject.SetActive(false);
-            grappleCooldownImage.fillAmount = 0f;   
+            grappleCooldownImage.fillAmount = 0f;
         }
         else
         {
@@ -190,7 +205,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGrappleCD()
     {
-        if(grappleShouldCooldown)
+        if (grappleShouldCooldown)
         {
             return;
         }

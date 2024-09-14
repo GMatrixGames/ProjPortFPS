@@ -695,12 +695,16 @@ MonoBehaviour:
   accelerationSpeed: 20
   maxSpeed: 20
   airMaxSpeed: 35
-  slowdownTimer: 1.5
+  slowdownTimer: 3
   sprintMod: 2
   jumpMax: 2
   jumpSpeed: 12
   gravity: 1000
   cameraShake: {fileID: 3705740741484860386}
+  slideSpeed: 10
+  slideDuration: 1
+  slideHeight: 0.2
+  playerModel: {fileID: 3838082731397906876}
   audioSteps:
   - {fileID: 8300000, guid: 1eb96f10ec51b6d44932e631f1918e6a, type: 3}
   - {fileID: 8300000, guid: a2f6051da586aea4a9f4f616af383c8c, type: 3}
