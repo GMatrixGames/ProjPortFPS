@@ -88,7 +88,7 @@ public class BossAI : EnemyAI
         MeleeDamage();
 
         // Wait for the shootRate (cooldown) before allowing another melee attack
-        yield return new WaitForSeconds(shootRate);
+        yield return new WaitForSeconds(shootRate * 1.15f);
         isShooting = false;
     }
 
