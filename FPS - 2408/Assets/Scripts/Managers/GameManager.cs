@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public Image grappleCooldownImage;
     [SerializeField] TMP_Text grappleCooldownText;
     public GameObject damageFlash;
-    public Image shootCooldownBar;
+    public GameObject heatBarParent;
 
     #endregion
 

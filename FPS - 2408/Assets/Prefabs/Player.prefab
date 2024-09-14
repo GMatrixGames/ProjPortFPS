@@ -726,6 +726,8 @@ MonoBehaviour:
   headshotMultiplier: 2
   gunModel: {fileID: 8933824663232001653}
   muzzleFlash: {fileID: 692860436970780126}
+  currentShots: 0
+  isCoolingDown: 0
   hasGrenade: 0
   grenadePrefab: {fileID: 945894502721705960, guid: a458c692a2624b044ba2c66cbdedc64b, type: 3}
   throwPoint: {fileID: 4969544857447736237}
