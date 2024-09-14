@@ -16,7 +16,7 @@ MonoBehaviour:
   gunRotation: {x: 0, y: 0, z: 0, w: 0}
   shootDamage: 2
   minDamage: 1
-  maxDamage: 2
+  maxDamage: 3
   shootRate: 0.5
   shootDist: 350
   maxShots: 10000000
@@ -29,5 +29,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 230d59294c9857140b63dd308ea4bd63, type: 3}
   - {fileID: 8300000, guid: 31f5f9d19376b964da72874480ad63ea, type: 3}
   - {fileID: 8300000, guid: 74079e3b043b8a549a28e1350566b7e0, type: 3}
-  shootVolume: 0.3
+  shootVolume: 0.1
   displayHeat: 0
