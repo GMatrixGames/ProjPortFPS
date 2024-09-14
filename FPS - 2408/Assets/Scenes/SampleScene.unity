@@ -2390,6 +2390,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 265944608672329050, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -40
+      objectReference: {fileID: 0}
+    - target: {fileID: 985328972627564191, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1178626050372240119, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313815090407439613, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173464394423474955, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -81
+      objectReference: {fileID: 0}
+    - target: {fileID: 3615186862260551423, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -41
+      objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2470,6 +2494,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5947914359011734081, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6906459532435524211, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8279054077111616189, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892082978776860229, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2545,8 +2585,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: slowdownTimer
-      value: 3
+      propertyPath: slideHeight
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3838082731397906876, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_LocalPosition.x

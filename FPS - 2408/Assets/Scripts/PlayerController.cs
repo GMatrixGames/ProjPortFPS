@@ -25,6 +25,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
+    [Header("----- Slide Attributes -----")]
+    [SerializeField] private float slideSpeed = 10f; 
+    [SerializeField] private float slideDuration = 0.5f;
+    [SerializeField] private float slideHeight = 0.5f; 
+    [SerializeField] private Transform playerModel; 
+
+    private bool isSliding; 
+    private float originalHeight; 
+
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
     [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
@@ -108,6 +117,7 @@ public class PlayerController : MonoBehaviour, IDamage
         hpOrig = hpMax;
         SpawnPlayer();
         rb = GetComponent<Rigidbody>();
+        originalHeight = playerModel.localScale.y;
     }
 
     public void SpawnPlayer()
@@ -127,6 +137,11 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             Movement();
             SelectGun();
+
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0) 
+            {
+                StartCoroutine(Slide()); 
+            }
         }
 
         Sprint();
@@ -255,6 +270,18 @@ public class PlayerController : MonoBehaviour, IDamage
             accelerationSpeed /= sprintMod;
             isSprinting = false;
         }
+    }
+
+    private IEnumerator Slide() 
+    {
+        isSliding = true; 
+        var cameraOriginalPos = Camera.main.transform.localPosition; // Use cam position so it doesn't squish things attached to it.
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z); 
+
+        yield return new WaitForSeconds(slideDuration); 
+
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z); 
+        isSliding = false; 
     }
 
     /// <summary>
