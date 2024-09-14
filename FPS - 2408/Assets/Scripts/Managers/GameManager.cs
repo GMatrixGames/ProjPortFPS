@@ -23,9 +23,11 @@ public class GameManager : MonoBehaviour
     public GameObject player { get; private set; }
     public PlayerController playerScript { get; private set; }
     public Image healthBar;
+    public Image heatBar;
     public Image grappleCooldownImage;
     [SerializeField] TMP_Text grappleCooldownText;
     public GameObject damageFlash;
+    public Image shootCooldownBar;
 
     #endregion
 
@@ -45,7 +47,7 @@ public class GameManager : MonoBehaviour
     private int totalEnemies;
     private int spawnersDestroyedCount;
     private int spawnersCount;
-    
+
     // GK: Custom timeScale, should be 1 by default.
     [SerializeField] private int timeScale = 1;
 
@@ -84,7 +86,7 @@ public class GameManager : MonoBehaviour
         if (killCount >= totalEnemies && spawnersDestroyedCount >= spawnersCount)
         {
             if (menuActive != menuWin) // Since we're handling this in Update instead of in the goal updates,
-                                       // we need to check if the menu is already active.
+                // we need to check if the menu is already active.
             {
                 StatePause();
                 menuActive = menuWin;
@@ -92,7 +94,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(grappleShouldCooldown)
+        if (grappleShouldCooldown)
         {
             GrappleCooldown();
         }
@@ -148,8 +150,21 @@ public class GameManager : MonoBehaviour
         {
             menuActive.SetActive(false);
         }
+
         menuActive = menuPause; // Assuming the previous window is the pause menu
         menuActive.SetActive(true);
+    }
+
+    public void UpdateWeaponHeat(float currShots, float maxShots)
+    {
+        if (heatBar)
+        {
+            heatBar.fillAmount = currShots / maxShots;
+        }
+        else
+        {
+            Debug.LogError("Ayo you missin' shit.");
+        }
     }
 
     /// <summary>
@@ -176,11 +191,11 @@ public class GameManager : MonoBehaviour
     {
         grappleCooldownTimer -= Time.deltaTime;
 
-        if( grappleCooldownTimer < 0f )
+        if (grappleCooldownTimer < 0f)
         {
             grappleShouldCooldown = false;
             grappleCooldownText.gameObject.SetActive(false);
-            grappleCooldownImage.fillAmount = 0f;   
+            grappleCooldownImage.fillAmount = 0f;
         }
         else
         {
@@ -191,7 +206,7 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGrappleCD()
     {
-        if(grappleShouldCooldown)
+        if (grappleShouldCooldown)
         {
             return;
         }

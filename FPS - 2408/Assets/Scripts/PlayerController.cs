@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour, IDamage
     private List<GunStats> gunList = new();
     private float shootRate;
     private int shootDist;
+    [SerializeField] private float currentShots;
+    private int maxShots;
+    private float shootCooldown;
+    public bool isCoolingDown;
 
     #endregion
 
@@ -165,9 +169,23 @@ public class PlayerController : MonoBehaviour, IDamage
             ThrowGrenade();
         }
 
+        if (!isShooting)
+        {
+            currentShots = Mathf.Clamp(currentShots - shootCooldown * Time.deltaTime, 0, 1000);
+        }
+
+        if(currentShots == 0)
+        {
+            isCoolingDown = false;
+        }
+
+        if (gunList.Count > 0 && currentShots >= gunList[selectedGun].maxShots)
+        {
+            isCoolingDown = true;
+        }
+
         speedCurrent = rb.velocity.magnitude;
     }
-
 
     /// <summary>
     /// Handling of sprinting mechanic.
@@ -234,7 +252,7 @@ public class PlayerController : MonoBehaviour, IDamage
             rb.AddForce(Vector3.down * (gravity * Time.deltaTime));
         }
 
-        if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0)
+        if (Input.GetButton("Shoot") && !isShooting && gunList.Count > 0 && !isCoolingDown)
         {
             StartCoroutine(Shoot());
         }
@@ -244,6 +262,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(PlayStep());
         }
 
+        GameManager.instance.UpdateWeaponHeat(currentShots, maxShots);
         speedCurrent = Mathf.Lerp(speedCurrent, accelerationSpeed, slowdownTimer);
     }
 
@@ -291,12 +310,13 @@ public class PlayerController : MonoBehaviour, IDamage
     private IEnumerator Shoot()
     {
         isShooting = true;
+        currentShots++;
         StartCoroutine(FlashMuzzle());
 
         var shootSounds = gunList[selectedGun].shootSounds ?? Array.Empty<AudioClip>();
         if (shootSounds.Length > 0)
         {
-            var randomSound = Random.Range(0, shootSounds.Length -1);
+            var randomSound = Random.Range(0, shootSounds.Length - 1);
             gunModel.GetComponent<AudioSource>().PlayOneShot(shootSounds[randomSound], gunList[selectedGun].shootVolume);
         }
 
@@ -437,6 +457,9 @@ public class PlayerController : MonoBehaviour, IDamage
         maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
+        maxShots = gun.maxShots;
+        shootCooldown = gun.shootCooldown;
+
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gun.gunRotation != default)
@@ -467,6 +490,8 @@ public class PlayerController : MonoBehaviour, IDamage
         maxDamage = gunList[selectedGun].maxDamage;
         shootDist = gunList[selectedGun].shootDist;
         shootRate = gunList[selectedGun].shootRate;
+        maxShots = gunList[selectedGun].maxShots;
+        shootCooldown = gunList[selectedGun].shootCooldown;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gunList[selectedGun].gunRotation != default)
