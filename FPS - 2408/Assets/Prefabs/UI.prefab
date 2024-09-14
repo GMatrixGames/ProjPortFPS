@@ -6474,7 +6474,7 @@ MonoBehaviour:
   grappleCooldownImage: {fileID: 6234498877316644147}
   grappleCooldownText: {fileID: 3643049326404134951}
   damageFlash: {fileID: 7537944883219974512}
-  shootCooldownBar: {fileID: 486053108258178262}
+  heatBarParent: {fileID: 6720996500458319923}
   grappleShouldCooldown: 0
   grappleCooldownTime: 3
   checkpointPopup: {fileID: 5778107002180581265}
@@ -8049,7 +8049,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2448433368366077221
 RectTransform:
   m_ObjectHideFlags: 0

@@ -460,6 +460,7 @@ public class PlayerController : MonoBehaviour, IDamage
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
 
+        GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gun.gunRotation != default)
@@ -486,20 +487,24 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
-        minDamage = gunList[selectedGun].minDamage;
-        maxDamage = gunList[selectedGun].maxDamage;
-        shootDist = gunList[selectedGun].shootDist;
-        shootRate = gunList[selectedGun].shootRate;
-        maxShots = gunList[selectedGun].maxShots;
-        shootCooldown = gunList[selectedGun].shootCooldown;
+        currentShots = 0;
+        var gun = gunList[selectedGun];
+        minDamage = gun.minDamage;
+        maxDamage = gun.maxDamage;
+        shootDist = gun.shootDist;
+        shootRate = gun.shootRate;
+        maxShots = gun.maxShots;
+        shootCooldown = gun.shootCooldown;
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gunList[selectedGun].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gunList[selectedGun].gunRotation != default)
         {
-            gunModel.transform.localRotation = Quaternion.Euler(gunList[selectedGun].gunRotation.x, gunList[selectedGun].gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
+            gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
             // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
         }
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunList[selectedGun].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     private void ThrowGrenade()

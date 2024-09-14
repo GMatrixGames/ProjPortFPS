@@ -25,8 +25,11 @@ public class GrapplingGun : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && !GameManager.instance.grappleShouldCooldown)
         {
             StartGrapple();
-            shouldDrawRope = true;
-            GameManager.instance.UpdateGrappleCD();
+            if (isGrappling)
+            {
+                shouldDrawRope = true;
+                GameManager.instance.UpdateGrappleCD();
+            }
         }
         else if (Input.GetMouseButtonUp(1))
         {
@@ -37,7 +40,7 @@ public class GrapplingGun : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (shouldDrawRope)
+        if (shouldDrawRope && isGrappling)
         {
             DrawLine();
         }
@@ -47,10 +50,10 @@ public class GrapplingGun : MonoBehaviour
     {
         grapplePoint = transform.position;
 
-        if(Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
+        if (Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
         {
             grapplePoint = hit.point;
-            isGrappling = true; 
+            isGrappling = true;
         }
 
         lineRenderer.positionCount = 2;
