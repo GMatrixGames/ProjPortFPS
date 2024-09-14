@@ -27,5 +27,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f19e3fdb9c8082647a2c32beca28ba84, type: 3}
   - {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
   - {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
-  shootVolume: 0.3
+  shootVolume: 0.1
   displayHeat: 1
