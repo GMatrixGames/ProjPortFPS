@@ -34,7 +34,10 @@ public class DamageTrigger : MonoBehaviour
         if (dmg != null && other.CompareTag("Player"))
         {
             dmg.TakeDamage(damage);
-            Destroy(gameObject);
+            if (type != DamageType.Stationary)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

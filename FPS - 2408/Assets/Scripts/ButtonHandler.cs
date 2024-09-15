@@ -49,7 +49,17 @@ public class ButtonHandler : MonoBehaviour
 
     public void GoToLevel1()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Level 1");
+    }
+
+    public void GoToLevel2()
+    {
+        SceneManager.LoadScene("Level 2");
+    }
+
+    public void GoToTutorial()
+    {
+        SceneManager.LoadScene("Tutorial");
     }
 
     public void SettingsMenuOn()

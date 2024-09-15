@@ -285,6 +285,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 1228194577458517262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1313815090407439613, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3290204887591431567, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -363,6 +375,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5365659731846549338, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5764127996409624203, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_text
+      value: Game Complete!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8892082978776860229, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
