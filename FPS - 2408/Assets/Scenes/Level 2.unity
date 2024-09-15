@@ -286,8 +286,12 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 1228194577458517262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228194577458517262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -55
+      value: -80
       objectReference: {fileID: 0}
     - target: {fileID: 1313815090407439613, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_IsActive
@@ -379,7 +383,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764127996409624203, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_text
-      value: Game Complete!
+      value: 'Game Complete!
+
+
+        You beat the boss!'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5764127996409624203, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_enableWordWrapping
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8892082978776860229, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_IsActive
