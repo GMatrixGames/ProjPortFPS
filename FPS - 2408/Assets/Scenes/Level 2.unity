@@ -1435,6 +1435,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d3461106288f7479612c8acbaf15a0, type: 3}
+--- !u!1001 &221767493
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8927576333966674036, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_Name
+      value: MiniBoss Melee Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 65.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.35999298
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 68.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971497724646970274, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb006c413453331429f3d3ed70fd6e4f, type: 3}
 --- !u!1001 &240445196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1513,12 +1570,8 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 1228194577458517262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1228194577458517262, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -80
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 1313815090407439613, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_IsActive
@@ -1610,14 +1663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5764127996409624203, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_text
-      value: 'Game Complete!
-
-
-        You beat the boss!'
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764127996409624203, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
-      propertyPath: m_enableWordWrapping
-      value: 0
+      value: Game Complete!
       objectReference: {fileID: 0}
     - target: {fileID: 8892082978776860229, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_IsActive
@@ -11650,3 +11696,4 @@ SceneRoots:
   - {fileID: 1122317327}
   - {fileID: 849393488}
   - {fileID: 2054881988}
+  - {fileID: 221767493}
