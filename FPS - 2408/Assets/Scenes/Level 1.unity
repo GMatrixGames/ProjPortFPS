@@ -2161,7 +2161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6913361633293535401, guid: e0c35c99094f65548a41913312ed525c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 17.459099
+      value: 32.212036
       objectReference: {fileID: 0}
     - target: {fileID: 6913361633293535401, guid: e0c35c99094f65548a41913312ed525c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2169,7 +2169,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6913361633293535401, guid: e0c35c99094f65548a41913312ed525c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6913361633293535401, guid: e0c35c99094f65548a41913312ed525c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4833,6 +4833,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4041041381814538366, guid: de308e6a4ad5ddd4d8f963bd3ed5de90, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6845568875219955793, guid: de308e6a4ad5ddd4d8f963bd3ed5de90, type: 3}
       propertyPath: m_Name
       value: KILLPLANE
