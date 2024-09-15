@@ -722,7 +722,7 @@ MonoBehaviour:
   runningOnWall: 0
   healthRegenRate: 0.5
   pullThreshold: 3
-  pullSpeed: 150
+  pullSpeed: 100
   headshotMultiplier: 2
   gunModel: {fileID: 8933824663232001653}
   muzzleFlash: {fileID: 692860436970780126}
