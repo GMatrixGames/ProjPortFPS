@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using TMPro;
 
 public class EnemySpawner : MonoBehaviour, IDamage
 {
@@ -14,6 +15,12 @@ public class EnemySpawner : MonoBehaviour, IDamage
     [SerializeField] private int timeBetweenSpawns;
     [SerializeField] private int distanceToSpawn;
     [SerializeField] private Image hpBar;
+    [SerializeField] private TMP_Text countdownText;
+    [SerializeField] private float countdownDuration = 10f; // Duration to destroy the spawner
+
+    private float countdownTimer;
+    private bool timerActive;
+    private bool isFlashing;
 
     private int hp;
     private int enemiesOnField;
@@ -22,13 +29,22 @@ public class EnemySpawner : MonoBehaviour, IDamage
     private List<GameObject> spawnedEnemies = new();
 
     private Color colorOriginal;
+    private Color countdownColorOriginal;
 
     private void Start()
     {
         hp = spawnerHP;
         hpBar.fillAmount = 1;
         colorOriginal = model.material.color;
+        countdownColorOriginal = countdownText.color;
         GameManager.instance.UpdateSpawnersMax(1);
+        countdownTimer = countdownDuration;
+
+        // Ensure countdownText is disabled initially
+        if (countdownText != null) 
+        {
+            countdownText.gameObject.SetActive(false); 
+        }
     }
 
     // Update is called once per frame
@@ -38,6 +54,43 @@ public class EnemySpawner : MonoBehaviour, IDamage
         {
             StartCoroutine(SpawnEnemies());
         }
+        // Handle the countdown timer
+        if (timerActive)
+        {
+            countdownTimer -= Time.deltaTime;
+            countdownText.text = "Destroy in: " + Mathf.CeilToInt(countdownTimer);
+            // Check if the timer is below or equal to 3 seconds
+            if (countdownTimer <= 3f && !isFlashing)
+            {
+                StartCoroutine(FlashCountdownText());
+            }
+
+            if (countdownTimer <= 0)
+            {
+                OnCountdownEnd();
+            }
+        }
+    }
+
+    private IEnumerator FlashCountdownText()
+    {
+        isFlashing = true;
+        while (countdownTimer > 0 && countdownTimer <= 3f)
+        {
+            // Toggle the text color between red and the original color
+            countdownText.color = countdownText.color == Color.red ? countdownColorOriginal : Color.red;
+
+            yield return new WaitForSeconds(0.5f); 
+        }
+
+        // Restore original color when done
+        countdownText.color = countdownColorOriginal;
+        isFlashing = false;
+    }
+
+    private void LateUpdate()
+    {
+        hpBar.transform.forward = Camera.main.transform.forward;
     }
 
     private IEnumerator SpawnEnemies()
@@ -63,6 +116,10 @@ public class EnemySpawner : MonoBehaviour, IDamage
     private void OnTriggerEnter(Collider other)
     {
         isInsideRadius = true;
+        if (!timerActive) // Start the countdown when the player enters the radius
+        {
+            StartCountdown();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -70,6 +127,41 @@ public class EnemySpawner : MonoBehaviour, IDamage
         isInsideRadius = false;
     }
 
+    private void StartCountdown()
+    {
+        countdownTimer = countdownDuration;
+        timerActive = true;
+
+        if (countdownText != null) 
+        {
+            countdownText.gameObject.SetActive(true); 
+        }
+    }
+
+    private void OnCountdownEnd()
+    {
+        timerActive = false;
+        countdownTimer = 0;
+        // Hide the countdown when it ends
+        if (countdownText != null)
+        {
+            countdownText.gameObject.SetActive(false); 
+        }
+        IncreaseEnemySpawning(); // Increase enemy spawning after the timer ends
+    }
+
+    private void UpdateCountdownDisplay()
+    {
+        if (countdownText)
+        {
+            countdownText.text = Mathf.Max(0, Mathf.Round(countdownTimer)).ToString("0");
+        }
+    }
+
+    public void IncreaseEnemySpawning()
+    {
+        maxEnemiesToSpawn += 5; // Increase the limit of enemies to spawn
+    }
     /// <summary>
     /// Flash red when taking damage.
     /// </summary>
@@ -91,6 +183,17 @@ public class EnemySpawner : MonoBehaviour, IDamage
         if (hp <= 0)
         {
             GameManager.instance.UpdateSpawnersGoal(1);
+            // Stop the timer and hide the countdown UI when the spawner is destroyed
+            if (timerActive) 
+            {
+                timerActive = false; // Stop the timer 
+
+                // Hide the countdown UI if the spawner is destroyed before the time runs out
+                if (countdownText != null) 
+                {
+                    countdownText.gameObject.SetActive(false); // Hide countdown UI 
+                }
+            }
             Destroy(gameObject);
         }
     }
@@ -102,5 +205,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
             spawnedEnemies.Remove(enemy);
             enemiesOnField--;
         }
+
+        Destroy(enemy);
     }
 }

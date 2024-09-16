@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private int lockVertMin, lockVertMax;
     [SerializeField] private bool invertY;
 
+    PlayerController playerController;
     private float rotX;
 
     // Start is called before the first frame update
@@ -13,6 +14,7 @@ public class CameraController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        playerController = GetComponent<PlayerController>();    
     }
 
     // Update is called once per frame
@@ -34,4 +36,13 @@ public class CameraController : MonoBehaviour
         // rotate the player on y
         transform.parent.Rotate(Vector3.up * mouseX);
     }
+
+    //This is a surprise tool that will help us later. 
+    //private void CameraTilt()
+    //{
+    //    if (playerController.runningOnWall == true)
+    //    {
+            
+    //    }
+    //}
 }
