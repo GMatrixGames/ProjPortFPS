@@ -4,72 +4,78 @@ using UnityEngine;
 
 public class Melee : EnemyAI
 {
-    private bool isAttacking;  
-    [SerializeField] private int meleeDamage;  
+    // Flag to check if the enemy is currently attacking
+    private bool isAttacking;
+
+    // Amount of damage the melee attack will deal
+    [SerializeField] private int meleeDamage;
+
+    // Time delay between attacks
     [SerializeField] private float meleeRate;
-    [SerializeField] private float meleeRange;
 
-    private Collider playerCollider; 
+    // Range at which the enemy can perform melee attacks
+    [SerializeField] private float meleeRange = 3;
 
+    // Reference to the player's collider for distance checking
+    private Collider playerCollider;
+
+    // This function is called when the script is first run
     protected override void Start()
     {
-        // Calls the base class Start method
-        base.Start();  
+        // Call the base class Start method to set up basic enemy behavior
+        base.Start();
 
-        // Sets the stopping distance to prevent the enemy from getting too close
+        // Set the stopping distance of the NavMeshAgent to the melee range
         agent.stoppingDistance = meleeRange;
 
-        // Gets reference to the player's collider
+        // Get the player's collider from the GameManager for future reference
         playerCollider = GameManager.instance.player.GetComponent<Collider>();
-
-        // Disables the physical collision between the enemy and the player
-        // Keeping the enemy from pushing the player around when attacking
-        Physics.IgnoreCollision(playerCollider, GetComponent<Collider>());
     }
 
+    // This function is called every frame
     protected override void Update()
     {
-        // Calls the base class Update method
-        base.Update(); 
+        // Call the base class Update method to ensure normal enemy movement and behavior
+        base.Update();
 
-        // Calculates the distance between the enemy and the player
+        // Calculate the distance between the enemy and the player
         float distanceToPlayer = Vector3.Distance(transform.position, GameManager.instance.player.transform.position);
 
-        // If the enemy is not already attacking and is within melee range
+        // If the enemy is not attacking and is within melee range
         if (!isAttacking && distanceToPlayer <= meleeRange)
         {
-            // Stops the enemy from moving and begins the attack
+            // Stops the enemy's movement and start the attack
             agent.isStopped = true;
             StartCoroutine(MeleeAttack());
         }
-        // If the enemy is not attacking and is outside of melee range
+        // If the enemy is not attacking and is outside the melee range
         else if (!isAttacking && distanceToPlayer > meleeRange)
         {
-            // Continue moving towards the player while maintaining the stopping distance
+            // Resume movement towards the player
             agent.isStopped = false;
             agent.SetDestination(GameManager.instance.player.transform.position);
         }
     }
 
-    // Coroutine to handle melee attacks
+    // Coroutine that handles the melee attack
     private IEnumerator MeleeAttack()
     {
-        // Preventa multiple attacks at once
+        // Set isAttacking to true to prevent multiple attacks at the same time
         isAttacking = true;
 
-        // Makes sure the enemy stops moving during the attack
-        agent.isStopped = true;  
+        // Stop the enemy from moving while the attack is happening
+        agent.isStopped = true;
 
-        // Deal damage to the player
+        // Apply damage to the player
         GameManager.instance.player.GetComponent<PlayerController>().TakeDamage(meleeDamage);
 
-        // Triggers the attack animation
+        // Trigger the attack animation
         anim.SetTrigger("Attack");
 
-        // Wait for the attack cooldown duration
+        // Wait for the time specified by meleeRate before the next attack
         yield return new WaitForSeconds(meleeRate);
 
-        // After the cooldown allow movement and set attack to false
+        // After the cooldown, allow the enemy to move and attack again
         isAttacking = false;
         agent.isStopped = false;
     }
