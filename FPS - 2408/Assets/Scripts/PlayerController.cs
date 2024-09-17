@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
     [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
-
+    
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
     #region WallRunning
@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public GameObject grenadePrefab;
     public Transform throwPoint;
     public float throwForce = 10f;
-
+    [SerializeField] private Image grenadeIcon;
     public GameObject GrenadeOnPlayer;
 
     private Rigidbody rb;
@@ -446,7 +446,17 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void PickUpGrenade()
     {
-        hasGrenade = true; 
+        hasGrenade = true;
+        Debug.Log("Grenade picked up. Setting grenade icon to visible.");
+        if (grenadeIcon != null)
+        {
+            Debug.Log("Grenade icon is not null. Setting to visible.");
+            grenadeIcon.enabled = true; 
+        }
+        else
+        {
+            Debug.Log("Grenade icon is null.");
+        }
         if (GrenadeOnPlayer != null)
         {
             GrenadeOnPlayer.SetActive(true);
@@ -515,12 +525,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private void ThrowGrenade()
     {
         if (grenadePrefab && throwPoint)
-        {
-            //Debug.Log("Throw point and grenade prefab are assigned.");
-
-            // Instantiate the grenade at the throw point
-            var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
-            // Debug.Log("Grenade instantiated at position: " + throwPoint.position);
+        {            
+            var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);           
 
             var rb = grenade.GetComponent<Rigidbody>();
             if (rb)
@@ -563,9 +569,12 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 GrenadeOnPlayer.SetActive(false);
             }
-
-            // Reset the flag since the grenade has been thrown
+           
             hasGrenade = false;
+            if (grenadeIcon != null)
+            {
+                grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
+            }
         }
         else
         {
