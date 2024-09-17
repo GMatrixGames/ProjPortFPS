@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
-
+using TMPro;
 public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
@@ -12,32 +12,32 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private GrapplingGun grapplingGun;
 
     [Header("----- Attributes -----")]
-    [SerializeField] [Range(0, 30)] private int hpMax;
+    [SerializeField][Range(0, 30)] private int hpMax;
     private float hpCurrent;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float airMaxSpeed;
     private float speedCurrent;
     [SerializeField] private float slowdownTimer;
-    [SerializeField] [Range(2, 4)] private int sprintMod;
-    [SerializeField] [Range(1, 3)] private int jumpMax;
-    [SerializeField] [Range(8, 20)] private int jumpSpeed;
+    [SerializeField][Range(2, 4)] private int sprintMod;
+    [SerializeField][Range(1, 3)] private int jumpMax;
+    [SerializeField][Range(8, 20)] private int jumpSpeed;
     [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
     [Header("----- Slide Attributes -----")]
-    [SerializeField] private float slideSpeed = 10f; 
+    [SerializeField] private float slideSpeed = 10f;
     [SerializeField] private float slideDuration = 0.5f;
-    [SerializeField] private float slideHeight = 0.5f; 
-    [SerializeField] private Transform playerModel; 
+    [SerializeField] private float slideHeight = 0.5f;
+    [SerializeField] private Transform playerModel;
 
-    private bool isSliding; 
-    private float originalHeight; 
+    private bool isSliding;
+    private float originalHeight;
 
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
-    [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
-    
+    [SerializeField][Range(0, 1)] private float audioStepsVolume = 0.5f;
+
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
     #region WallRunning
@@ -97,11 +97,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isShooting;
     private bool isPlayingStep;
 
-    public bool hasGrenade = false;
+    public int grenadeCount = 0;
     public GameObject grenadePrefab;
     public Transform throwPoint;
     public float throwForce = 10f;
     [SerializeField] private Image grenadeIcon;
+    [SerializeField] private TextMeshProUGUI grenadeCountText;
     public GameObject GrenadeOnPlayer;
 
     private Rigidbody rb;
@@ -126,6 +127,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             grenadeIcon.enabled = false;
         }
+
     }
 
     public void SpawnPlayer()
@@ -146,9 +148,9 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0) 
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0)
             {
-                StartCoroutine(Slide()); 
+                StartCoroutine(Slide());
             }
         }
 
@@ -167,7 +169,7 @@ public class PlayerController : MonoBehaviour, IDamage
             GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && hasGrenade)
+        if (Input.GetKeyDown(KeyCode.G) && grenadeCount > 0)
         {
             // Debug.Log("G key pressed. Calling ThrowGrenade.");
             ThrowGrenade();
@@ -178,7 +180,7 @@ public class PlayerController : MonoBehaviour, IDamage
             currentShots = Mathf.Clamp(currentShots - shootCooldown * Time.deltaTime, 0, 1000);
         }
 
-        if(currentShots == 0)
+        if (currentShots == 0)
         {
             isCoolingDown = false;
         }
@@ -295,11 +297,11 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    private IEnumerator Slide() 
+    private IEnumerator Slide()
     {
-        isSliding = true; 
+        isSliding = true;
         var cameraOriginalPos = Camera.main.transform.localPosition; // Use cam position so it doesn't squish things attached to it.
-        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z); 
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z);
         GetComponent<Collider>().transform.localScale = new Vector3(1, 0.5f, 1); // TODO: FIX THINGS GETTING SQUISHED
 
         var slideDirection = transform.forward * slideSpeed;
@@ -308,7 +310,7 @@ public class PlayerController : MonoBehaviour, IDamage
         yield return new WaitForSeconds(slideDuration);
 
         GetComponent<Collider>().transform.localScale = Vector3.one; // TODO: FIX THINGS GETTING SQUISHED
-        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z); 
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z);
         isSliding = false;
     }
 
@@ -448,20 +450,11 @@ public class PlayerController : MonoBehaviour, IDamage
         isTakingDamage = false;
     }
 
-    public void PickUpGrenade()
+    public void PickUpGrenade(int amount)
     {
-        hasGrenade = true;
-        
-        if (grenadeIcon != null)
-        {
-            
-            grenadeIcon.enabled = true; 
-        }
-       
-        if (GrenadeOnPlayer != null)
-        {
-            GrenadeOnPlayer.SetActive(true);
-        }
+        grenadeCount += amount;
+        UpdateGrenadeCountDisplay(); 
+        UpdateGrenadeIcon();
     }
 
     public void GetGunStats(GunStats gun)
@@ -526,60 +519,78 @@ public class PlayerController : MonoBehaviour, IDamage
     private void ThrowGrenade()
     {
         if (grenadePrefab && throwPoint)
-        {            
-            var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);           
-
-            var rb = grenade.GetComponent<Rigidbody>();
-            if (rb)
-            {
-                // Ensure the grenade starts moving in the forward direction
-                var throwDirection = throwPoint.forward;
-                var angle = 45f;
-                var gravity = Physics.gravity.y;
-                var throwSpeed = throwForce;
-
-                // Calculate the initial velocity
-                var radians = angle * Mathf.Deg2Rad;
-                var horizontalSpeed = throwSpeed * Mathf.Cos(radians);
-                var verticalSpeed = throwSpeed * Mathf.Sin(radians);
-                var initialVelocity = throwDirection * horizontalSpeed;
-                initialVelocity.y = verticalSpeed;
-
-
-                rb.velocity = initialVelocity;
-                rb.drag = 0.5f;
-            }
-            else
-            {
-                Debug.LogError("No Rigidbody found on grenade prefab.");
-            }
-
-            grenade.tag = "Thrown Grenade";
-
-            var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
-            if (grenadeBehaviour != null)
-            {
-                grenadeBehaviour.ActivateExplosion();
-            }
-            else
-            {
-                Debug.LogError("GrenadeBehaviour component missing on grenade prefab.");
-            }
-
-            if (GrenadeOnPlayer != null)
-            {
-                GrenadeOnPlayer.SetActive(false);
-            }
-           
-            hasGrenade = false;
-            if (grenadeIcon != null)
-            {
-                grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
-            }
-        }
-        else
         {
-            Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
+            if (grenadeCount > 0)
+            {
+                var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
+
+                var rb = grenade.GetComponent<Rigidbody>();
+                if (rb)
+                {
+                    // Ensure the grenade starts moving in the forward direction
+                    var throwDirection = throwPoint.forward;
+                    var angle = 45f;
+                    var gravity = Physics.gravity.y;
+                    var throwSpeed = throwForce;
+
+                    // Calculate the initial velocity
+                    var radians = angle * Mathf.Deg2Rad;
+                    var horizontalSpeed = throwSpeed * Mathf.Cos(radians);
+                    var verticalSpeed = throwSpeed * Mathf.Sin(radians);
+                    var initialVelocity = throwDirection * horizontalSpeed;
+                    initialVelocity.y = verticalSpeed;
+
+
+                    rb.velocity = initialVelocity;
+                    rb.drag = 0.5f;
+                }
+
+                grenade.tag = "Thrown Grenade";
+
+                var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
+                if (grenadeBehaviour != null)
+                {
+                    grenadeBehaviour.ActivateExplosion();
+                }
+
+                grenadeCount--;
+                UpdateGrenadeCountDisplay();
+                UpdateGrenadeIcon();
+                if (grenadeCount <= 0)
+                {
+                    if (grenadeIcon != null)
+                    {
+                        grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
+                    }
+                }
+            }  
+        }
+    }
+    private void UpdateGrenadeCountDisplay()
+    {
+        if (grenadeCountText != null)
+        {
+            grenadeCountText.text = "Grenades: " + grenadeCount; // Update the UI text with the grenade count
+        }
+    }
+
+    private void UpdateGrenadeIcon()
+    {
+        if (grenadeIcon != null)
+        {
+            grenadeIcon.enabled = grenadeCount > 0; // Show icon if player has grenades
+        }
+
+        if (GrenadeOnPlayer != null)
+        {
+            GrenadeOnPlayer.SetActive(grenadeCount > 0); // Show grenade model if player has grenades
+        }
+    }
+    private void UpdateGrenadeUI()
+    {
+        if (grenadeCountText != null)
+        {
+            grenadeCountText.text = grenadeCount.ToString(); // Update the UI text with the grenade count
         }
     }
 
