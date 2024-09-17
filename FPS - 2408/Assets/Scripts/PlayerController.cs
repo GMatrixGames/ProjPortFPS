@@ -122,6 +122,10 @@ public class PlayerController : MonoBehaviour, IDamage
         SpawnPlayer();
         rb = GetComponent<Rigidbody>();
         originalHeight = playerModel.localScale.y;
+        if (grenadeIcon != null)
+        {
+            grenadeIcon.enabled = false;
+        }
     }
 
     public void SpawnPlayer()
@@ -447,16 +451,13 @@ public class PlayerController : MonoBehaviour, IDamage
     public void PickUpGrenade()
     {
         hasGrenade = true;
-        Debug.Log("Grenade picked up. Setting grenade icon to visible.");
+        
         if (grenadeIcon != null)
         {
-            Debug.Log("Grenade icon is not null. Setting to visible.");
+            
             grenadeIcon.enabled = true; 
         }
-        else
-        {
-            Debug.Log("Grenade icon is null.");
-        }
+       
         if (GrenadeOnPlayer != null)
         {
             GrenadeOnPlayer.SetActive(true);
