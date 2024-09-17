@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using UnityEngine;
 using Utils;
@@ -59,6 +59,10 @@ public class GameSettings
         { "Right", KeyCode.D },
         { "Back", KeyCode.S },
         { "Jump", KeyCode.Space },
-        { "Slide", KeyCode.LeftControl }
+        { "Slide", KeyCode.LeftControl },
+
+        // Special cases for WebGL, not configurable (for now)
+        { "Grapple", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Mouse1 : KeyCode.V },
+        { "Pause", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Escape : KeyCode.P }
     };
 }

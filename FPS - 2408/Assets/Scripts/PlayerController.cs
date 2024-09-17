@@ -544,7 +544,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                Debug.LogError("No Rigidbody found on grenade prefab.");
+                //Debug.LogError("No Rigidbody found on grenade prefab.");
             }
 
             grenade.tag = "Thrown Grenade";
@@ -556,7 +556,7 @@ public class PlayerController : MonoBehaviour, IDamage
             }
             else
             {
-                Debug.LogError("GrenadeBehaviour component missing on grenade prefab.");
+                //Debug.LogError("GrenadeBehaviour component missing on grenade prefab.");
             }
 
             if (GrenadeOnPlayer != null)
@@ -569,7 +569,7 @@ public class PlayerController : MonoBehaviour, IDamage
         }
         else
         {
-            Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
+            //Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
 

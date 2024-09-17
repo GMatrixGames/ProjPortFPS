@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingGun : MonoBehaviour
@@ -22,7 +20,9 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !GameManager.instance.grappleShouldCooldown)
+        var grappleKey = SettingsManager.instance.settings.keyBindings["Grapple"];
+
+        if (Input.GetKeyDown(grappleKey) && !GameManager.instance.grappleShouldCooldown)
         {
             StartGrapple();
             if (isGrappling)
@@ -31,7 +31,7 @@ public class GrapplingGun : MonoBehaviour
                 GameManager.instance.UpdateGrappleCD();
             }
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetKeyUp(grappleKey))
         {
             StopGrapple();
             shouldDrawRope = false;
