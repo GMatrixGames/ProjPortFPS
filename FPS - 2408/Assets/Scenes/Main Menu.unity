@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 454660}
   - component: {fileID: 454659}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -607,6 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
+    version: 0
     volume: 0.5
     keyBindings:
       keys:
@@ -739,7 +740,7 @@ GameObject:
   - component: {fileID: 87664443}
   - component: {fileID: 87664442}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1390,7 +1391,7 @@ GameObject:
   - component: {fileID: 195954725}
   - component: {fileID: 195954724}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1645,7 +1646,7 @@ GameObject:
   - component: {fileID: 218399613}
   - component: {fileID: 218399612}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2130,7 +2131,7 @@ GameObject:
   - component: {fileID: 428104332}
   - component: {fileID: 428104331}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2263,7 +2264,7 @@ GameObject:
   - component: {fileID: 598241986}
   - component: {fileID: 598241985}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
