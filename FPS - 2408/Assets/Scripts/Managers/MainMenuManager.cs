@@ -6,6 +6,6 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        AudioListener.volume = SettingsManager.instance.settings.volume;
+        AudioListener.volume = SettingsManager.instance.settings.GetVolume();
     }
 }
