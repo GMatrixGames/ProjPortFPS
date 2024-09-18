@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0) 
+            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && rb.velocity.y == 0) 
             {
                 StartCoroutine(Slide()); 
             }
@@ -204,8 +204,15 @@ public class PlayerController : MonoBehaviour, IDamage
             PullToPoint();
         }
 
-        // Movement logic. 
-        move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        var forward = Input.GetKey(SettingsManager.instance.settings.keyBindings["Forward"]) ? 1 : 0;
+        var backward = Input.GetKey(SettingsManager.instance.settings.keyBindings["Back"]) ? -1 : 0;
+        var left = Input.GetKey(SettingsManager.instance.settings.keyBindings["Left"]) ? -1 : 0;
+        var right = Input.GetKey(SettingsManager.instance.settings.keyBindings["Right"]) ? 1 : 0;
+        var horizontal = left + right;
+        var vertical = forward + backward;
+
+        // Movement logic.
+        move = new Vector3(left + right, 0f, forward + backward);
         var moveVector = transform.TransformDirection(move) * accelerationSpeed;
 
         // Directly set the velocity for more responsive control
@@ -219,21 +226,21 @@ public class PlayerController : MonoBehaviour, IDamage
             rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * slowdownTimer);
         }
 
-        if (rb.velocity.y == 0 && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if (rb.velocity.y == 0 && horizontal == 0 && vertical == 0)
         {
             //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
             //How do I do this?
             rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z, ForceMode.Force);
         }
 
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Jump"]) && jumpCount < jumpMax)
         {
             jumpCount++;
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         }
 
         // Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
-        if (Input.GetButtonDown("Jump") && runningOnWall && wallKickCount < wallKickMax)
+        if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Jump"]) && runningOnWall && wallKickCount < wallKickMax)
         {
             // Debug.Log($"Wallkick {wallKickCount}");
             wallKickCount++;

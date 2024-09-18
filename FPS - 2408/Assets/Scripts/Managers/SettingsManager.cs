@@ -77,7 +77,7 @@ public class GameSettings
     public int version;
     public float volume;
 
-    [CanBeNull] public SerializableDictionary<string, KeyCode> keyBindings = new()
+    public SerializableDictionary<string, KeyCode> keyBindings = new()
     {
         { "Forward", KeyCode.W },
         { "Left", KeyCode.A },
