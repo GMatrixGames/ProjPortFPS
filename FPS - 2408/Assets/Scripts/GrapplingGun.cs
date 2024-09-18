@@ -20,9 +20,9 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
-        var grappleKey = SettingsManager.instance.settings.keyBindings["Grapple"];
+        var grappleKey = SettingsManager.instance.settings.keyBindings?["Grapple"];
 
-        if (Input.GetKeyDown(grappleKey) && !GameManager.instance.grappleShouldCooldown)
+        if (Input.GetKeyDown(grappleKey.Value) && !GameManager.instance.grappleShouldCooldown)
         {
             StartGrapple();
             if (isGrappling)
@@ -31,7 +31,7 @@ public class GrapplingGun : MonoBehaviour
                 GameManager.instance.UpdateGrappleCD();
             }
         }
-        else if (Input.GetKeyUp(grappleKey))
+        else if (Input.GetKeyUp(grappleKey.Value))
         {
             StopGrapple();
             shouldDrawRope = false;
