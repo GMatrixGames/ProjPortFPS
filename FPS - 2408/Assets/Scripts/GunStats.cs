@@ -15,4 +15,5 @@ public class GunStats : ScriptableObject
     public AudioClip[] shootSounds;
     public float shootVolume = .5f;
     public bool displayHeat = true;
+    public bool hasDropoff;
 }

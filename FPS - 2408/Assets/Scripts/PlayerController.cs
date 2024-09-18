@@ -83,6 +83,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private int maxShots;
     private float shootCooldown;
     public bool isCoolingDown;
+    public bool hasDropoff;
 
     #endregion
 
@@ -365,13 +366,20 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <returns>calculated damage</returns>
     private int CalcDamage(float distance)
     {
-        if (distance <= dropOffStart) return maxDamage;
-        if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
+        if (gunList[selectedGun].hasDropoff == true)
+        {
+            if (distance <= dropOffStart) return maxDamage;
+            if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
 
-        var range = dropOffEnd - dropOffStart;
-        var normalizedDistance = (distance - dropOffStart) / range;
+            var range = dropOffEnd - dropOffStart;
+            var normalizedDistance = (distance - dropOffStart) / range;
 
-        return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+            return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+        }
+        else
+        {
+            return maxDamage;
+        }
     }
 
     /// <inheritdoc/>
@@ -464,6 +472,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
+        hasDropoff = gun.hasDropoff;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
@@ -500,6 +509,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
+        hasDropoff = gun.hasDropoff;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
