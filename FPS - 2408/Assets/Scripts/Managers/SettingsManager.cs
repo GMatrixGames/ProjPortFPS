@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using JetBrains.Annotations;
 using UnityEngine;
 using Utils;
 
@@ -39,9 +40,30 @@ public class SettingsManager : MonoBehaviour
         {
             var json = File.ReadAllText(settingsPath);
             settings = JsonUtility.FromJson<GameSettings>(json);
+
+            var defaultSettings = new GameSettings();
+            if (settings.version is not GameSettings.LATEST_VERSION) // Value doesn't exist or version doesn't match
+            {
+                settings.version = GameSettings.LATEST_VERSION;
+                settings.volume = settings.volume == default ? 0.5f : settings.volume;
+                settings.keyBindings ??= defaultSettings.keyBindings;
+
+                foreach (var (action, code) in defaultSettings.keyBindings!)
+                {
+                    settings.keyBindings?.TryAdd(action, code);
+                }
+
+                Save(); // Save if default settings were updated
+            }
         }
         else
         {
+            settings = new GameSettings
+            {
+                version = GameSettings.LATEST_VERSION,
+                volume = 0.5f
+            };
+
             Save(); // Save default settings for next start
         }
     }
@@ -50,7 +72,10 @@ public class SettingsManager : MonoBehaviour
 [Serializable]
 public class GameSettings
 {
-    public float volume = .5f;
+    public const int LATEST_VERSION = 1;
+
+    public int version;
+    public float volume;
 
     public SerializableDictionary<string, KeyCode> keyBindings = new()
     {
@@ -65,4 +90,9 @@ public class GameSettings
         { "Grapple", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Mouse1 : KeyCode.V },
         { "Pause", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Escape : KeyCode.P }
     };
+
+    public float GetVolume()
+    {
+        return volume;
+    }
 }

@@ -411,7 +411,7 @@ MonoBehaviour:
   roamTimer: 3
   animSpeedTrans: 10
   bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
-  shootRate: 2
+  shootRate: 2.25
   shootAngle: 45
 --- !u!195 &2406695971009466887
 NavMeshAgent:

@@ -1051,7 +1051,7 @@ GameObject:
   - component: {fileID: 3758665307316799222}
   - component: {fileID: 5025721739099578151}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Jump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3162,7 +3162,7 @@ GameObject:
   - component: {fileID: 7351243763955785713}
   - component: {fileID: 4876891381144590198}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3295,7 +3295,7 @@ GameObject:
   - component: {fileID: 1018225778315979955}
   - component: {fileID: 4880368157560571933}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3428,7 +3428,7 @@ GameObject:
   - component: {fileID: 7711102262986879850}
   - component: {fileID: 2319477031988937221}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Forward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5431,6 +5431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings:
+    version: 0
     volume: 0.5
     keyBindings:
       keys:
@@ -6023,7 +6024,7 @@ GameObject:
   - component: {fileID: 2386927350052674662}
   - component: {fileID: 4265145554657071462}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8932,7 +8933,7 @@ GameObject:
   - component: {fileID: 2920396720335298421}
   - component: {fileID: 8568211974606693131}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
