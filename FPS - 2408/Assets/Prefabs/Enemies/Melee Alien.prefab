@@ -392,7 +392,7 @@ MonoBehaviour:
   headPos: {fileID: 6123732931257647657}
   healthBar: {fileID: 477898715789893940}
   hp: 10
-  viewAngle: 90
+  viewAngle: 180
   facePlayerSpeed: 5
   roamDistance: 15
   roamTimer: 5

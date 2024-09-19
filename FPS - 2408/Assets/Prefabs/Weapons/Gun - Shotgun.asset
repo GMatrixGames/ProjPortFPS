@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunModel: {fileID: 8276986080499376821, guid: e82f1152c2c33df459e1b1bd72c5d050, type: 3}
   gunRotation: {x: 0, y: -90, z: 0, w: 0}
-  shootDamage: 15
+  shootDamage: 30
   minDamage: 10
-  maxDamage: 15
-  shootRate: 0.75
+  maxDamage: 30
+  shootRate: 0.5
   shootDist: 350
-  maxShots: 6
+  maxShots: 8
   shootCooldown: 3
   hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
   shootSounds:

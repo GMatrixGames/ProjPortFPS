@@ -405,14 +405,14 @@ MonoBehaviour:
   headPos: {fileID: 8788208901346676812}
   healthBar: {fileID: 8259557519089543360}
   hp: 15
-  viewAngle: 90
+  viewAngle: 180
   facePlayerSpeed: 5
   roamDistance: 15
   roamTimer: 3
   animSpeedTrans: 10
   bullet: {fileID: 3962277038822394387, guid: 592bc40bdc0aeb948b21a95cbb3be1fb, type: 3}
-  shootRate: 2.25
-  shootAngle: 45
+  shootRate: 1
+  shootAngle: 65
 --- !u!195 &2406695971009466887
 NavMeshAgent:
   m_ObjectHideFlags: 0
