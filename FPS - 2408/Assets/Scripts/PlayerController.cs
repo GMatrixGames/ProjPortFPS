@@ -563,11 +563,17 @@ public class PlayerController : MonoBehaviour, IDamage
                 grenadeCount--;
                 UpdateGrenadeCountDisplay();
                 UpdateGrenadeIcon();
+
                 if (grenadeCount <= 0)
                 {
                     if (grenadeIcon != null)
                     {
                         grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
+                    }
+
+                    if (grenadeCountText != null)
+                    {
+                        grenadeCountText.enabled = false; // Hide the grenade count when it reaches zero
                     }
                 }
             }  
@@ -578,6 +584,11 @@ public class PlayerController : MonoBehaviour, IDamage
         if (grenadeCountText != null)
         {
             grenadeCountText.text = "Grenades: " + grenadeCount; // Update the UI text with the grenade count
+            grenadeCountText.enabled = true;
+        }
+        else
+        {
+            grenadeCountText.enabled = false; 
         }
     }
 
