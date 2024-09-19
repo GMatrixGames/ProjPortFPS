@@ -50,8 +50,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   rb: {fileID: 4808609137082909718}
-  damage: 1
-  speed: 15
+  damage: 2
+  speed: 30
   destroyTime: 3
 --- !u!135 &611039050762850168
 SphereCollider:
