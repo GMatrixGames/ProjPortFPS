@@ -5,6 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
 using TMPro;
+
 public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("----- Components -----")]
@@ -12,16 +13,16 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private GrapplingGun grapplingGun;
 
     [Header("----- Attributes -----")]
-    [SerializeField][Range(0, 30)] private int hpMax;
+    [SerializeField] [Range(0, 30)] private int hpMax;
     private float hpCurrent;
     [SerializeField] private float accelerationSpeed;
     [SerializeField] private float maxSpeed;
     [SerializeField] private float airMaxSpeed;
     private float speedCurrent;
     [SerializeField] private float slowdownTimer;
-    [SerializeField][Range(2, 4)] private int sprintMod;
-    [SerializeField][Range(1, 3)] private int jumpMax;
-    [SerializeField][Range(8, 20)] private int jumpSpeed;
+    [SerializeField] [Range(2, 4)] private int sprintMod;
+    [SerializeField] [Range(1, 3)] private int jumpMax;
+    [SerializeField] [Range(8, 20)] private int jumpSpeed;
     [SerializeField] private int gravity;
     [SerializeField] private CameraShake cameraShake;
 
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
-    [SerializeField][Range(0, 1)] private float audioStepsVolume = 0.5f;
+    [SerializeField] [Range(0, 1)] private float audioStepsVolume = 0.5f;
 
     // Thank you Garrett for teaching me that this region stuff was a thing. This is very nice for decluttering. 
 
@@ -97,12 +98,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isShooting;
     private bool isPlayingStep;
 
-    public int grenadeCount = 0;
+    public int grenadeCount;
     public GameObject grenadePrefab;
     public Transform throwPoint;
     public float throwForce = 10f;
-    [SerializeField] private Image grenadeIcon;
-    [SerializeField] private TextMeshProUGUI grenadeCountText;
+    private Image grenadeIcon;
+    private TMP_Text grenadeCountText;
     public GameObject GrenadeOnPlayer;
 
     private Rigidbody rb;
@@ -122,12 +123,13 @@ public class PlayerController : MonoBehaviour, IDamage
         hpOrig = hpMax;
         SpawnPlayer();
         rb = GetComponent<Rigidbody>();
+        grenadeCountText = GameManager.instance.grenadeCanvas.GetComponentInChildren<TMP_Text>();
+        grenadeIcon = GameManager.instance.grenadeCanvas.GetComponentInChildren<Image>();
         originalHeight = playerModel.localScale.y;
         if (grenadeIcon != null)
         {
             grenadeIcon.enabled = false;
         }
-
     }
 
     public void SpawnPlayer()
@@ -140,7 +142,6 @@ public class PlayerController : MonoBehaviour, IDamage
     // Update is called once per frame
     private void Update()
     {
-
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && rb.velocity.y == 0) 
+            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && rb.velocity.y == 0)
             {
                 StartCoroutine(Slide());
             }
@@ -460,7 +461,7 @@ public class PlayerController : MonoBehaviour, IDamage
     public void PickUpGrenade(int amount)
     {
         grenadeCount += amount;
-        UpdateGrenadeCountDisplay(); 
+        UpdateGrenadeCountDisplay();
         UpdateGrenadeIcon();
     }
 
@@ -531,13 +532,12 @@ public class PlayerController : MonoBehaviour, IDamage
             {
                 var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
 
-                var rb = grenade.GetComponent<Rigidbody>();
-                if (rb)
+                var grb = grenade.GetComponent<Rigidbody>();
+                if (grb)
                 {
                     // Ensure the grenade starts moving in the forward direction
                     var throwDirection = throwPoint.forward;
                     var angle = 45f;
-                    var gravity = Physics.gravity.y;
                     var throwSpeed = throwForce;
 
                     // Calculate the initial velocity
@@ -547,15 +547,14 @@ public class PlayerController : MonoBehaviour, IDamage
                     var initialVelocity = throwDirection * horizontalSpeed;
                     initialVelocity.y = verticalSpeed;
 
-
-                    rb.velocity = initialVelocity;
-                    rb.drag = 0.5f;
+                    grb.velocity = initialVelocity;
+                    grb.drag = 0.5f;
                 }
 
                 grenade.tag = "Thrown Grenade";
 
                 var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
-                if (grenadeBehaviour != null)
+                if (grenadeBehaviour)
                 {
                     grenadeBehaviour.ActivateExplosion();
                 }
@@ -566,65 +565,66 @@ public class PlayerController : MonoBehaviour, IDamage
 
                 if (grenadeCount <= 0)
                 {
-                    if (grenadeIcon != null)
+                    GameManager.instance.grenadeCanvas.SetActive(false);
+
+                    if (grenadeIcon)
                     {
                         grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
                     }
 
-                    if (grenadeCountText != null)
+                    if (grenadeCountText)
                     {
                         grenadeCountText.enabled = false; // Hide the grenade count when it reaches zero
                     }
                 }
-            }  
+            }
         }
     }
+
     private void UpdateGrenadeCountDisplay()
     {
-        if (grenadeCountText != null)
+        if (grenadeCountText)
         {
+            GameManager.instance.grenadeCanvas.SetActive(true);
             grenadeCountText.text = "Grenades: " + grenadeCount; // Update the UI text with the grenade count
-            grenadeCountText.enabled = true;
-        }
-        else
-        {
-            grenadeCountText.enabled = false; 
         }
     }
 
     private void UpdateGrenadeIcon()
     {
-        if (grenadeIcon != null)
+        GameManager.instance.grenadeCanvas.SetActive(grenadeCount > 0);
+
+        if (grenadeIcon)
         {
             grenadeIcon.enabled = grenadeCount > 0; // Show icon if player has grenades
         }
 
-        if (GrenadeOnPlayer != null)
+        if (GrenadeOnPlayer)
         {
             GrenadeOnPlayer.SetActive(grenadeCount > 0); // Show grenade model if player has grenades
         }
     }
+
     private void UpdateGrenadeUI()
     {
-        if (grenadeCountText != null)
+        if (grenadeCountText)
         {
             //Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
 
-    void PullToPoint()
+    private void PullToPoint()
     {
-        Vector3 direction = grapplingGun.grapplePoint - transform.position;
+        var direction = grapplingGun.grapplePoint - transform.position;
 
         if (direction.magnitude > pullThreshold)
         {
             direction.Normalize();
-            rb.AddForce(direction * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+            rb.AddForce(direction * (pullSpeed * Time.deltaTime), ForceMode.Impulse);
         }
         else
         {
             grapplingGun.StopGrapple();
         }
-
     }
 }
