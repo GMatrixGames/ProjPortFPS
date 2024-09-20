@@ -366,7 +366,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <returns>calculated damage</returns>
     private int CalcDamage(float distance)
     {
-        if (gunList[selectedGun].hasDropoff == true)
+        if (gunList[selectedGun].hasDropoff)
         {
             if (distance <= dropOffStart) return maxDamage;
             if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
@@ -376,10 +376,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
             return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
         }
-        else
-        {
-            return maxDamage;
-        }
+
+        return maxDamage;
     }
 
     /// <inheritdoc/>
