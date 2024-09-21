@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2590463925587078856}
   - component: {fileID: 8778770866907317142}
   - component: {fileID: 6066069309837461254}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall Plain (31)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 1816083681442593807}
   - component: {fileID: 5083300639760089562}
   - component: {fileID: 7950114128669820908}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LP_Window_Wall_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 7422074315950991599}
   - component: {fileID: 5344906263070704669}
   - component: {fileID: 7205407534842473274}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall Plain (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ Transform:
   m_GameObject: {fileID: 2966525307098236834}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00012208613, y: 0.000015258789, z: 6.028003}
+  m_LocalPosition: {x: -0.00012208613, y: 0.000015258789, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1.1012}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 5997653441108284807}
   - component: {fileID: 2230622848062819375}
   - component: {fileID: 8791276294330107228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LP_Window_muntinBar_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 162649182311786174}
   - component: {fileID: 8267472874591157590}
   - component: {fileID: 4910948422207597054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LP_Window_Glass_snaps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3659678931808563058}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Massive Window Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
