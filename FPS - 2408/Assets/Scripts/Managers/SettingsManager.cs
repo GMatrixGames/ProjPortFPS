@@ -66,6 +66,8 @@ public class SettingsManager : MonoBehaviour
 
             Save(); // Save default settings for next start
         }
+
+        AudioListener.volume = settings.GetVolume();
     }
 }
 

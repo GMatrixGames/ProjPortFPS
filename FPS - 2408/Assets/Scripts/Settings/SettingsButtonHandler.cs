@@ -49,6 +49,20 @@ public class SettingsButtonHandler : MonoBehaviour
         }
     }
 
+    public void ExitWithoutSave()
+    {
+        var percent = Mathf.RoundToInt(SettingsManager.instance.settings.GetVolume() * 100);
+        volumeSlider.GetComponentInChildren<TMP_Text>().text = $"Volume ({percent}%)";
+        volumeSlider.value = SettingsManager.instance.settings.GetVolume();
+
+        forward.text = SettingsManager.instance.settings.keyBindings?["Forward"].ToString();
+        backward.text = SettingsManager.instance.settings.keyBindings?["Back"].ToString();
+        left.text = SettingsManager.instance.settings.keyBindings?["Left"].ToString();
+        right.text = SettingsManager.instance.settings.keyBindings?["Right"].ToString();
+        jump.text = SettingsManager.instance.settings.keyBindings?["Jump"].ToString();
+        slide.text = SettingsManager.instance.settings.keyBindings?["Slide"].ToString();
+    }
+
     public void ChangeKey(GameObject clicked)
     {
         currKey = clicked;
