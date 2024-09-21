@@ -5359,14 +5359,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: dropOffEnd
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 579502437780882788, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: dropOffStart
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 3838082731397906876, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.5
@@ -5407,10 +5399,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6389510640758940352, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 15303, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 7609893449189220777, guid: 20f882e44766ed64686364bbb5257c54, type: 3}
       propertyPath: m_Name
       value: Player
