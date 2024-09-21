@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
     private IEnumerator FlashCountdownText()
     {
         isFlashing = true;
-        while (countdownTimer > 0 && countdownTimer <= 3f)
+        while (countdownTimer is > 0 and <= 3f)
         {
             // Toggle the text color between red and the original color
             countdownText.color = countdownText.color == Color.red ? countdownColorOriginal : Color.red;
@@ -129,12 +129,15 @@ public class EnemySpawner : MonoBehaviour, IDamage
 
     private void StartCountdown()
     {
-        countdownTimer = countdownDuration;
-        timerActive = true;
-
-        if (countdownText != null) 
+        if (countdownDuration != -1)
         {
-            countdownText.gameObject.SetActive(true); 
+            countdownTimer = countdownDuration;
+            timerActive = true;
+
+            if (countdownText != null)
+            {
+                countdownText.gameObject.SetActive(true);
+            }
         }
     }
 
