@@ -10190,7 +10190,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1650148255}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.42577523}
+  m_LocalPosition: {x: 0, y: 0, z: 0.671211}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10198,7 +10198,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.312384, y: -1.1671383}
+  m_AnchoredPosition: {x: 19.312384, y: -0.91713834}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650148257
@@ -10231,11 +10231,13 @@ MonoBehaviour:
     to
     attach and grapple towards
 
-    a nearby grapple point (Green Pole)
+    a nearby grapple point (Green Pole).
+
+    Jump
+    to give yourself an extra upwards boost!
 
 
-    TIP:
-    Runnable Walls are also grappleable'
+    TIP: Runnable Walls are also grappleable'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10298,7 +10300,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5.2616134, y: -0.41483593, z: 5.225605, w: -0.37262106}
+  m_margin: {x: 5.2616134, y: -0.41483593, z: 4.303057, w: -0.37262106}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
