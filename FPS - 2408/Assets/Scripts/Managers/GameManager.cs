@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public GameObject checkpointPopup;
+    public GameObject grenadeCanvas;
 
     public bool isPaused;
 
@@ -68,12 +69,13 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Pause"]))
         {
             if (!menuActive)
             {
                 StatePause();
                 menuActive = menuPause;
+                menuActive.transform.Find("Quit").gameObject.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
                 menuActive.SetActive(isPaused);
             }
             else if (menuActive == menuPause)
@@ -89,6 +91,7 @@ public class GameManager : MonoBehaviour
             {
                 StatePause();
                 menuActive = menuWin;
+                menuActive.transform.Find("Quit").gameObject.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
                 menuActive.SetActive(isPaused);
             }
         }
@@ -127,6 +130,7 @@ public class GameManager : MonoBehaviour
     {
         if (menuActive) menuActive.SetActive(false);
         menuActive = menuPause;
+        menuActive.transform.Find("Quit").gameObject.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
         menuActive.SetActive(true);
     }
 
@@ -137,20 +141,6 @@ public class GameManager : MonoBehaviour
     {
         if (menuActive) menuActive.SetActive(false);
         menuActive = menuOptions;
-        menuActive.SetActive(true);
-    }
-
-    /// <summary>
-    /// Re-open the previous window
-    /// </summary>
-    public void ReopenPreviousWindow()
-    {
-        if (menuActive)
-        {
-            menuActive.SetActive(false);
-        }
-
-        menuActive = menuPause; // Assuming the previous window is the pause menu
         menuActive.SetActive(true);
     }
 
@@ -205,16 +195,10 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGrappleCD()
     {
-        if (grappleShouldCooldown)
-        {
-            return;
-        }
-        else
-        {
-            grappleShouldCooldown = true;
-            grappleCooldownText.gameObject.SetActive(true);
-            grappleCooldownTimer = grappleCooldownTime;
-        }
+        if (grappleShouldCooldown) return;
+        grappleShouldCooldown = true;
+        grappleCooldownText.gameObject.SetActive(true);
+        grappleCooldownTimer = grappleCooldownTime;
     }
 
     /// <summary>
@@ -244,7 +228,7 @@ public class GameManager : MonoBehaviour
         spawnersCount += amount;
         spawnersCountText.text = $"{spawnersDestroyedCount:D2}/{spawnersCount:D2}";
     }
-
+ 
     /// <summary>
     /// Set state to lost
     /// </summary>
@@ -252,6 +236,7 @@ public class GameManager : MonoBehaviour
     {
         StatePause();
         menuActive = menuLose;
+        menuActive.transform.Find("Quit").gameObject.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
         menuActive.SetActive(isPaused);
     }
 }
