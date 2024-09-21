@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     public GameObject checkpointPopup;
+    public GameObject grenadeCanvas;
 
     public bool isPaused;
 
@@ -194,16 +195,10 @@ public class GameManager : MonoBehaviour
 
     public void UpdateGrappleCD()
     {
-        if (grappleShouldCooldown)
-        {
-            return;
-        }
-        else
-        {
-            grappleShouldCooldown = true;
-            grappleCooldownText.gameObject.SetActive(true);
-            grappleCooldownTimer = grappleCooldownTime;
-        }
+        if (grappleShouldCooldown) return;
+        grappleShouldCooldown = true;
+        grappleCooldownText.gameObject.SetActive(true);
+        grappleCooldownTimer = grappleCooldownTime;
     }
 
     /// <summary>
@@ -233,7 +228,7 @@ public class GameManager : MonoBehaviour
         spawnersCount += amount;
         spawnersCountText.text = $"{spawnersDestroyedCount:D2}/{spawnersCount:D2}";
     }
-
+ 
     /// <summary>
     /// Set state to lost
     /// </summary>
