@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    private float distToGround;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -131,6 +133,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             grenadeIcon.enabled = false;
         }
+
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     public void SpawnPlayer()
@@ -150,7 +154,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && rb.velocity.y == 0)
+            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && IsGrounded())
             {
                 StartCoroutine(Slide());
             }
@@ -200,7 +204,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void Movement()
     {
-        if (rb.velocity.y == 0)
+        if (IsGrounded())
         {
             jumpCount = 0;
             playerVelocity = Vector3.zero;
@@ -229,12 +233,12 @@ public class PlayerController : MonoBehaviour, IDamage
         rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * slowdownTimer);
 
         // Counter movement to stop quickly when no input is given
-        if (rb.velocity.y == 0 && move.magnitude == 0)
+        if (IsGrounded() && move.magnitude == 0)
         {
             rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * slowdownTimer);
         }
 
-        if (rb.velocity.y == 0 && horizontal == 0 && vertical == 0)
+        if (IsGrounded() && horizontal == 0 && vertical == 0)
         {
             //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
             //How do I do this?
@@ -272,7 +276,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (rb.velocity.y == 0 && move.magnitude > 0.3f && !isPlayingStep)
+        if (IsGrounded() && move.magnitude > 0.3f && !isPlayingStep && !isSliding)
         {
             StartCoroutine(PlayStep());
         }
@@ -635,4 +639,6 @@ public class PlayerController : MonoBehaviour, IDamage
             grapplingGun.StopGrapple();
         }
     }
+
+    private bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
 }
