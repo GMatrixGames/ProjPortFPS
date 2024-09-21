@@ -2217,6 +2217,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 109
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (4)
@@ -2282,6 +2286,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (5)
@@ -4521,6 +4529,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 109
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (1)
@@ -4643,6 +4655,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 120.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (6)
@@ -8579,6 +8595,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 109.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (2)
@@ -9067,6 +9095,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (7)
@@ -13474,6 +13506,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2749394949089495966, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
+      propertyPath: m_Radius
+      value: 109
+      objectReference: {fileID: 0}
     - target: {fileID: 6290625219531684322, guid: 48bf092ef7974b041816fd1138815ab3, type: 3}
       propertyPath: m_Name
       value: Enemy Spawner (3)
