@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool hasWallKicked;
     private int wallKickCount;
 
+    public bool isLeaningRight;
+
     #endregion
 
     #region HealthRegen
@@ -84,6 +86,7 @@ public class PlayerController : MonoBehaviour, IDamage
     private int maxShots;
     private float shootCooldown;
     public bool isCoolingDown;
+    public bool hasDropoff;
 
     #endregion
 
@@ -117,6 +120,8 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    private float distToGround;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -130,6 +135,8 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             grenadeIcon.enabled = false;
         }
+
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     public void SpawnPlayer()
@@ -149,7 +156,7 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && rb.velocity.y == 0)
+            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && IsGrounded())
             {
                 StartCoroutine(Slide());
             }
@@ -199,7 +206,7 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void Movement()
     {
-        if (rb.velocity.y == 0)
+        if (IsGrounded())
         {
             jumpCount = 0;
             playerVelocity = Vector3.zero;
@@ -228,12 +235,12 @@ public class PlayerController : MonoBehaviour, IDamage
         rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * slowdownTimer);
 
         // Counter movement to stop quickly when no input is given
-        if (rb.velocity.y == 0 && move.magnitude == 0)
+        if (IsGrounded() && move.magnitude == 0)
         {
             rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * slowdownTimer);
         }
 
-        if (rb.velocity.y == 0 && horizontal == 0 && vertical == 0)
+        if (IsGrounded() && horizontal == 0 && vertical == 0)
         {
             //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
             //How do I do this?
@@ -271,7 +278,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (rb.velocity.y == 0 && move.magnitude > 0.3f && !isPlayingStep)
+        if (IsGrounded() && move.magnitude > 0.3f && !isPlayingStep && !isSliding)
         {
             StartCoroutine(PlayStep());
         }
@@ -379,13 +386,18 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <returns>calculated damage</returns>
     private int CalcDamage(float distance)
     {
-        if (distance <= dropOffStart) return maxDamage;
-        if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
+        if (gunList[selectedGun].hasDropoff)
+        {
+            if (distance <= dropOffStart) return maxDamage;
+            if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
 
-        var range = dropOffEnd - dropOffStart;
-        var normalizedDistance = (distance - dropOffStart) / range;
+            var range = dropOffEnd - dropOffStart;
+            var normalizedDistance = (distance - dropOffStart) / range;
 
-        return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+            return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+        }
+
+        return maxDamage;
     }
 
     /// <inheritdoc/>
@@ -424,8 +436,19 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (other.gameObject.CompareTag("RunnableWall"))
         {
+            // Wall Running feedback is not at a point where we want it at this stage, so it did not make it into the Beta milestone. I apologize.
+            // if (Physics.Raycast(transform.position, transform.right, 1))
+            // {
+            //     isLeaningRight = false;
+            // }
+            // else if (Physics.Raycast(transform.position, -transform.right, 1))
+            // {
+            //     isLeaningRight = true;
+            // }
+
             // Debug.Log("Yep.");
             runningOnWall = true;
+
             if (other.gameObject != lastTouchedWall)
             {
                 hasWallKicked = false;
@@ -476,6 +499,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
+        hasDropoff = gun.hasDropoff;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
@@ -512,6 +536,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootRate = gun.shootRate;
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
+        hasDropoff = gun.hasDropoff;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
@@ -627,4 +652,6 @@ public class PlayerController : MonoBehaviour, IDamage
             grapplingGun.StopGrapple();
         }
     }
+
+    private bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
 }

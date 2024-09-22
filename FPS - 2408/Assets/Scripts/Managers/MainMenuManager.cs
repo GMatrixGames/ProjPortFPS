@@ -11,4 +11,10 @@ public class MainMenuManager : MonoBehaviour
 
         quitButton.SetActive(Application.platform != RuntimePlatform.WebGLPlayer);
     }
+
+    private void Update()
+    {
+        // Rotate the skybox on main menu
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time);
+    }
 }

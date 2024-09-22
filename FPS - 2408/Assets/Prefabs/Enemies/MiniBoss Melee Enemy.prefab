@@ -846,7 +846,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3403080557270928090
@@ -1722,7 +1722,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 110.54741, y: 0.0000009536743, z: -1.4599}
-  m_LocalScale: {x: 1.7248, y: 1.7248, z: 1.7248}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6669614605319840374}
@@ -1748,7 +1748,7 @@ MonoBehaviour:
   headPos: {fileID: 4594108225406695387}
   healthBar: {fileID: 2546307146458673841}
   hp: 50
-  viewAngle: 90
+  viewAngle: 180
   facePlayerSpeed: 7
   roamDistance: 15
   roamTimer: 3

@@ -72,7 +72,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3466208500763869892
@@ -404,8 +404,8 @@ MonoBehaviour:
   shootPos: {fileID: 8785150370719182104}
   headPos: {fileID: 8788208901346676812}
   healthBar: {fileID: 8259557519089543360}
-  hp: 10
-  viewAngle: 90
+  hp: 15
+  viewAngle: 180
   facePlayerSpeed: 5
   roamDistance: 15
   roamTimer: 3

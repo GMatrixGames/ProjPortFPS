@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
   gunRotation: {x: -90, y: 0, z: 0, w: 0}
-  shootDamage: 5
-  minDamage: 5
-  maxDamage: 10
+  shootDamage: 6
+  minDamage: 6
+  maxDamage: 6
   shootRate: 0.2
   shootDist: 500
   maxShots: 15
@@ -29,3 +29,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8581f806dddef8046b4942de05b897be, type: 3}
   shootVolume: 0.1
   displayHeat: 1
+  hasDropoff: 0
