@@ -38,6 +38,8 @@ public class CameraController : MonoBehaviour
 
         // rotate the player on y
         transform.parent.Rotate(Vector3.up * mouseX);
+
+        CameraTilt();
     }
 
     //This is a surprise tool that will help us later. 
