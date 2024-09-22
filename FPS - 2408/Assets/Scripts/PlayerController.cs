@@ -53,6 +53,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool hasWallKicked;
     private int wallKickCount;
 
+    public bool isLeaningRight;
+
     #endregion
 
     #region HealthRegen
@@ -434,8 +436,18 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (other.gameObject.CompareTag("RunnableWall"))
         {
+            if (Physics.Raycast(transform.position, transform.right, 1))
+            {
+                isLeaningRight = false;
+            }
+            else if (Physics.Raycast(transform.position, -transform.right, 1))
+            {
+                isLeaningRight = true;
+            }
+
             // Debug.Log("Yep.");
             runningOnWall = true;
+
             if (other.gameObject != lastTouchedWall)
             {
                 hasWallKicked = false;
