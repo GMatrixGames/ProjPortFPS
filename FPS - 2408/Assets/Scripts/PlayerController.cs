@@ -436,19 +436,17 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (other.gameObject.CompareTag("RunnableWall"))
         {
-            Vector3 direction = (other.gameObject.transform.position - gameObject.transform.position).normalized;
-
-            if(direction.x > 0)
-            {
-                isLeaningRight = true;
-            }else if(direction.x < 0)
+            if (Physics.Raycast(transform.position, transform.right, 1))
             {
                 isLeaningRight = false;
             }
+            else if (Physics.Raycast(transform.position, -transform.right, 1))
+            {
+                isLeaningRight = true;
+            }
+
             // Debug.Log("Yep.");
             runningOnWall = true;
-
-
 
             if (other.gameObject != lastTouchedWall)
             {
