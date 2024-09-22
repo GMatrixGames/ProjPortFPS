@@ -4892,10 +4892,10 @@ MonoBehaviour:
     Attempt Sliding
 
 
-    Press and Hold [{SLIDE}]
+    Press [{SLIDE}]
 
-    to slide
-    under obstacles.'
+    to slide under
+    obstacles.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9569,9 +9569,17 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
+    - target: {fileID: 1313815090407439613, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3290204887591431567, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_SizeDelta.y
       value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 3447763421528703016, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3649506898826568194, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_text
@@ -9672,6 +9680,14 @@ PrefabInstance:
     - target: {fileID: 7042334251335832305, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7174770756118029949, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8584397935556602256, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8892082978776860229, guid: 81388b16dcdfba7428f1b91906fe6ef9, type: 3}
       propertyPath: m_IsActive
