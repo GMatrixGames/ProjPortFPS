@@ -9,6 +9,9 @@ public class CameraController : MonoBehaviour
     PlayerController playerController;
     private float rotX;
 
+    private bool rotateBack;
+    private bool wasRight;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -38,11 +41,36 @@ public class CameraController : MonoBehaviour
     }
 
     //This is a surprise tool that will help us later. 
-    //private void CameraTilt()
-    //{
-    //    if (playerController.runningOnWall == true)
-    //    {
-            
-    //    }
-    //}
+    private void CameraTilt()
+    {
+        if (playerController.runningOnWall == true)
+        {
+            if(playerController.isLeaningRight == true)
+            {
+                Camera.main.transform.localRotation = Quaternion.Euler(30, transform.localRotation.y, transform.localRotation.z);
+                rotateBack = true;
+                wasRight = true;
+            }
+            else if (playerController.isLeaningRight == false)
+            {
+                Camera.main.transform.localRotation = Quaternion.Euler(-30, transform.localRotation.y, transform.localRotation.z);
+                rotateBack = true;
+                wasRight = false;
+            }
+        }
+
+        if(playerController.runningOnWall == false && rotateBack == true)
+        {
+            if (wasRight)
+            {
+                Camera.main.transform.localRotation = Quaternion.Euler(-30, transform.localRotation.y, transform.localRotation.z);
+                rotateBack = false;
+            }
+            else if (!wasRight)
+            {
+                Camera.main.transform.localRotation = Quaternion.Euler(30, transform.localRotation.y, transform.localRotation.z);
+                rotateBack = false;
+            }
+        }
+    }
 }
