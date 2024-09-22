@@ -436,14 +436,15 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (other.gameObject.CompareTag("RunnableWall"))
         {
-            if (Physics.Raycast(transform.position, transform.right, 1))
-            {
-                isLeaningRight = false;
-            }
-            else if (Physics.Raycast(transform.position, -transform.right, 1))
-            {
-                isLeaningRight = true;
-            }
+            // Wall Running feedback is not at a point where we want it at this stage, so it did not make it into the Beta milestone. I apologize.
+            // if (Physics.Raycast(transform.position, transform.right, 1))
+            // {
+            //     isLeaningRight = false;
+            // }
+            // else if (Physics.Raycast(transform.position, -transform.right, 1))
+            // {
+            //     isLeaningRight = true;
+            // }
 
             // Debug.Log("Yep.");
             runningOnWall = true;

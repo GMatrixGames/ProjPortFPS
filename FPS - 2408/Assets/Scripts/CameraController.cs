@@ -40,35 +40,36 @@ public class CameraController : MonoBehaviour
         // rotate the player on y
         transform.parent.Rotate(Vector3.up * mouseX);
 
-        if (playerController.runningOnWall && !isAlreadyTilted)
-        {
-            var targetTilt = playerController.isLeaningRight ? -15 : 15;
-            var targetTiltRotation = Quaternion.Euler(0, 0, targetTilt);
-
-            // Smoothly tilt the camera towards the target tilt rotation
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, movementRotation * targetTiltRotation, Time.deltaTime * 5f);
-        
-            // Check if the tilt is nearly done
-            if (Quaternion.Angle(transform.localRotation, movementRotation * targetTiltRotation) < 0.1f)
-            {
-                isAlreadyTilted = true;
-            }
-        }
-        else if (!playerController.runningOnWall && isAlreadyTilted)
-        {
-            // Smoothly return to the original rotation (no tilt, just movement)
-            transform.localRotation = Quaternion.Slerp(transform.localRotation, movementRotation * originalRotation, Time.deltaTime * 5f);
-        
-            // Check if the rotation is back to normal
-            if (Quaternion.Angle(transform.localRotation, movementRotation * originalRotation) < 0.1f)
-            {
-                isAlreadyTilted = false;
-            }
-        }
-        else
-        {
+        // Wall Running feedback is not at a point where we want it at this stage, so it did not make it into the Beta milestone. I apologize.
+        // if (playerController.runningOnWall && !isAlreadyTilted)
+        // {
+        //     var targetTilt = playerController.isLeaningRight ? -15 : 15;
+        //     var targetTiltRotation = Quaternion.Euler(0, 0, targetTilt);
+        //
+        //     // Smoothly tilt the camera towards the target tilt rotation
+        //     transform.localRotation = Quaternion.Slerp(transform.localRotation, movementRotation * targetTiltRotation, Time.deltaTime * 5f);
+        //
+        //     // Check if the tilt is nearly done
+        //     if (Quaternion.Angle(transform.localRotation, movementRotation * targetTiltRotation) < 0.1f)
+        //     {
+        //         isAlreadyTilted = true;
+        //     }
+        // }
+        // else if (!playerController.runningOnWall && isAlreadyTilted)
+        // {
+        //     // Smoothly return to the original rotation (no tilt, just movement)
+        //     transform.localRotation = Quaternion.Slerp(transform.localRotation, movementRotation * originalRotation, Time.deltaTime * 5f);
+        //
+        //     // Check if the rotation is back to normal
+        //     if (Quaternion.Angle(transform.localRotation, movementRotation * originalRotation) < 0.1f)
+        //     {
+        //         isAlreadyTilted = false;
+        //     }
+        // }
+        // else
+        // {
             // Apply camera movement when not tilting
             transform.localRotation = movementRotation;
-        }
+        // }
     }
 }
