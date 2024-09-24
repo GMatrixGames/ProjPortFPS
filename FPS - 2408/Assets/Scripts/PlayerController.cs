@@ -490,37 +490,23 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void GetGunStats(GunStats gun)
     {
+        if (gunList.Count > 0) gunList[selectedGun].shotCount = currentShots;
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
-
-        minDamage = gun.minDamage;
-        maxDamage = gun.maxDamage;
-        shootDist = gun.shootDist;
-        shootRate = gun.shootRate;
-        maxShots = gun.maxShots;
-        shootCooldown = gun.shootCooldown;
-        hasDropoff = gun.hasDropoff;
-
-        GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        if (gun.gunRotation != default)
-        {
-            gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
-            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
-        }
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        LoadGunStats(gun);
     }
 
     private void SelectGun()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
         {
+            gunList[selectedGun].shotCount = currentShots;
             selectedGun++;
             ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
+            gunList[selectedGun].shotCount = currentShots;
             selectedGun--;
             ChangeGun();
         }
@@ -528,8 +514,14 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
-        currentShots = 0;
         var gun = gunList[selectedGun];
+        LoadGunStats(gun);
+    }
+
+    private void LoadGunStats(GunStats gun)
+    {
+        // Debug.Log("Gun Cooldown: " + gun.shotCount);
+
         minDamage = gun.minDamage;
         maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
@@ -538,17 +530,18 @@ public class PlayerController : MonoBehaviour, IDamage
         shootCooldown = gun.shootCooldown;
         hasDropoff = gun.hasDropoff;
 
+        currentShots = gun.shotCount;
+
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         if (gunList[selectedGun].gunRotation != default)
         {
             gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
-            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
         }
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
-
+    
     private void ThrowGrenade()
     {
         if (grenadePrefab && throwPoint)

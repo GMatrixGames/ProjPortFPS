@@ -15,4 +15,6 @@ public class GunStats : ScriptableObject
     public float shootVolume = .5f;
     public bool displayHeat = true;
     public bool hasDropoff = true;
+
+    public float shotCount;
 }
