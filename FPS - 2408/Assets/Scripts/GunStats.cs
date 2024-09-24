@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu]
 public class GunStats : ScriptableObject
 {
+    public Guid guid = Guid.NewGuid();
     public GameObject gunModel;
     public Quaternion gunRotation;
     public int minDamage, maxDamage;
