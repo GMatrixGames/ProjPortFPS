@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour, IDamage
         hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        currentShots = 0;
     }
 
     // Update is called once per frame
