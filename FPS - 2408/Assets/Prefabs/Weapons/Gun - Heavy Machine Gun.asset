@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Heavy Machine Gun
   m_EditorClassIdentifier: 
+  guid: d67b86b441d440a89b3e2563dffa45d9
   gunModel: {fileID: 100000, guid: fccd8e251d698f7449ed9aca4bacc50e, type: 3}
   gunRotation: {x: -90, y: 180, z: 0, w: 0}
-  shootDamage: 5
   minDamage: 5
   maxDamage: 5
   shootRate: 0.1
@@ -28,3 +28,4 @@ MonoBehaviour:
   shootVolume: 0.1
   displayHeat: 1
   hasDropoff: 0
+  shotCount: 0

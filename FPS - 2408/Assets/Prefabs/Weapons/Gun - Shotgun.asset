@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Shotgun
   m_EditorClassIdentifier: 
+  guid: a7f368330e374c8aa90a6005962823e2
   gunModel: {fileID: 8276986080499376821, guid: e82f1152c2c33df459e1b1bd72c5d050, type: 3}
   gunRotation: {x: 0, y: -90, z: 0, w: 0}
   minDamage: 10
@@ -31,3 +32,4 @@ MonoBehaviour:
   shootVolume: 0.1
   displayHeat: 1
   hasDropoff: 1
+  shotCount: 0

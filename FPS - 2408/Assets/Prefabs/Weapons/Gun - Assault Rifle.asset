@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Assault Rifle
   m_EditorClassIdentifier: 
+  guid: 56e81ba1cbec42029d0499b304d4298e
   gunModel: {fileID: 100000, guid: a97da33f506743140bba5d7a279179ed, type: 3}
   gunRotation: {x: -90, y: 0, z: 0, w: 0}
-  shootDamage: 6
   minDamage: 6
   maxDamage: 6
   shootRate: 0.2
@@ -30,3 +30,4 @@ MonoBehaviour:
   shootVolume: 0.1
   displayHeat: 1
   hasDropoff: 0
+  shotCount: 0

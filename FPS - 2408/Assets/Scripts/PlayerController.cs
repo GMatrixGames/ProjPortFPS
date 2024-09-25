@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.UI;
@@ -91,7 +92,6 @@ public class PlayerController : MonoBehaviour, IDamage
     #endregion
 
     private Vector3 move;
-    private Vector3 playerVelocity;
 
     private int jumpCount;
     private float hpOrig;
@@ -209,7 +209,6 @@ public class PlayerController : MonoBehaviour, IDamage
         if (IsGrounded())
         {
             jumpCount = 0;
-            playerVelocity = Vector3.zero;
             lastTouchedWall = null;
         }
 
@@ -490,6 +489,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     public void GetGunStats(GunStats gun)
     {
+        if (gunList.Any(g => g.guid == gun.guid)) return;
         if (gunList.Count > 0) gunList[selectedGun].shotCount = currentShots;
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
