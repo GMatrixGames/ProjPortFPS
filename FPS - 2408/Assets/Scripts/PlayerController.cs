@@ -226,8 +226,13 @@ public class PlayerController : MonoBehaviour, IDamage
         var vertical = forward + backward;
 
         // Movement logic.
-        move = new Vector3(left + right, 0f, forward + backward);
+        move = new Vector3(left + right, 0f, forward + backward).normalized;
         var moveVector = transform.TransformDirection(move) * accelerationSpeed;
+
+        if (Physics.Raycast(transform.position, moveVector, out var hit, 0.1f))
+        {
+            moveVector = Vector3.ProjectOnPlane(moveVector, hit.normal);
+        }
 
         // Directly set the velocity for more responsive control
         var targetVelocity = moveVector;
@@ -242,9 +247,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (IsGrounded() && horizontal == 0 && vertical == 0)
         {
-            //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
-            //How do I do this?
-            rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z, ForceMode.Force);
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.deltaTime * slowdownTimer), rb.velocity.y, Mathf.Lerp(rb.velocity.z, 0, Time.deltaTime * slowdownTimer));
         }
 
         if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Jump"]) && jumpCount < jumpMax)
