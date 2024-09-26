@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             dmg?.TakeDamage(damage);
             Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
-            gunModel.GetComponent<AudioSource>().PlayOneShot(gunList[selectedGun].hitSound, .5f);
+            gunModel.GetComponent<AudioSource>().PlayOneShot(gunList[selectedGun].hitSound, .7f);
         }
 
         yield return new WaitForSeconds(shootRate);

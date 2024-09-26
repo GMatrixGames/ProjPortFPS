@@ -210,6 +210,7 @@ MonoBehaviour:
   grappleTip: {fileID: 715583965355845552}
   cameraPoint: {fileID: 2255971209563409337}
   maxDistance: 100
+  gunAudio: {fileID: 8300000, guid: 268560cdf9e323a42b51efe7299b6fa1, type: 3}
   isGrappling: 0
 --- !u!120 &1075896386819849837
 LineRenderer:

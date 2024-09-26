@@ -7,6 +7,7 @@ public class GrapplingGun : MonoBehaviour
     public Vector3 grapplePoint;
     [SerializeField] Transform grappleTip, cameraPoint;
     [SerializeField] float maxDistance = 50f;
+    [SerializeField] private AudioClip gunAudio;
 
     bool shouldDrawRope;
     public bool isGrappling;
@@ -48,6 +49,8 @@ public class GrapplingGun : MonoBehaviour
 
     public void StartGrapple()
     {
+        GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(gunAudio, .5f);
+
         grapplePoint = transform.position;
 
         if (Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
