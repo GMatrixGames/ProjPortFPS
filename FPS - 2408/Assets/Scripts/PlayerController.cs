@@ -452,6 +452,10 @@ public class PlayerController : MonoBehaviour, IDamage
             // {
             //     isLeaningRight = true;
             // }
+            if (IsGrounded())
+            {
+                return;
+            }
 
             // Debug.Log("Yep.");
             runningOnWall = true;
