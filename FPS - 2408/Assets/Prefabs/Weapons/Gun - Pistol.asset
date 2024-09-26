@@ -29,6 +29,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 230d59294c9857140b63dd308ea4bd63, type: 3}
   - {fileID: 8300000, guid: 31f5f9d19376b964da72874480ad63ea, type: 3}
   - {fileID: 8300000, guid: 74079e3b043b8a549a28e1350566b7e0, type: 3}
+  hitSound: {fileID: 8300000, guid: e7e12d812ea2d4c40b7db7bc844f7ca5, type: 3}
   shootVolume: 0.1
   displayHeat: 0
   hasDropoff: 0

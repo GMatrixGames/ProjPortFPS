@@ -131,11 +131,7 @@ public class PlayerController : MonoBehaviour, IDamage
         grenadeCountText = GameManager.instance.grenadeCanvas.GetComponentInChildren<TMP_Text>();
         grenadeIcon = GameManager.instance.grenadeCanvas.GetComponentInChildren<Image>();
         originalHeight = playerModel.localScale.y;
-        if (grenadeIcon != null)
-        {
-            grenadeIcon.enabled = false;
-        }
-
+        if (grenadeIcon) grenadeIcon.enabled = false;
         distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
@@ -373,6 +369,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             dmg?.TakeDamage(damage);
             Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+            gunModel.GetComponent<AudioSource>().PlayOneShot(gunList[selectedGun].hitSound, .5f);
         }
 
         yield return new WaitForSeconds(shootRate);
@@ -420,7 +417,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (hpCurrent <= 0)
         {
-            HandleDaath();
+            HandleDeath();
             GameManager.instance.StateLost();
             //hpCurrent = 0;
             // Debug.Log("Player died.");
@@ -634,14 +631,6 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    private void UpdateGrenadeUI()
-    {
-        if (grenadeCountText)
-        {
-            //Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
-        }
-    }
-
     private void PullToPoint()
     {
         var direction = grapplingGun.grapplePoint - transform.position;
@@ -659,7 +648,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
 
-    public void HandleDaath()
+    public void HandleDeath()
     {
         SpawnPlayer();
     }

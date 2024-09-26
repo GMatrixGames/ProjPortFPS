@@ -13,6 +13,7 @@ public class GunStats : ScriptableObject
     public float shootCooldown;
     public ParticleSystem hitEffect;
     public AudioClip[] shootSounds;
+    public AudioClip hitSound;
     public float shootVolume = .5f;
     public bool displayHeat = true;
     public bool hasDropoff = true;
