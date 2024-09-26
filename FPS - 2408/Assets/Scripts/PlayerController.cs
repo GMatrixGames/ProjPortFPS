@@ -411,8 +411,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (hpCurrent <= 0)
         {
+            HandleDaath();
             GameManager.instance.StateLost();
-            hpCurrent = 0;
+            //hpCurrent = 0;
             // Debug.Log("Player died.");
         }
 
@@ -647,4 +648,9 @@ public class PlayerController : MonoBehaviour, IDamage
     }
 
     private bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+
+    public void HandleDaath()
+    {
+        SpawnPlayer();
+    }
 }
