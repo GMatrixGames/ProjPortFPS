@@ -17,7 +17,7 @@ MonoBehaviour:
   minDamage: 10
   maxDamage: 15
   shootRate: 0.75
-  shootDist: 10
+  shootDist: 18
   maxShots: 6
   shootCooldown: 3
   hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
@@ -31,3 +31,4 @@ MonoBehaviour:
   shootVolume: 0.1
   displayHeat: 1
   hasDropoff: 1
+  shotCount: 2.2618895
