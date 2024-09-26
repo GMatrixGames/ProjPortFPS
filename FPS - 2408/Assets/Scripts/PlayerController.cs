@@ -320,7 +320,7 @@ public class PlayerController : MonoBehaviour, IDamage
         isSliding = true;
 
         var cameraOriginalPos = Camera.main.transform.localPosition;
-        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y - (1 - slideHeight), cameraOriginalPos.z);
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z);
 
         var playerCollider = GetComponent<CapsuleCollider>();
         playerCollider.height *= slideHeight; // Reduce height for sliding
