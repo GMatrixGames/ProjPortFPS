@@ -17,7 +17,7 @@ MonoBehaviour:
   gunRotation: {x: 0, y: 0, z: 0, w: 0}
   minDamage: 2
   maxDamage: 2
-  shootRate: 0.5
+  shootRate: 0.3
   shootDist: 350
   maxShots: 10000000
   shootCooldown: 2
