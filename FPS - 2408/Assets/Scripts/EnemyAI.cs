@@ -75,22 +75,75 @@ public class EnemyAI : MonoBehaviour, IDamage
 
     private IEnumerator Roam()
     {
+        //isRoaming = true;
+
+        //yield return new WaitForSeconds(roamTimer);
+        //agent.stoppingDistance = 0;
+
+        //var randomDist = Random.insideUnitSphere * roamDistance;
+        //randomDist += startingPos;
+
+        //if (NavMesh.SamplePosition(randomDist, out var hit, roamDistance, 1))
+        //{
+        //    agent.SetDestination(hit.position);
+        //}
+
+        //isRoaming = false;
+
         isRoaming = true;
+        agent.stoppingDistance = 0; // Disable stopping distance while roaming
 
-        yield return new WaitForSeconds(roamTimer);
-        agent.stoppingDistance = 0;
+        float roamDuration = Random.Range(5f, 10f); // Random roaming time between 5 and 10 seconds
+        float timeElapsed = 0f;
 
-        var randomDist = Random.insideUnitSphere * roamDistance;
-        randomDist += startingPos;
+        Vector3 targetPosition = GetRandomRoamingPosition();
 
-        if (NavMesh.SamplePosition(randomDist, out var hit, roamDistance, 1))
+        while (timeElapsed < roamDuration)
         {
-            agent.SetDestination(hit.position);
+            
+            if (agent.remainingDistance < 0.5f)
+            {
+                Vector3 newPosition = GetRandomRoamingPosition();
+                
+                if (Vector3.Distance(newPosition, targetPosition) > 1f)
+                {
+                    targetPosition = newPosition;
+                    agent.SetDestination(targetPosition);
+                }
+            }
+            
+            if (agent.velocity.magnitude < 0.1f)
+            {               
+                targetPosition += new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+                agent.SetDestination(targetPosition);
+            }
+
+            timeElapsed += Time.deltaTime;
+            yield return null; 
         }
 
         isRoaming = false;
     }
 
+    private Vector3 GetRandomRoamingPosition()
+    {
+        // Generate random position within roamDistance from the starting position
+        Vector3 randomDir = Random.insideUnitSphere * roamDistance;
+        randomDir += startingPos;
+
+        // Ensure the new position is valid on the NavMesh and not too close to the player
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomDir, out hit, roamDistance, NavMesh.AllAreas))
+        {
+            float distanceFromPlayer = Vector3.Distance(hit.position, GameManager.instance.player.transform.position);
+            if (distanceFromPlayer >= 5f) 
+            {
+                return hit.position;
+            }
+        }
+
+        return startingPos; // Fallback to starting position if no valid point found
+    }
     protected bool CanSeePlayer()
     {
         playerDir = GameManager.instance.player.transform.position - headPos.position;
