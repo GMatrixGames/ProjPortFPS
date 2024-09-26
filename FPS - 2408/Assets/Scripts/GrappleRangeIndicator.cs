@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class GrappleRangeIndicator : MonoBehaviour
 {
-    //Could potentially be used for something, but this seemed too much, so...
 
     //private void OnTriggerEnter(Collider other)
     //{
@@ -17,7 +16,7 @@ public class GrappleRangeIndicator : MonoBehaviour
 
     //private void OnTriggerExit(Collider other)
     //{
-    //    if(other.gameObject.CompareTag("RunnableWall"))
+    //    if (other.gameObject.CompareTag("RunnableWall"))
     //    {
     //        other.GetComponent<Renderer>().material.color = default;
     //    }
