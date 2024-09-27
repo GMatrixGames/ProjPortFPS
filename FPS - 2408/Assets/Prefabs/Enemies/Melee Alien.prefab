@@ -72,7 +72,7 @@ MonoBehaviour:
   m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
-  m_FillOrigin: 1
+  m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1749215992065324576
@@ -391,7 +391,7 @@ MonoBehaviour:
   shootPos: {fileID: 6726900393260333818}
   headPos: {fileID: 6123732931257647657}
   healthBar: {fileID: 477898715789893940}
-  hp: 10
+  hp: 8
   viewAngle: 90
   facePlayerSpeed: 5
   roamDistance: 15
@@ -401,7 +401,7 @@ MonoBehaviour:
   shootRate: 0
   shootAngle: 0
   meleeDamage: 1
-  meleeRate: 1
+  meleeRate: 1.25
 --- !u!195 &3100199220541300936
 NavMeshAgent:
   m_ObjectHideFlags: 0

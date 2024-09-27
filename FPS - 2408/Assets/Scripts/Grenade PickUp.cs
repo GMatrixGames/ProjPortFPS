@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class GrenadePickUp : MonoBehaviour
 {
-    public void OnTriggerStay(Collider other) // OnTriggerStay is called continuously while the collider of this object is touching another object
+    public int grenadesToAdd = 1;
+    public void OnTriggerStay(Collider other) 
     {
         // Check if the other object is tagged as "Player"
         if (other.gameObject.CompareTag("Player") && !other.gameObject.CompareTag("Thrown Grenade"))
@@ -12,9 +13,8 @@ public class GrenadePickUp : MonoBehaviour
 
             var playerController = other.GetComponent<PlayerController>();
             if (playerController != null)
-            {
-                playerController.GrenadeOnPlayer.SetActive(true);
-                playerController.PickUpGrenade();
+            {                
+                playerController.PickUpGrenade(grenadesToAdd);
             }
         }
     }

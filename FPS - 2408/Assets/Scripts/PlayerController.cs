@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour, IDamage
 {
@@ -26,13 +28,13 @@ public class PlayerController : MonoBehaviour, IDamage
     [SerializeField] private CameraShake cameraShake;
 
     [Header("----- Slide Attributes -----")]
-    [SerializeField] private float slideSpeed = 10f; 
+    [SerializeField] private float slideSpeed = 10f;
     [SerializeField] private float slideDuration = 0.5f;
-    [SerializeField] private float slideHeight = 0.5f; 
-    [SerializeField] private Transform playerModel; 
+    [SerializeField] private float slideHeight = 0.5f;
+    [SerializeField] private Transform playerModel;
 
-    private bool isSliding; 
-    private float originalHeight; 
+    private bool isSliding;
+    private float originalHeight;
 
     [Header("----- Sounds -----")]
     [SerializeField] private AudioClip[] audioSteps;
@@ -51,6 +53,8 @@ public class PlayerController : MonoBehaviour, IDamage
     private GameObject lastTouchedWall;
     private bool hasWallKicked;
     private int wallKickCount;
+
+    public bool isLeaningRight;
 
     #endregion
 
@@ -83,11 +87,11 @@ public class PlayerController : MonoBehaviour, IDamage
     private int maxShots;
     private float shootCooldown;
     public bool isCoolingDown;
+    public bool hasDropoff;
 
     #endregion
 
     private Vector3 move;
-    private Vector3 playerVelocity;
 
     private int jumpCount;
     private float hpOrig;
@@ -97,11 +101,12 @@ public class PlayerController : MonoBehaviour, IDamage
     private bool isShooting;
     private bool isPlayingStep;
 
-    public bool hasGrenade = false;
+    public int grenadeCount;
     public GameObject grenadePrefab;
     public Transform throwPoint;
     public float throwForce = 10f;
-
+    private Image grenadeIcon;
+    private TMP_Text grenadeCountText;
     public GameObject GrenadeOnPlayer;
 
     private Rigidbody rb;
@@ -115,13 +120,19 @@ public class PlayerController : MonoBehaviour, IDamage
 
     #endregion
 
+    private float distToGround;
+
     // Start is called before the first frame update
     private void Start()
     {
         hpOrig = hpMax;
         SpawnPlayer();
         rb = GetComponent<Rigidbody>();
+        grenadeCountText = GameManager.instance.grenadeCanvas.GetComponentInChildren<TMP_Text>();
+        grenadeIcon = GameManager.instance.grenadeCanvas.GetComponentInChildren<Image>();
         originalHeight = playerModel.localScale.y;
+        if (grenadeIcon) grenadeIcon.enabled = false;
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
     public void SpawnPlayer()
@@ -129,12 +140,12 @@ public class PlayerController : MonoBehaviour, IDamage
         hpCurrent = hpOrig;
         GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        currentShots = 0;
     }
 
     // Update is called once per frame
     private void Update()
     {
-
         Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
 
         if (!GameManager.instance.isPaused) // Don't handle movement/shooting if the game is paused.
@@ -142,9 +153,9 @@ public class PlayerController : MonoBehaviour, IDamage
             Movement();
             SelectGun();
 
-            if (Input.GetKeyDown(KeyCode.LeftControl) && !isSliding && rb.velocity.y == 0) 
+            if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Slide"]) && !isSliding && IsGrounded())
             {
-                StartCoroutine(Slide()); 
+                StartCoroutine(Slide());
             }
         }
 
@@ -163,7 +174,7 @@ public class PlayerController : MonoBehaviour, IDamage
             GameManager.instance.UpdateHealthBar(hpCurrent, hpMax);
         }
 
-        if (Input.GetKeyDown(KeyCode.G) && hasGrenade)
+        if (Input.GetKeyDown(KeyCode.G) && grenadeCount > 0)
         {
             // Debug.Log("G key pressed. Calling ThrowGrenade.");
             ThrowGrenade();
@@ -174,7 +185,7 @@ public class PlayerController : MonoBehaviour, IDamage
             currentShots = Mathf.Clamp(currentShots - shootCooldown * Time.deltaTime, 0, 1000);
         }
 
-        if(currentShots == 0)
+        if (currentShots == 0)
         {
             isCoolingDown = false;
         }
@@ -192,10 +203,9 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void Movement()
     {
-        if (rb.velocity.y == 0)
+        if (IsGrounded())
         {
             jumpCount = 0;
-            playerVelocity = Vector3.zero;
             lastTouchedWall = null;
         }
 
@@ -204,9 +214,21 @@ public class PlayerController : MonoBehaviour, IDamage
             PullToPoint();
         }
 
-        // Movement logic. 
-        move = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        var forward = Input.GetKey(SettingsManager.instance.settings.keyBindings["Forward"]) ? 1 : 0;
+        var backward = Input.GetKey(SettingsManager.instance.settings.keyBindings["Back"]) ? -1 : 0;
+        var left = Input.GetKey(SettingsManager.instance.settings.keyBindings["Left"]) ? -1 : 0;
+        var right = Input.GetKey(SettingsManager.instance.settings.keyBindings["Right"]) ? 1 : 0;
+        var horizontal = left + right;
+        var vertical = forward + backward;
+
+        // Movement logic.
+        move = new Vector3(left + right, 0f, forward + backward).normalized;
         var moveVector = transform.TransformDirection(move) * accelerationSpeed;
+
+        if (Physics.Raycast(transform.position, moveVector, out var hit, 0.1f))
+        {
+            moveVector = Vector3.ProjectOnPlane(moveVector, hit.normal);
+        }
 
         // Directly set the velocity for more responsive control
         var targetVelocity = moveVector;
@@ -214,26 +236,24 @@ public class PlayerController : MonoBehaviour, IDamage
         rb.velocity = Vector3.Lerp(rb.velocity, targetVelocity, Time.deltaTime * slowdownTimer);
 
         // Counter movement to stop quickly when no input is given
-        if (rb.velocity.y == 0 && move.magnitude == 0)
+        if (IsGrounded() && move.magnitude == 0)
         {
             rb.velocity = Vector3.Lerp(rb.velocity, Vector3.zero, Time.deltaTime * slowdownTimer);
         }
 
-        if (rb.velocity.y == 0 && Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        if (IsGrounded() && horizontal == 0 && vertical == 0)
         {
-            //rb.velocity.x to approach 0 quickly. I want this to happen in roughly one sec.
-            //How do I do this?
-            rb.AddForce(-rb.velocity.x, 0, -rb.velocity.z, ForceMode.Force);
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.deltaTime * slowdownTimer), rb.velocity.y, Mathf.Lerp(rb.velocity.z, 0, Time.deltaTime * slowdownTimer));
         }
 
-        if (Input.GetButtonDown("Jump") && jumpCount < jumpMax)
+        if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Jump"]) && jumpCount < jumpMax)
         {
             jumpCount++;
             rb.AddForce(Vector3.up * jumpSpeed, ForceMode.Impulse);
         }
 
         // Checks if you're running on the wall, and if you have a wallkick left. If so, you can kick. 
-        if (Input.GetButtonDown("Jump") && runningOnWall && wallKickCount < wallKickMax)
+        if (Input.GetKeyDown(SettingsManager.instance.settings.keyBindings["Jump"]) && runningOnWall && wallKickCount < wallKickMax)
         {
             // Debug.Log($"Wallkick {wallKickCount}");
             wallKickCount++;
@@ -257,7 +277,7 @@ public class PlayerController : MonoBehaviour, IDamage
             StartCoroutine(Shoot());
         }
 
-        if (rb.velocity.y == 0 && move.magnitude > 0.3f && !isPlayingStep)
+        if (IsGrounded() && move.magnitude > 0.3f && !isPlayingStep && !isSliding)
         {
             StartCoroutine(PlayStep());
         }
@@ -291,20 +311,26 @@ public class PlayerController : MonoBehaviour, IDamage
         }
     }
 
-    private IEnumerator Slide() 
+    private IEnumerator Slide()
     {
-        isSliding = true; 
-        var cameraOriginalPos = Camera.main.transform.localPosition; // Use cam position so it doesn't squish things attached to it.
-        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z); 
-        GetComponent<Collider>().transform.localScale = new Vector3(1, 0.5f, 1); // TODO: FIX THINGS GETTING SQUISHED
+        isSliding = true;
+
+        var cameraOriginalPos = Camera.main.transform.localPosition;
+        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y * slideHeight, cameraOriginalPos.z);
+
+        var playerCollider = GetComponent<CapsuleCollider>();
+        playerCollider.height *= slideHeight; // Reduce height for sliding
+        playerCollider.center = new Vector3(playerCollider.center.x, playerCollider.center.y * slideHeight, playerCollider.center.z); // Adjust center
 
         var slideDirection = transform.forward * slideSpeed;
         rb.velocity += new Vector3(slideDirection.x, 0, slideDirection.z);
 
         yield return new WaitForSeconds(slideDuration);
 
-        GetComponent<Collider>().transform.localScale = Vector3.one; // TODO: FIX THINGS GETTING SQUISHED
-        Camera.main.transform.localPosition = new Vector3(cameraOriginalPos.x, cameraOriginalPos.y, cameraOriginalPos.z); 
+        playerCollider.height /= slideHeight;
+        playerCollider.center = new Vector3(playerCollider.center.x, playerCollider.center.y / slideHeight, playerCollider.center.z);
+
+        Camera.main.transform.localPosition = cameraOriginalPos;
         isSliding = false;
     }
 
@@ -343,6 +369,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
             dmg?.TakeDamage(damage);
             Instantiate(gunList[selectedGun].hitEffect, hit.point, Quaternion.identity);
+            gunModel.GetComponent<AudioSource>().PlayOneShot(gunList[selectedGun].hitSound, .7f);
         }
 
         yield return new WaitForSeconds(shootRate);
@@ -365,13 +392,18 @@ public class PlayerController : MonoBehaviour, IDamage
     /// <returns>calculated damage</returns>
     private int CalcDamage(float distance)
     {
-        if (distance <= dropOffStart) return maxDamage;
-        if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
+        if (gunList[selectedGun].hasDropoff)
+        {
+            if (distance <= dropOffStart) return maxDamage;
+            if (distance > dropOffEnd) return 0 /*minDamage*/; // Once drop off end is reached, any bullets past that don't damage. 
 
-        var range = dropOffEnd - dropOffStart;
-        var normalizedDistance = (distance - dropOffStart) / range;
+            var range = dropOffEnd - dropOffStart;
+            var normalizedDistance = (distance - dropOffStart) / range;
 
-        return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+            return Mathf.FloorToInt(Mathf.Lerp(maxDamage, minDamage, normalizedDistance));
+        }
+
+        return maxDamage;
     }
 
     /// <inheritdoc/>
@@ -385,8 +417,9 @@ public class PlayerController : MonoBehaviour, IDamage
 
         if (hpCurrent <= 0)
         {
+            HandleDeath();
             GameManager.instance.StateLost();
-            hpCurrent = 0;
+            //hpCurrent = 0;
             // Debug.Log("Player died.");
         }
 
@@ -410,8 +443,23 @@ public class PlayerController : MonoBehaviour, IDamage
     {
         if (other.gameObject.CompareTag("RunnableWall"))
         {
+            // Wall Running feedback is not at a point where we want it at this stage, so it did not make it into the Beta milestone. I apologize.
+            // if (Physics.Raycast(transform.position, transform.right, 1))
+            // {
+            //     isLeaningRight = false;
+            // }
+            // else if (Physics.Raycast(transform.position, -transform.right, 1))
+            // {
+            //     isLeaningRight = true;
+            // }
+            if (IsGrounded())
+            {
+                return;
+            }
+
             // Debug.Log("Yep.");
             runningOnWall = true;
+
             if (other.gameObject != lastTouchedWall)
             {
                 hasWallKicked = false;
@@ -444,47 +492,33 @@ public class PlayerController : MonoBehaviour, IDamage
         isTakingDamage = false;
     }
 
-    public void PickUpGrenade()
+    public void PickUpGrenade(int amount)
     {
-        hasGrenade = true; 
-        if (GrenadeOnPlayer != null)
-        {
-            GrenadeOnPlayer.SetActive(true);
-        }
+        grenadeCount += amount;
+        UpdateGrenadeCountDisplay();
+        UpdateGrenadeIcon();
     }
 
     public void GetGunStats(GunStats gun)
     {
+        if (gunList.Any(g => g.guid == gun.guid)) return;
+        if (gunList.Count > 0) gunList[selectedGun].shotCount = currentShots;
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
-
-        minDamage = gun.minDamage;
-        maxDamage = gun.maxDamage;
-        shootDist = gun.shootDist;
-        shootRate = gun.shootRate;
-        maxShots = gun.maxShots;
-        shootCooldown = gun.shootCooldown;
-
-        GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        if (gun.gunRotation != default)
-        {
-            gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
-            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
-        }
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        LoadGunStats(gun);
     }
 
     private void SelectGun()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
         {
+            gunList[selectedGun].shotCount = currentShots;
             selectedGun++;
             ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
+            gunList[selectedGun].shotCount = currentShots;
             selectedGun--;
             ChangeGun();
         }
@@ -492,14 +526,23 @@ public class PlayerController : MonoBehaviour, IDamage
 
     private void ChangeGun()
     {
-        currentShots = 0;
         var gun = gunList[selectedGun];
+        LoadGunStats(gun);
+    }
+
+    private void LoadGunStats(GunStats gun)
+    {
+        // Debug.Log("Gun Cooldown: " + gun.shotCount);
+
         minDamage = gun.minDamage;
         maxDamage = gun.maxDamage;
         shootDist = gun.shootDist;
         shootRate = gun.shootRate;
         maxShots = gun.maxShots;
         shootCooldown = gun.shootCooldown;
+        hasDropoff = gun.hasDropoff;
+
+        currentShots = gun.shotCount;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 
@@ -507,85 +550,110 @@ public class PlayerController : MonoBehaviour, IDamage
         if (gunList[selectedGun].gunRotation != default)
         {
             gunModel.transform.localRotation = Quaternion.Euler(gun.gunRotation.x, gun.gunRotation.y, gunModel.transform.localRotation.eulerAngles.z);
-            // muzzleFlash.transform.localRotation = gunModel.transform.localRotation;
         }
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
-
+    
     private void ThrowGrenade()
     {
         if (grenadePrefab && throwPoint)
         {
-            //Debug.Log("Throw point and grenade prefab are assigned.");
-
-            // Instantiate the grenade at the throw point
-            var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
-            // Debug.Log("Grenade instantiated at position: " + throwPoint.position);
-
-            var rb = grenade.GetComponent<Rigidbody>();
-            if (rb)
+            if (grenadeCount > 0)
             {
-                // Ensure the grenade starts moving in the forward direction
-                var throwDirection = throwPoint.forward;
-                var angle = 45f;
-                var gravity = Physics.gravity.y;
-                var throwSpeed = throwForce;
+                var grenade = Instantiate(grenadePrefab, throwPoint.position, throwPoint.rotation);
 
-                // Calculate the initial velocity
-                var radians = angle * Mathf.Deg2Rad;
-                var horizontalSpeed = throwSpeed * Mathf.Cos(radians);
-                var verticalSpeed = throwSpeed * Mathf.Sin(radians);
-                var initialVelocity = throwDirection * horizontalSpeed;
-                initialVelocity.y = verticalSpeed;
+                var grb = grenade.GetComponent<Rigidbody>();
+                if (grb)
+                {
+                    // Ensure the grenade starts moving in the forward direction
+                    var throwDirection = throwPoint.forward;
+                    var angle = 45f;
+                    var throwSpeed = throwForce;
 
+                    // Calculate the initial velocity
+                    var radians = angle * Mathf.Deg2Rad;
+                    var horizontalSpeed = throwSpeed * Mathf.Cos(radians);
+                    var verticalSpeed = throwSpeed * Mathf.Sin(radians);
+                    var initialVelocity = throwDirection * horizontalSpeed;
+                    initialVelocity.y = verticalSpeed;
 
-                rb.velocity = initialVelocity;
-                rb.drag = 0.5f;
+                    grb.velocity = initialVelocity;
+                    grb.drag = 0.5f;
+                }
+
+                grenade.tag = "Thrown Grenade";
+
+                var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
+                if (grenadeBehaviour)
+                {
+                    grenadeBehaviour.ActivateExplosion();
+                }
+
+                grenadeCount--;
+                UpdateGrenadeCountDisplay();
+                UpdateGrenadeIcon();
+
+                if (grenadeCount <= 0)
+                {
+                    GameManager.instance.grenadeCanvas.SetActive(false);
+
+                    if (grenadeIcon)
+                    {
+                        grenadeIcon.enabled = false; // Hide the grenade icon when the grenade is thrown
+                    }
+
+                    if (grenadeCountText)
+                    {
+                        grenadeCountText.enabled = false; // Hide the grenade count when it reaches zero
+                    }
+                }
             }
-            else
-            {
-                Debug.LogError("No Rigidbody found on grenade prefab.");
-            }
-
-            grenade.tag = "Thrown Grenade";
-
-            var grenadeBehaviour = grenade.GetComponent<GrenadeBehaviour>();
-            if (grenadeBehaviour != null)
-            {
-                grenadeBehaviour.ActivateExplosion();
-            }
-            else
-            {
-                Debug.LogError("GrenadeBehaviour component missing on grenade prefab.");
-            }
-
-            if (GrenadeOnPlayer != null)
-            {
-                GrenadeOnPlayer.SetActive(false);
-            }
-
-            // Reset the flag since the grenade has been thrown
-            hasGrenade = false;
-        }
-        else
-        {
-            Debug.LogError("ThrowPoint / GrenadePrefab not assigned!");
         }
     }
 
-    void PullToPoint()
+    private void UpdateGrenadeCountDisplay()
     {
-        Vector3 direction = grapplingGun.grapplePoint - transform.position;
+        if (grenadeCountText)
+        {
+            GameManager.instance.grenadeCanvas.SetActive(true);
+            grenadeCountText.text = "Grenades: " + grenadeCount; // Update the UI text with the grenade count
+        }
+    }
+
+    private void UpdateGrenadeIcon()
+    {
+        GameManager.instance.grenadeCanvas.SetActive(grenadeCount > 0);
+
+        if (grenadeIcon)
+        {
+            grenadeIcon.enabled = grenadeCount > 0; // Show icon if player has grenades
+        }
+
+        if (GrenadeOnPlayer)
+        {
+            GrenadeOnPlayer.SetActive(grenadeCount > 0); // Show grenade model if player has grenades
+        }
+    }
+
+    private void PullToPoint()
+    {
+        var direction = grapplingGun.grapplePoint - transform.position;
 
         if (direction.magnitude > pullThreshold)
         {
             direction.Normalize();
-            rb.AddForce(direction * pullSpeed * Time.deltaTime, ForceMode.Impulse);
+            rb.AddForce(direction * (pullSpeed * Time.deltaTime), ForceMode.Impulse);
         }
         else
         {
             grapplingGun.StopGrapple();
         }
+    }
 
+    private bool IsGrounded() => Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+
+    public void HandleDeath()
+    {
+        SpawnPlayer();
     }
 }

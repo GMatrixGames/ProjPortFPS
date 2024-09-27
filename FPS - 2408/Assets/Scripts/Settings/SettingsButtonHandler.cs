@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,17 +14,17 @@ public class SettingsButtonHandler : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        forward.text = SettingsManager.instance.settings.keyBindings["Forward"].ToString();
-        backward.text = SettingsManager.instance.settings.keyBindings["Back"].ToString();
-        left.text = SettingsManager.instance.settings.keyBindings["Left"].ToString();
-        right.text = SettingsManager.instance.settings.keyBindings["Right"].ToString();
-        jump.text = SettingsManager.instance.settings.keyBindings["Jump"].ToString();
-        slide.text = SettingsManager.instance.settings.keyBindings["Slide"].ToString();
+        forward.text = SettingsManager.instance.settings.keyBindings?["Forward"].ToString();
+        backward.text = SettingsManager.instance.settings.keyBindings?["Back"].ToString();
+        left.text = SettingsManager.instance.settings.keyBindings?["Left"].ToString();
+        right.text = SettingsManager.instance.settings.keyBindings?["Right"].ToString();
+        jump.text = SettingsManager.instance.settings.keyBindings?["Jump"].ToString();
+        slide.text = SettingsManager.instance.settings.keyBindings?["Slide"].ToString();
 
-        var percent = Mathf.RoundToInt(SettingsManager.instance.settings.volume * 100);
+        var percent = Mathf.RoundToInt(SettingsManager.instance.settings.GetVolume() * 100);
         volumeSlider.GetComponentInChildren<TMP_Text>().text = $"Volume ({percent}%)";
-        volumeSlider.value = SettingsManager.instance.settings.volume;
-        AudioListener.volume = SettingsManager.instance.settings.volume;
+        volumeSlider.value = SettingsManager.instance.settings.GetVolume();
+        AudioListener.volume = SettingsManager.instance.settings.GetVolume();
         volumeSlider.onValueChanged.AddListener(val =>
         {
             percent = Mathf.RoundToInt(val * 100);
@@ -42,11 +43,39 @@ public class SettingsButtonHandler : MonoBehaviour
 
             if (e.isKey)
             {
+                // You cannot (use) escape in WebGL
+                if (e.keyCode == KeyCode.Escape && Application.platform == RuntimePlatform.WebGLPlayer)
+                {
+                    currKey = null;
+                    return;
+                }
+
+                // Keybinds cannot be duplicated
+                if (SettingsManager.instance.settings.keyBindings.Any(kb => kb.Value == e.keyCode))
+                {
+                    currKey = null;
+                    return;
+                }
+
                 SettingsManager.instance.settings.keyBindings[currKey.name] = e.keyCode;
                 currKey.GetComponentInChildren<TMP_Text>().text = e.keyCode.ToString();
                 currKey = null;
             }
         }
+    }
+
+    public void ExitWithoutSave()
+    {
+        var percent = Mathf.RoundToInt(SettingsManager.instance.settings.GetVolume() * 100);
+        volumeSlider.GetComponentInChildren<TMP_Text>().text = $"Volume ({percent}%)";
+        volumeSlider.value = SettingsManager.instance.settings.GetVolume();
+
+        forward.text = SettingsManager.instance.settings.keyBindings?["Forward"].ToString();
+        backward.text = SettingsManager.instance.settings.keyBindings?["Back"].ToString();
+        left.text = SettingsManager.instance.settings.keyBindings?["Left"].ToString();
+        right.text = SettingsManager.instance.settings.keyBindings?["Right"].ToString();
+        jump.text = SettingsManager.instance.settings.keyBindings?["Jump"].ToString();
+        slide.text = SettingsManager.instance.settings.keyBindings?["Slide"].ToString();
     }
 
     public void ChangeKey(GameObject clicked)

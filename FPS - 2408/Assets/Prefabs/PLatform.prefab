@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 4731360936442821693}
   - component: {fileID: 8040560433502610442}
   - component: {fileID: 1803578446205958787}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PLatform
-  m_TagString: Untagged
+  m_TagString: RunnableWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: aa382976d563168409ce37158855f22a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,7 +91,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8074770799587369710}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 76f734d92efc8a94292012250fc1804c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

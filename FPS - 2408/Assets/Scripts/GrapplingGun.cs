@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GrapplingGun : MonoBehaviour
@@ -9,6 +7,7 @@ public class GrapplingGun : MonoBehaviour
     public Vector3 grapplePoint;
     [SerializeField] Transform grappleTip, cameraPoint;
     [SerializeField] float maxDistance = 50f;
+    [SerializeField] private AudioClip gunAudio;
 
     bool shouldDrawRope;
     public bool isGrappling;
@@ -22,7 +21,9 @@ public class GrapplingGun : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !GameManager.instance.grappleShouldCooldown)
+        var grappleKey = SettingsManager.instance.settings.keyBindings["Grapple"];
+
+        if (Input.GetKeyDown(grappleKey) && !GameManager.instance.grappleShouldCooldown)
         {
             StartGrapple();
             if (isGrappling)
@@ -31,7 +32,7 @@ public class GrapplingGun : MonoBehaviour
                 GameManager.instance.UpdateGrappleCD();
             }
         }
-        else if (Input.GetMouseButtonUp(1))
+        else if (Input.GetKeyUp(grappleKey))
         {
             StopGrapple();
             shouldDrawRope = false;
@@ -48,6 +49,8 @@ public class GrapplingGun : MonoBehaviour
 
     public void StartGrapple()
     {
+        GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(gunAudio, .5f);
+
         grapplePoint = transform.position;
 
         if (Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
@@ -65,7 +68,7 @@ public class GrapplingGun : MonoBehaviour
         isGrappling = false;
     }
 
-    void DrawLine()
+    private void DrawLine()
     {
         //THis is nothing, so that I can recommit. 
         lineRenderer.SetPosition(0, grappleTip.position);

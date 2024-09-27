@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Heavy Machine Gun
   m_EditorClassIdentifier: 
+  guid: d67b86b441d440a89b3e2563dffa45d9
   gunModel: {fileID: 100000, guid: fccd8e251d698f7449ed9aca4bacc50e, type: 3}
   gunRotation: {x: -90, y: 180, z: 0, w: 0}
-  shootDamage: 20
-  minDamage: 15
-  maxDamage: 20
+  minDamage: 5
+  maxDamage: 5
   shootRate: 0.1
   shootDist: 200
   maxShots: 30
@@ -25,5 +25,8 @@ MonoBehaviour:
   shootSounds:
   - {fileID: 8300000, guid: 48283adefda01514e851c40517a63d59, type: 3}
   - {fileID: 8300000, guid: 81ac649d26a9a96419b76c635591f6d8, type: 3}
+  hitSound: {fileID: 8300000, guid: e7e12d812ea2d4c40b7db7bc844f7ca5, type: 3}
   shootVolume: 0.1
   displayHeat: 1
+  hasDropoff: 0
+  shotCount: 0

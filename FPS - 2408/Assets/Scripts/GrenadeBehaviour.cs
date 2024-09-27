@@ -59,18 +59,9 @@ public class GrenadeBehaviour : MonoBehaviour
                 continue;
             }
 
-            IDamage damageable = collider.GetComponent<IDamage>();
-            if (damageable != null)
-            {
-                damageable.TakeDamage(explosionDamage);
-            }
+            var damageable = collider.GetComponent<IDamage>();
+            damageable?.TakeDamage(explosionDamage);
         }
-        StartCoroutine(DestroyAfterEffect());
-    }
-   
-    private IEnumerator DestroyAfterEffect()
-    {
-        yield return new WaitForSeconds(0.5f);
 
         Destroy(gameObject);
     }

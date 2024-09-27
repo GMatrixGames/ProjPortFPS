@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1883845233298610324, guid: 3bff59f553b00fc4bba444fbd906093f, type: 3}
       propertyPath: hp
-      value: 40
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 1883845233298610324, guid: 3bff59f553b00fc4bba444fbd906093f, type: 3}
       propertyPath: bullet
@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 3609657160253935524, guid: e07f91dbc0bd90b4a8ae63890400bee2, type: 3}
     - target: {fileID: 1883845233298610324, guid: 3bff59f553b00fc4bba444fbd906093f, type: 3}
       propertyPath: shootRate
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1883845233298610324, guid: 3bff59f553b00fc4bba444fbd906093f, type: 3}
       propertyPath: facePlayerSpeed

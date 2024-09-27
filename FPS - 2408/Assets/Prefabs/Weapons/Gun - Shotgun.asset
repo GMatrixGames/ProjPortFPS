@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Shotgun
   m_EditorClassIdentifier: 
+  guid: a7f368330e374c8aa90a6005962823e2
   gunModel: {fileID: 8276986080499376821, guid: e82f1152c2c33df459e1b1bd72c5d050, type: 3}
   gunRotation: {x: 0, y: -90, z: 0, w: 0}
-  shootDamage: 15
   minDamage: 10
-  maxDamage: 15
-  shootRate: 0.5
-  shootDist: 350
-  maxShots: 10
+  maxDamage: 20
+  shootRate: 0.75
+  shootDist: 20
+  maxShots: 6
   shootCooldown: 3
   hitEffect: {fileID: 8443315704496310908, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
   shootSounds:
@@ -29,5 +29,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 67535d6a9b045954e925424a157be5d5, type: 3}
   - {fileID: 8300000, guid: b527b67e65d45b741b1e55da12b8b297, type: 3}
   - {fileID: 8300000, guid: b7c83d02d034c2b4c9fd14359cb69164, type: 3}
+  hitSound: {fileID: 8300000, guid: e7e12d812ea2d4c40b7db7bc844f7ca5, type: 3}
   shootVolume: 0.1
   displayHeat: 1
+  hasDropoff: 1
+  shotCount: 0

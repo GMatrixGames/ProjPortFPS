@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2497c5044441d6ad5a88d834ab01d0, type: 3}
   m_Name: Gun - Pistol
   m_EditorClassIdentifier: 
+  guid: c39b9cace90546a1ab6528698000e4b4
   gunModel: {fileID: 5891155283769805884, guid: 945c8c3faa25f1342bb340511c5dd643, type: 3}
   gunRotation: {x: 0, y: 0, z: 0, w: 0}
-  shootDamage: 2
-  minDamage: 1
-  maxDamage: 3
-  shootRate: 0.5
+  minDamage: 2
+  maxDamage: 2
+  shootRate: 0.3
   shootDist: 350
   maxShots: 10000000
   shootCooldown: 2
@@ -29,5 +29,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 230d59294c9857140b63dd308ea4bd63, type: 3}
   - {fileID: 8300000, guid: 31f5f9d19376b964da72874480ad63ea, type: 3}
   - {fileID: 8300000, guid: 74079e3b043b8a549a28e1350566b7e0, type: 3}
+  hitSound: {fileID: 8300000, guid: e7e12d812ea2d4c40b7db7bc844f7ca5, type: 3}
   shootVolume: 0.1
   displayHeat: 0
+  hasDropoff: 0
+  shotCount: 0
