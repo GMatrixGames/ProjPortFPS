@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -42,7 +43,13 @@ public class SettingsButtonHandler : MonoBehaviour
 
             if (e.isKey)
             {
-                SettingsManager.instance.settings.keyBindings![currKey.name] = e.keyCode;
+                if (SettingsManager.instance.settings.keyBindings.Any(kb => kb.Value == e.keyCode))
+                {
+                    currKey = null;
+                    return;
+                }
+
+                SettingsManager.instance.settings.keyBindings[currKey.name] = e.keyCode;
                 currKey.GetComponentInChildren<TMP_Text>().text = e.keyCode.ToString();
                 currKey = null;
             }
