@@ -43,6 +43,14 @@ public class SettingsButtonHandler : MonoBehaviour
 
             if (e.isKey)
             {
+                // You cannot (use) escape in WebGL
+                if (e.keyCode == KeyCode.Escape && Application.platform == RuntimePlatform.WebGLPlayer)
+                {
+                    currKey = null;
+                    return;
+                }
+
+                // Keybinds cannot be duplicated
                 if (SettingsManager.instance.settings.keyBindings.Any(kb => kb.Value == e.keyCode))
                 {
                     currKey = null;

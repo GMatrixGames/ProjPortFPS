@@ -87,9 +87,7 @@ public class GameSettings
         { "Back", KeyCode.S },
         { "Jump", KeyCode.Space },
         { "Slide", KeyCode.LeftControl },
-
-        // Special cases for WebGL, not configurable (for now)
-        { "Grapple", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Mouse1 : KeyCode.V },
+        { "Grapple", KeyCode.Mouse1 },
         { "Pause", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Escape : KeyCode.P }
     };
 
