@@ -6,9 +6,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private int lockVertMin, lockVertMax;
     [SerializeField] private bool invertY;
 
-    private PlayerController playerController;
     private float rotX;
-    private Quaternion originalRotation;
     private bool isAlreadyTilted;
 
     // Start is called before the first frame update
@@ -16,15 +14,12 @@ public class CameraController : MonoBehaviour
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        playerController = GameManager.instance.playerScript;
-        originalRotation = transform.localRotation;
     }
 
     // Update is called once per frame
-    private void Update()
+    private void LateUpdate()
     {
         // input
-        // The camera bugginess is happening here, but I've got no idea how to resolve it without using fixed update and fixedDeltaTime and making it not as smooth.
         var mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
         var mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
 
@@ -38,7 +33,11 @@ public class CameraController : MonoBehaviour
         var movementRotation = Quaternion.Euler(rotX, 0, 0);
 
         // rotate the player on y
-        transform.parent.Rotate(Vector3.up * mouseX);
+        // GK: Why was this so confusing/annoying to figure out???
+        // Why does the rigidbody only SOMETIMES fight the transform rotation???
+        var rb = GetComponentInParent<Rigidbody>();
+        rb.MoveRotation(rb.rotation * Quaternion.Euler(0, mouseX, 0));
+        // transform.parent.Rotate(Vector3.up * mouseX);
 
         // Wall Running feedback is not at a point where we want it at this stage, so it did not make it into the Beta milestone. I apologize.
         // if (playerController.runningOnWall && !isAlreadyTilted)

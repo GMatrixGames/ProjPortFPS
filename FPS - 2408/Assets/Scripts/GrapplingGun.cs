@@ -49,14 +49,14 @@ public class GrapplingGun : MonoBehaviour
 
     public void StartGrapple()
     {
-        GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(gunAudio, .5f);
-
         grapplePoint = transform.position;
 
         if (Physics.Raycast(cameraPoint.position, cameraPoint.forward, out hit, maxDistance, grappleLayer))
         {
             grapplePoint = hit.point;
             isGrappling = true;
+
+            GameManager.instance.player.GetComponent<AudioSource>().PlayOneShot(gunAudio, .5f);
         }
 
         lineRenderer.positionCount = 2;
