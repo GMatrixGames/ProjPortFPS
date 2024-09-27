@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         Time.timeScale = timeScale;
+        Application.targetFrameRate = 60;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
