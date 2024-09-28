@@ -103,7 +103,7 @@ public class EnemySpawner : MonoBehaviour, IDamage
             var randomPos = spawnPosition.position + Random.insideUnitSphere * distanceToSpawn;
             if (NavMesh.SamplePosition(randomPos, out var hit, distanceToSpawn, NavMesh.AllAreas))
             {
-                var enemy = Instantiate(enemyToSpawn, hit.position, enemyToSpawn.transform.rotation);
+                var enemy = Instantiate(enemyToSpawn, hit.position, Random.rotation);
                 enemy.GetComponent<EnemyAI>().SetSpawner(this);
                 spawnedEnemies.Add(enemy);
                 enemiesOnField++;

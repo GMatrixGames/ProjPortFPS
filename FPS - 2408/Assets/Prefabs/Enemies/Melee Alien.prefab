@@ -483,7 +483,7 @@ MonoBehaviour:
   headPos: {fileID: 6123732931257647657}
   healthBar: {fileID: 477898715789893940}
   hp: 8
-  viewAngle: 90
+  viewAngle: 270
   facePlayerSpeed: 5
   roamDistance: 15
   roamTimer: 5
@@ -507,7 +507,7 @@ NavMeshAgent:
   m_Acceleration: 16
   avoidancePriority: 50
   m_AngularSpeed: 600
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
