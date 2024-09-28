@@ -23,7 +23,7 @@ public class GrapplingGun : MonoBehaviour
     {
         var grappleKey = SettingsManager.instance.settings.keyBindings["Grapple"];
 
-        if (Input.GetKeyDown(grappleKey) && !GameManager.instance.grappleShouldCooldown)
+        if (Input.GetKeyDown(grappleKey) && !GameManager.instance.grappleShouldCooldown && Time.timeScale != 0)
         {
             StartGrapple();
             if (isGrappling)

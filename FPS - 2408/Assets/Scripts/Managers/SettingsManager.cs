@@ -74,7 +74,7 @@ public class SettingsManager : MonoBehaviour
 [Serializable]
 public class GameSettings
 {
-    public const int LATEST_VERSION = 1;
+    public const int LATEST_VERSION = 2;
 
     public int version;
     public float volume;
@@ -86,8 +86,9 @@ public class GameSettings
         { "Right", KeyCode.D },
         { "Back", KeyCode.S },
         { "Jump", KeyCode.Space },
-        { "Slide", KeyCode.LeftControl },
+        { "Slide", KeyCode.C },
         { "Grapple", KeyCode.Mouse1 },
+        { "Sprint", KeyCode.LeftShift },
         { "Pause", Application.platform != RuntimePlatform.WebGLPlayer ? KeyCode.Escape : KeyCode.P }
     };
 

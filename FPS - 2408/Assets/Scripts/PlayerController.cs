@@ -299,12 +299,14 @@ public class PlayerController : MonoBehaviour, IDamage
     /// </summary>
     private void Sprint()
     {
-        if (Input.GetButtonDown("Sprint"))
+        var sprintKey = SettingsManager.instance.settings.keyBindings["Sprint"];
+        
+        if (Input.GetKeyDown(sprintKey))
         {
             accelerationSpeed *= sprintMod;
             isSprinting = true;
         }
-        else if (Input.GetButtonUp("Sprint"))
+        else if (Input.GetKeyUp(sprintKey))
         {
             accelerationSpeed /= sprintMod;
             isSprinting = false;

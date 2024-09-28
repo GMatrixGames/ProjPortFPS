@@ -1336,6 +1336,8 @@ MonoBehaviour:
   right: {fileID: 1372334064}
   jump: {fileID: 1009375204}
   slide: {fileID: 1928335023}
+  sprint: {fileID: 478431374}
+  grapple: {fileID: 353664892}
 --- !u!114 &139436373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6449,7 +6451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1177003918
 MonoBehaviour:
   m_ObjectHideFlags: 0
