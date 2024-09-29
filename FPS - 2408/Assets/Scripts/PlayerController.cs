@@ -504,9 +504,15 @@ public class PlayerController : MonoBehaviour, IDamage
     public void GetGunStats(GunStats gun)
     {
         if (gunList.Any(g => g.guid == gun.guid)) return;
-        if (gunList.Count > 0) gunList[selectedGun].shotCount = currentShots;
+        if (gunList.Count > 0)
+        {
+            gunList[selectedGun].shotCount = currentShots;
+            gunList[selectedGun].isCoolingDown = isCoolingDown;
+        }
         gunList.Add(gun);
         selectedGun = gunList.Count - 1;
+        currentShots = 0;
+        isCoolingDown = false;
         LoadGunStats(gun);
     }
 
@@ -515,12 +521,14 @@ public class PlayerController : MonoBehaviour, IDamage
         if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunList.Count - 1)
         {
             gunList[selectedGun].shotCount = currentShots;
+            gunList[selectedGun].isCoolingDown = isCoolingDown;
             selectedGun++;
             ChangeGun();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
         {
             gunList[selectedGun].shotCount = currentShots;
+            gunList[selectedGun].isCoolingDown = isCoolingDown;
             selectedGun--;
             ChangeGun();
         }
@@ -545,6 +553,7 @@ public class PlayerController : MonoBehaviour, IDamage
         hasDropoff = gun.hasDropoff;
 
         currentShots = gun.shotCount;
+        isCoolingDown = gun.isCoolingDown;
 
         GameManager.instance.heatBarParent.SetActive(gun.displayHeat);
 

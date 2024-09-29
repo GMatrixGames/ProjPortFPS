@@ -19,4 +19,5 @@ public class GunStats : ScriptableObject
     public bool hasDropoff = true;
 
     public float shotCount;
+    public bool isCoolingDown;
 }
