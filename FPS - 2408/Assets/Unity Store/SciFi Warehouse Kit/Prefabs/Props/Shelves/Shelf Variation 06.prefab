@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 520191364533119547}
   - component: {fileID: -5317810150801186653}
+  - component: {fileID: -4242641181414976524}
   m_Layer: 0
   m_Name: Shelf Variation 06
   m_TagString: Untagged
@@ -100,6 +101,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-4242641181414976524
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3558774523109972008}
+  m_Material: {fileID: 13400000, guid: 76f734d92efc8a94292012250fc1804c, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7, y: 5, z: 2}
+  m_Center: {x: -3, y: 2.5, z: 0}
 --- !u!1 &7321565168586268460
 GameObject:
   m_ObjectHideFlags: 0
