@@ -32,3 +32,4 @@ MonoBehaviour:
   displayHeat: 1
   hasDropoff: 0
   shotCount: 0
+  isCoolingDown: 0

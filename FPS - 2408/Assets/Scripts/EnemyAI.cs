@@ -100,7 +100,6 @@ public class EnemyAI : MonoBehaviour, IDamage
 
         while (timeElapsed < roamDuration)
         {
-            
             if (agent.remainingDistance < 0.5f)
             {
                 Vector3 newPosition = GetRandomRoamingPosition();

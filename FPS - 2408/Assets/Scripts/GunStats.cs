@@ -18,6 +18,6 @@ public class GunStats : ScriptableObject
     public bool displayHeat = true;
     public bool hasDropoff = true;
 
-    public float shotCount;
-    public bool isCoolingDown;
+    [SerializeField] public float shotCount;
+    [SerializeField] public bool isCoolingDown;
 }
